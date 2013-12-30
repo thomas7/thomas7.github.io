@@ -619,28 +619,16 @@
 					</div>
 				</div>
 			</div> <!--End Tabs -->
-
-			FirstName:<input type="text" name="FirstName">
-			<button type="submit" class="btn btn-default" onclick = "sendEmail()">Submit</button>
-
+			<form action="mailto:thomaselliott728@gmail.com" method="post" enctype="text/plain">
+				FirstName:<input type="text" name="FirstName">
+			  <input type="submit" name="submit" value="Submit">
+			</form>
 		</div>
 	</div>
 </div>
 
 <script>
 	$('img').tooltip();
-
-	function sendEmail() {
-		$.post("sendemail.php",
-   			{ emailTo: "thomaselliott728@gmail.com", emailFrom: "thomaselliott728@gmail.com", subject: "Test email", message: "hello" },
-   			function(data){
-				$("#sendemail").slideUp("normal", function() {
-
-			   		$("#sendemail").before('<h1>Success</h1><p>Your email was sent.</p>');
-				});
-			}
-		);
-	}
 </script>
 </body>
 </html>
