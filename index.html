@@ -40,6 +40,26 @@
 			pointer-events: none;
 		}
 
+		.threeDHeader {
+			display:block;
+			color: #fff;
+        	text-shadow: 0px 1px 0px #999, 0px 2px 0px #888, 0px 3px 0px #777, 0px 4px 0px #666, 0px 5px 0px #555, 0px 6px 0px #444, 0px 7px 0px #333, 0px 8px 7px #001135;
+        	font: 50px 'ChunkFiveRegular';
+		}
+
+		.eliminatedText {
+			display:block;
+			position:relative;
+			text-shadow: 0px -1px 4px red, 0px -2px 10px yellow, 0px -10px 20px #ff8000, 0px -18px 40px orange;
+			opacity: 1;
+			bottom:130px;
+			right: 14px;
+			color: red;
+        	font: 30px 'LeagueGothicRegular';
+			transform:rotate(305deg);
+			-webkit-transform:rotate(305deg); /* Safari and Chrome */
+		}
+
 	</style>
 
 	<script>
@@ -80,6 +100,8 @@
            	    $(ui.draggable).remove(); //remove from list
 		      }
 		    });
+
+		    $('.eliminatedWomen').draggable({disabled:true });
 		 
 		    //drop women into the container
 		    $dropContainer.droppable({
@@ -496,7 +518,7 @@
 </head>
 <body>
 
-<h1 style = "position: relative; bottom: 10px; left: 10px; color:white;"><strong>The Bachelor Bracket!</strong></h1>
+<h1 style = "position: relative; bottom: 10px; left: 10px; color:white;"><strong><span class="threeDHeader" >The Bachelor Bracket!</span></strong></h1>
 <!-- Initially hidden alert class to be set by alert functions -->
 <div id = "alertError" class = "podbar hidden">
 </div>
@@ -688,12 +710,13 @@
 	<div class="ui-widget ui-helper-clearfix" style = "width:100%">
 		<div class = "col-md-5">
 	 		<ul id="sortable" class="sortable ui-helper-reset ui-helper-clearfix" style = "width:100%;">
-	  			<li name = "Alexis" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Alexis">
+	  			<li name = "Alexis" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Alexis">
 	  				<img title="Alexis" src="pics/Alexis.PNG" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
 	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Alexis.PNG')">
 	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Alexis &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Alexis')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
 	  			</li>
 
 	  			<li name = "Allison" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Allison">
@@ -703,12 +726,13 @@
 	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp Allison &nbsp&nbsp&nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Allison')"></a></h5>
 	  			</li>
-	  			<li name = "Amy J" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Amy_J">
+	  			<li name = "Amy J" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Amy_J">
 	  				<img title="Amy J" src="pics/Amy J.PNG" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
 	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Amy J.PNG')">
 	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Amy J &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Amy_J')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
 	  			</li>
 	  			<li name = "Amy L" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Amy_L">
 	  				<img title="Amy L" src="pics/Amy L.PNG" class="img-responsive">
@@ -724,12 +748,13 @@
 	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Andi &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Andi')"></a></h5>
 	  			</li>
-	  			<li name = "Ashley" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Ashley">
+	  			<li name = "Ashley" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Ashley">
 	  				<img title="Ashley" src="pics/Ashley.PNG" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
 	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Ashley.PNG')">
 	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp Ashley &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Ashley')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
 	  			</li>
 	  			<li name = "Cassandra" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Cassandra">
 	  				<img title="Cassandra" src="pics/Cassandra.PNG" class="img-responsive">
@@ -752,12 +777,13 @@
 	  				  	</a>&nbsp&nbsp&nbsp&nbsp Chelsie &nbsp&nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Chelsie')"></a></h5>
 	  			</li>
-	  			<li name = "Christine" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Christine">
+	  			<li name = "Christine" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Christine">
 	  				<img title="Christine" src="pics/Christine.PNG" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
 	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Christine.PNG')">
 	  				  	</a>&nbsp&nbsp&nbsp Christine &nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Christine')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
 	  			</li>
 	  			<li name = "Christy" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Christy">
 	  				<img title="Christy" src="pics/Christy.PNG" class="img-responsive">
@@ -801,26 +827,29 @@
 	  				  	</a>&nbsp&nbsp&nbsp&nbsp Kelly &nbsp&nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Kelly')"></a></h5>
 	  			</li>
-	  			<li name = "Kylie" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Kylie">
+	  			<li name = "Kylie" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Kylie">
 	  				<img title="Kylie" src="pics/Kylie.PNG" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
 	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Kylie.PNG')">
 	  				  	</a>&nbsp&nbsp&nbsp&nbsp Kylie &nbsp&nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Kylie')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
 	  			</li>
-	  			<li name = "Lacy" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Lacy">
+	  			<li name = "Lacy" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Lacy">
 	  				<img title="Lacy" src="pics/Lacy.PNG" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
 	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Lacy.PNG')">
 	  				  	</a>&nbsp&nbsp&nbsp&nbsp Lacy &nbsp&nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Lacy')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
 	  			</li>
-	  			<li name = "Lauren H" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Lauren_H">
+	  			<li name = "Lauren H" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Lauren_H">
 	  				<img title="Lauren H" src="pics/Lauren H.PNG" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
 	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Lauren H.PNG')">
 	  				  	</a>&nbsp&nbsp&nbsp Lauren H &nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Lauren_H')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
 	  			</li>
 	  			<li name = "Lauren S" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Lauren_S">
 	  				<img title="Lauren S" src="pics/Lauren S.PNG" class="img-responsive">
@@ -836,12 +865,13 @@
 	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Lucy &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Lucy')"></a></h5>
 	  			</li>
-	  			<li name = "Maggie" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Maggie">
+	  			<li name = "Maggie" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Maggie">
 	  				<img title="Maggie" src="pics/Maggie.PNG" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
 	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Maggie.PNG')">
 	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp Maggie &nbsp&nbsp&nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Maggie')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
 	  			</li>
 	  			<li name = "Nikki" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Nikki">
 	  				<img title="Nikki" src="pics/Nikki.PNG" class="img-responsive">
@@ -865,12 +895,13 @@
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Sharleen')"></a></h5>
 	  			</li>
 
-	  			<li name = "Valerie" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Valerie">
+	  			<li name = "Valerie" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Valerie">
 	  				<img title="Valerie" src="pics/Valerie.PNG" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
 	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Valerie.PNG')">
 	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp Valerie &nbsp&nbsp&nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Valerie')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
 	  			</li>
 	  			<li name = "Victoria" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Victoria">
 	  				<img title="Victoria" src="pics/Victoria.PNG" class="img-responsive">
