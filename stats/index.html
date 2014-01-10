@@ -2,7 +2,7 @@
 <html lang="us">
 <head>
 	<meta charset="utf-8">
-	<title>The Bachelor Bracket</title>
+	<title>The Bachelor Stats</title>
 	<link href="../css/dark-hive/jquery-ui-1.10.3.custom.css" rel="stylesheet">
 	<link href="../css/bootstrap.min.css" rel="stylesheet">
 	<script src="../js/jquery-1.9.1.js"></script>
@@ -11,18 +11,19 @@
 </head>
 
 <script>
-	var file = "";
 	$(document).ready(function() {
         $.ajax({
             url : "bachelorEmailExtraction.txt",
             dataType: "text",
             success : function (data) {
-                file = data;
+                $("#textDisplay").html(data);
             }
         });
 	});
-	alert(file);
 </script>
 
 <body>
+	<textarea id = "textDisplay">
+
+	</textarea>
 </body>
