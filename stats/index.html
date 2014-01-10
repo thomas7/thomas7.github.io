@@ -16,14 +16,31 @@
             url : "bachelorEmailExtraction.txt",
             dataType: "text",
             success : function (data) {
-                $("#textDisplay").html(data);
+                $("#textFile").html(data);
             }
         });
 	});
 </script>
 
 <body>
-	<textarea id = "textDisplay">
-
+	<!-- Stores text file in a hidden html textarea -->
+	<textarea id = "textFile" class="hide">
 	</textarea>
 </body>
+
+<script>
+	var textFile = document.getElementById("textFile").innerHTML;
+
+	for(var i=0; i<textFile.length; i++) {
+		if (textFile[i] == "\r" && textFile[i+1] == "\n" && textFile[i-2] != ";") {
+			textFile = textFile.slice(0,i) + textFile.slice(i+2, textFile.length);
+			console.log(textFile);
+		}
+	}
+
+	var entries = textFile.split("\r\n\r\n");
+	for(var i=0; i<entries.length; i++) {
+		console.log(i);
+		console.log(entries[i]);
+	}
+</script>
