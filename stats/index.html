@@ -24,24 +24,91 @@
 
 <body>
 	<!-- Stores text file in a hidden html textarea -->
-	<textarea id = "textFile">
+	<textarea id = "textFile" class = "hide">
+		<!-- name=Thomas 
+week3=Allison;Amy_L;Chantel;Cassandra;Andi;Clare;Christy;Chelsie;Kelly;Kathe
+rine;Elise;Danielle;Lauren_S; 
+week4=Amy_L;Allison;Chantel;Cassandra;Andi;Chelsie;Christy;Clare;Danielle;Ka
+therine; 
+week5=Katherine;Allison;Amy_L;Andi;Cassandra;Chantel;Chelsie; 
+week6=Allison;Amy_L;Andi;Cassandra;Chantel; 
+week7=Amy_L;Cassandra;Allison;Andi; 
+week8=Allison;Cassandra;Andi; 
+week9=Andi;Cassandra; 
+week10=Andi; 
+
+name=Sanchit 
+week3=Allison;Amy_L;Chantel;Cassandra;Andi;Clare;Christy;Chelsie;Kelly;Kathe
+rine;Elise;Danielle;Lauren_S; 
+week4=Amy_L;Allison;Chantel;Cassandra;Andi;Chelsie;Christy;Clare;Danielle;Ka
+therine; 
+week5=Katherine;Allison;Amy_L;Andi;Cassandra;Chantel;Chelsie; 
+week6=Allison;Amy_L;Andi;Cassandra;Chantel; 
+week7=Amy_L;Cassandra;Allison;Andi; 
+week8=Allison;Cassandra;Andi; 
+week9=Andi;Cassandra; 
+week10=Andi; 
+
+name=Ryan 
+week3=Allison;Amy_L;Chantel;Cassandra;Andi;Clare;Christy;Chelsie;Kelly;Kathe
+rine;Elise;Danielle;Lauren_S; 
+week4=Amy_L;Allison;Chantel;Cassandra;Andi;Chelsie;Christy;Clare;Danielle;Ka
+therine; 
+week5=Katherine;Allison;Amy_L;Andi;Cassandra;Chantel;Chelsie; 
+week6=Allison;Amy_L;Andi;Cassandra;Chantel; 
+week7=Amy_L;Cassandra;Allison;Andi; 
+week8=Allison;Cassandra;Andi; 
+week9=Andi;Cassandra; 
+week10=Cassandra; 
+
+name=Ryan 
+week3=Allison;Amy_L;Chantel;Cassandra;Andi;Clare;Christy;Chelsie;Kelly;Kathe
+rine;Elise;Danielle;Lauren_S; 
+week4=Amy_L;Allison;Chantel;Cassandra;Andi;Chelsie;Christy;Clare;Danielle;Ka
+therine; 
+week5=Katherine;Allison;Amy_L;Andi;Cassandra;Chantel;Chelsie; 
+week6=Allison;Amy_L;Andi;Cassandra;Chantel; 
+week7=Amy_L;Cassandra;Allison;Andi; 
+week8=Allison;Cassandra;Andi; 
+week9=Andi;Cassandra; 
+week10=Cassandra; 
+
+name=Ryan 
+week3=Allison;Amy_L;Chantel;Cassandra;Andi;Clare;Christy;Chelsie;Kelly;Kathe
+rine;Elise;Danielle;Lauren_S; 
+week4=Amy_L;Allison;Chantel;Cassandra;Andi;Chelsie;Christy;Clare;Danielle;Ka
+therine; 
+week5=Katherine;Allison;Amy_L;Andi;Cassandra;Chantel;Chelsie; 
+week6=Allison;Amy_L;Andi;Cassandra;Chantel; 
+week7=Amy_L;Cassandra;Allison;Andi; 
+week8=Allison;Cassandra;Andi; 
+week9=Andi;Cassandra; 
+week10=Cassandra;  -->
 	</textarea>
 </body>
 
 <script>
 	var textFile = document.getElementById("textFile").innerHTML;
-	console.log(textFile);
+	//break up the email entries
+	var entries = textFile.split("\n\n");
 
-	for(var i=0; i<textFile.length; i++) {
-		if (textFile[i] == "\r" && textFile[i+1] == "\n" && textFile[i-2] != ";") {
-			textFile = textFile.slice(0,i) + textFile.slice(i+2, textFile.length);
-			console.log(textFile);
-		}
-	}
-
-	var entries = textFile.split("\r\n\r\n");
+	//fix the new line characters that google app scripts add to the scrape for whatever reason
 	for(var i=0; i<entries.length; i++) {
-		console.log(i);
+		for(var j=0; j<entries[i].length; j++) {
+			//j> 20 bad way to avoid the first line, but works
+			if (entries[i][j] == "\n" && entries[i][j-2] != ";" && j>20) {
+				entries[i] = entries[i].slice(0,j) + entries[i].slice(j+1, entries[i].length);
+			}
+		}
 		console.log(entries[i]);
 	}
+
+	var entryObjs = [];
+	for(var i=0; i<entries.length; i++) {
+		var obj = {};
+		obj.name = entries[i].substring(5, entries[i].indexOf("\n")-1) //assume name is first line, start at 5 after chars "name="
+		entryObjs[i] = obj;
+	}
+	console.log(entryObjs);
+
 </script>
