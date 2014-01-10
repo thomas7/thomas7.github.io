@@ -24,12 +24,13 @@
 
 <body>
 	<!-- Stores text file in a hidden html textarea -->
-	<textarea id = "textFile" class="hide">
+	<textarea id = "textFile">
 	</textarea>
 </body>
 
 <script>
 	var textFile = document.getElementById("textFile").innerHTML;
+	console.log(textFile);
 
 	for(var i=0; i<textFile.length; i++) {
 		if (textFile[i] == "\r" && textFile[i+1] == "\n" && textFile[i-2] != ";") {
