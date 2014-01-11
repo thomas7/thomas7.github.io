@@ -87,6 +87,7 @@
 		var obj = {};
 		obj.name = entries[i].substring(5, entries[i].indexOf("\n")-1) //assume name is first line, start at 5 after chars "name="
 		var entryNoName = entries[i].substring(entries[i].indexOf("\n")+1, entries[i].length);
+		console.log(entryNoName);
 		var weeks = entryNoName.split("=");
 		obj.week = [];
 		obj.week[0] = weeks[1].substring(0, weeks[1].indexOf(" "));
