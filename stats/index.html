@@ -68,7 +68,7 @@
 </body>
 
 <script>
-	var textFile = document.getElementById("textFile").innerHTML;
+	var textFile = new String(document.getElementById("textFile").innerHTML);
 	//break up the email entries
 	console.log(textFile);
 	if (textFile.indexOf("\n")) {
