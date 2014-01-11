@@ -81,11 +81,12 @@
 			}
 		}
 	}
-
+	console.log(entries)
 	var entryObjs = [];
 	for(var i=0; i<entries.length; i++) {
 		var obj = {};
 		obj.name = entries[i].substring(5, entries[i].indexOf("\n")-1) //assume name is first line, start at 5 after chars "name="
+		console.log(obj.name);
 		var entryNoName = entries[i].substring(entries[i].indexOf("\n")+1, entries[i].length);
 		console.log(entryNoName);
 		var weeks = entryNoName.split("=");
