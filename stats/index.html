@@ -68,10 +68,9 @@
 </body>
 
 <script>
-	var textFile = document.getElementById("textFile").textContent;
+	var textFile = document.getElementById("textFile").value;
 	//break up the email entries
-	console.log(document.getElementById("textFile").textContent);
-	console.log(document.getElementById("textFile").innerHTML);
+	console.log(document.getElementById("textFile").value);
 	if (textFile.indexOf("\n")) {
 		console.log("Should have found new line");
 	}
