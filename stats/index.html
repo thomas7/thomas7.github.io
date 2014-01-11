@@ -70,7 +70,13 @@
 <script>
 	var textFile = document.getElementById("textFile").innerHTML;
 	//break up the email entries
-	var entries = textFile.split("\n\n");
+	if (texfile.indexOf("\n\n") != -1) {
+		console.log("found nn");
+	}
+	if (textFile.indexOf("\r\n") != -1) {
+		console.log("found rn");
+	}
+	var entries = textFile.split("\r\n");
 	console.log(entries);
 	//fix the new line characters that google app scripts add to the scrape for whatever reason
 	for(var i=0; i<entries.length; i++) {
