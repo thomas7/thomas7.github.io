@@ -55,7 +55,7 @@
 
 <body>
 	<!-- Stores text file in a hidden html textarea -->
-	<textarea id = "textFile" class = "hide">
+	<textarea id = "textFile">
 	</textarea>
 	<div class = "row">
 		<div class = "col-md-9" id = "graph">
@@ -71,6 +71,9 @@
 	var textFile = document.getElementById("textFile").innerHTML;
 	//break up the email entries
 	console.log(textFile);
+	if (textFile.indexOf("a")) {
+		console.log("Should have found a");
+	}
 
 	var entries = textFile.split("\r\r");
 	console.log(entries);
