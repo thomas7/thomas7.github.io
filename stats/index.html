@@ -42,11 +42,13 @@
 </head>
 
 <script>
+	var file = "";
 	$(document).ready(function() {
         $.ajax({
             url : "bachelorEmailExtraction.txt",
             dataType: "text",
             success : function (data) {
+            	file = data;
                 $("#textFile").html(data);
             }
         });
@@ -72,6 +74,7 @@
 	//break up the email entries
 	console.log(document.getElementById("textFile"));
 	console.log(document.getElementById("textFile").value);
+	console.log(file);
 	if (textFile.indexOf("a") != -1) {
 		console.log("Should have found a");
 	}
