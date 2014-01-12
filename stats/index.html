@@ -66,191 +66,192 @@
 	</div>
 
 <script>
-	setTimeout(function(){},2000);
-	var textFile = document.getElementById("file")
-	//break up the email entries
-	console.log(document.getElementById("file"));
-	console.log(document.getElementById("file").value);
-	console.log(document.getElementById("file").innerHTML);
+	$(document).ready(function() {
+		var textFile = document.getElementById("file").value;
+		//break up the email entries
+		console.log(document.getElementById("file"));
+		console.log(document.getElementById("file").value);
+		console.log(document.getElementById("file").innerHTML);
 
-	if (textFile.indexOf("a") != -1) {
-		console.log("Should have found a");
-	}
-
-	if (textFile.indexOf("\r") != -1) {
-		console.log("Should have found return");
-	}
-	console.log(textFile[12], textFile[13], textFile[14], textFile[14], textFile[15]);
-
-	var entries = textFile.split("\r\r");
-	console.log(entries);
-	//fix the new line characters that google app scripts add to the scrape for whatever reason
-	for(var i=0; i<entries.length; i++) {
-		for(var j=0; j<entries[i].length; j++) {
-			//j> 20 bad way to avoid the first line, but works
-			if (entries[i][j] == "\n" && entries[i][j-2] != ";" && j>20) {
-				entries[i] = entries[i].slice(0,j) + entries[i].slice(j+1, entries[i].length);
-				console.log(entries[i]);
-			}
+		if (textFile.indexOf("a") != -1) {
+			console.log("Should have found a");
 		}
-	}
-	console.log(entries)
-	var entryObjs = [];
-	for(var i=0; i<entries.length; i++) {
-		var obj = {};
-		obj.name = entries[i].substring(5, entries[i].indexOf("\n")-1) //assume name is first line, start at 5 after chars "name="
-		console.log(obj.name);
-		var entryNoName = entries[i].substring(entries[i].indexOf("\n")+1, entries[i].length);
-		console.log(entryNoName);
-		var weeks = entryNoName.split("=");
-		obj.week = [];
-		obj.week[0] = weeks[1].substring(0, weeks[1].indexOf(" "));
-		obj.week[1] = weeks[2].substring(0, weeks[2].indexOf(" "));
-		obj.week[2] = weeks[3].substring(0, weeks[3].indexOf(" "));
-		obj.week[3] = weeks[4].substring(0, weeks[4].indexOf(" "));
-		obj.week[4] = weeks[5].substring(0, weeks[5].indexOf(" "));
-		obj.week[5] = weeks[6].substring(0, weeks[6].indexOf(" "));
-		obj.week[6] = weeks[7].substring(0, weeks[7].indexOf(" "));
-		obj.week[7] = weeks[8].substring(0, weeks[8].indexOf(" "));
-		entryObjs[i] = obj;
-	}
-	console.log(entryObjs);
 
+		if (textFile.indexOf("\r") != -1) {
+			console.log("Should have found return");
+		}
+		console.log(textFile[12], textFile[13], textFile[14], textFile[14], textFile[15]);
 
-	var winners = [["Clare", "Nikki", "Andi"], 
-				   ["Clare", "Andi"], 
-				   ["Andi", "Allison"], 
-				   [], 
-				   [], 
-				   [], 
-				   [], 
-				   []];
-
-	var weekValues = [1,2,3,5,8,13,21,34];
-
-	var scores = []; //an array of arrays of everyone's score
-	//loop through everyone's entry
-	for (var i=0; i<entryObjs.length; i++) {
-		var score = [0];
-		//loop through each week
-		for (var j=0; j<8; j++) {
-			score[j+1] = score[j]; //initialize score to score in previous week, j+1 because first value needs to stay 0
-			//loop through array of winners for corresponding week
-			for (var k=0; k< winners[j].length; k++) {
-				if (entryObjs[i].week[j].indexOf(winners[j][k]) != -1) {
-					score[j+1] = score[j+1] + weekValues[j];
+		var entries = textFile.split("\r\r");
+		console.log(entries);
+		//fix the new line characters that google app scripts add to the scrape for whatever reason
+		for(var i=0; i<entries.length; i++) {
+			for(var j=0; j<entries[i].length; j++) {
+				//j> 20 bad way to avoid the first line, but works
+				if (entries[i][j] == "\n" && entries[i][j-2] != ";" && j>20) {
+					entries[i] = entries[i].slice(0,j) + entries[i].slice(j+1, entries[i].length);
+					console.log(entries[i]);
 				}
 			}
 		}
-		scores[i] = score;
-		console.log(entryObjs[i].name, score);
-	}
-
-	var score = [0,1,2,3,4,5,6,7,8];
-	var xKeys = ["Start", "Week 3", "Week 4", "Week 5", "Week 6", "Week 7", "Week 8", "Week 9", "Week 10"];
-	var data = [];
-	for (var i=0; i<scores.length; i++) {
-		var tempData = [];
-		for (var j=0; j<scores[i].length; j++) {
-			var tempObj = {};
-	        tempObj.xValue = xKeys[j];
-	        tempObj.yValue = scores[i][j];
-	        tempData[j] = tempObj;
-	    }
-	    data[i] = tempData;
-	}
-
-	console.log(data);
-
-    // define dimensions of graph
-	var margin = {top: 20, right: 20, bottom: 30, left: 50},
-    w = 960 - margin.left - margin.right,
-    h = 500 - margin.top - margin.bottom;
-
-	var x = d3.scale.ordinal().domain(data[0].map(function(d) {return d.xValue;})).rangeRoundBands([0,w],1);
-	var y = d3.scale.linear().domain([0, d3.max(data[0], function(d) {return d.yValue; })]).range([h, 0]);
-
-	var xAxis = d3.svg.axis()
-	    .scale(x)
-	    .orient("bottom")
-	    .ticks(10);
-
-	var yAxis = d3.svg.axis()
-	    .scale(y)
-	    .orient("left")
-	    .ticks(10);
-
-	var line = d3.svg.line()
-		.x(function(d) { return x(d.xValue); })
-		// .x(function(d) { if (d == 0) {return 0;} else {return xKeys[d];} })
-    	.y(function(d) { return y(d.yValue); });
-
-	var graph = d3.select("#graph").append("svg")
-	      .attr("width", w + margin.left + margin.right)
-	      .attr("height", h + margin.top + margin.bottom)
-	    .append("svg:g")
-	      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-	graph.append("svg:g")
-		  .attr("class", "x axis")
-	      .attr("transform", "translate(0," + h + ")")
-	      .call(xAxis);
-
-	graph.append("svg:g")
-		  .attr("class", "grid")
-	      .attr("transform", "translate(0," + h + ")")
-	      .call(xAxis
-            .tickSize(-h, 0, 0)
-            .tickFormat("")
-          );
-
-	// Y-Axis
-    graph.append("g")
-		  .attr("class", "y axis")
-	      .call(yAxis);
-
-	// Y-Axis Grid
-	graph.append("g")
-		  .attr("class", "grid")
-	      .call(yAxis
-	      	.tickSize(-w, 0, 0)
-          	.tickFormat("")
-          );
-
-	var colors = ["blue", "green", "orange", "red", "purple", "maroon", "black"];
-	for (var i=0; i < data.length; i++) {
-		graph.append("path")
-		      .attr("class", "line")
-		      .style("stroke", colors[i%7])
-		      .attr("d", line(data[i]));
-	}
-
-	var standings = []
-	for (var i=0; i<entryObjs.length; i++) {
-		var obj = {}
-		obj.name = entryObjs[i].name;
-		obj.score = scores[i][8]; //the last score which is the current score no matter what week it is
-		obj.color = colors[i%7];
-		standings[i] = obj;
-	}
-
-	standings.sort(function(a,b) {
-		if (a.score > b.score) {
-			return -1
+		console.log(entries)
+		var entryObjs = [];
+		for(var i=0; i<entries.length; i++) {
+			var obj = {};
+			obj.name = entries[i].substring(5, entries[i].indexOf("\n")-1) //assume name is first line, start at 5 after chars "name="
+			console.log(obj.name);
+			var entryNoName = entries[i].substring(entries[i].indexOf("\n")+1, entries[i].length);
+			console.log(entryNoName);
+			var weeks = entryNoName.split("=");
+			obj.week = [];
+			obj.week[0] = weeks[1].substring(0, weeks[1].indexOf(" "));
+			obj.week[1] = weeks[2].substring(0, weeks[2].indexOf(" "));
+			obj.week[2] = weeks[3].substring(0, weeks[3].indexOf(" "));
+			obj.week[3] = weeks[4].substring(0, weeks[4].indexOf(" "));
+			obj.week[4] = weeks[5].substring(0, weeks[5].indexOf(" "));
+			obj.week[5] = weeks[6].substring(0, weeks[6].indexOf(" "));
+			obj.week[6] = weeks[7].substring(0, weeks[7].indexOf(" "));
+			obj.week[7] = weeks[8].substring(0, weeks[8].indexOf(" "));
+			entryObjs[i] = obj;
 		}
-		else if (a.score < b.score) {
-			return 1;
+		console.log(entryObjs);
+
+
+		var winners = [["Clare", "Nikki", "Andi"], 
+					   ["Clare", "Andi"], 
+					   ["Andi", "Allison"], 
+					   [], 
+					   [], 
+					   [], 
+					   [], 
+					   []];
+
+		var weekValues = [1,2,3,5,8,13,21,34];
+
+		var scores = []; //an array of arrays of everyone's score
+		//loop through everyone's entry
+		for (var i=0; i<entryObjs.length; i++) {
+			var score = [0];
+			//loop through each week
+			for (var j=0; j<8; j++) {
+				score[j+1] = score[j]; //initialize score to score in previous week, j+1 because first value needs to stay 0
+				//loop through array of winners for corresponding week
+				for (var k=0; k< winners[j].length; k++) {
+					if (entryObjs[i].week[j].indexOf(winners[j][k]) != -1) {
+						score[j+1] = score[j+1] + weekValues[j];
+					}
+				}
+			}
+			scores[i] = score;
+			console.log(entryObjs[i].name, score);
 		}
-		else
-			return 0;
+
+		var score = [0,1,2,3,4,5,6,7,8];
+		var xKeys = ["Start", "Week 3", "Week 4", "Week 5", "Week 6", "Week 7", "Week 8", "Week 9", "Week 10"];
+		var data = [];
+		for (var i=0; i<scores.length; i++) {
+			var tempData = [];
+			for (var j=0; j<scores[i].length; j++) {
+				var tempObj = {};
+		        tempObj.xValue = xKeys[j];
+		        tempObj.yValue = scores[i][j];
+		        tempData[j] = tempObj;
+		    }
+		    data[i] = tempData;
+		}
+
+		console.log(data);
+
+	    // define dimensions of graph
+		var margin = {top: 20, right: 20, bottom: 30, left: 50},
+	    w = 960 - margin.left - margin.right,
+	    h = 500 - margin.top - margin.bottom;
+
+		var x = d3.scale.ordinal().domain(data[0].map(function(d) {return d.xValue;})).rangeRoundBands([0,w],1);
+		var y = d3.scale.linear().domain([0, d3.max(data[0], function(d) {return d.yValue; })]).range([h, 0]);
+
+		var xAxis = d3.svg.axis()
+		    .scale(x)
+		    .orient("bottom")
+		    .ticks(10);
+
+		var yAxis = d3.svg.axis()
+		    .scale(y)
+		    .orient("left")
+		    .ticks(10);
+
+		var line = d3.svg.line()
+			.x(function(d) { return x(d.xValue); })
+			// .x(function(d) { if (d == 0) {return 0;} else {return xKeys[d];} })
+	    	.y(function(d) { return y(d.yValue); });
+
+		var graph = d3.select("#graph").append("svg")
+		      .attr("width", w + margin.left + margin.right)
+		      .attr("height", h + margin.top + margin.bottom)
+		    .append("svg:g")
+		      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		graph.append("svg:g")
+			  .attr("class", "x axis")
+		      .attr("transform", "translate(0," + h + ")")
+		      .call(xAxis);
+
+		graph.append("svg:g")
+			  .attr("class", "grid")
+		      .attr("transform", "translate(0," + h + ")")
+		      .call(xAxis
+	            .tickSize(-h, 0, 0)
+	            .tickFormat("")
+	          );
+
+		// Y-Axis
+	    graph.append("g")
+			  .attr("class", "y axis")
+		      .call(yAxis);
+
+		// Y-Axis Grid
+		graph.append("g")
+			  .attr("class", "grid")
+		      .call(yAxis
+		      	.tickSize(-w, 0, 0)
+	          	.tickFormat("")
+	          );
+
+		var colors = ["blue", "green", "orange", "red", "purple", "maroon", "black"];
+		for (var i=0; i < data.length; i++) {
+			graph.append("path")
+			      .attr("class", "line")
+			      .style("stroke", colors[i%7])
+			      .attr("d", line(data[i]));
+		}
+
+		var standings = []
+		for (var i=0; i<entryObjs.length; i++) {
+			var obj = {}
+			obj.name = entryObjs[i].name;
+			obj.score = scores[i][8]; //the last score which is the current score no matter what week it is
+			obj.color = colors[i%7];
+			standings[i] = obj;
+		}
+
+		standings.sort(function(a,b) {
+			if (a.score > b.score) {
+				return -1
+			}
+			else if (a.score < b.score) {
+				return 1;
+			}
+			else
+				return 0;
+		});
+
+		var legend = document.getElementById("legend");
+		var legendHtml = ""
+		for (var i=0; i<standings.length; i++) {
+			legendHtml += "<div><font color='" + standings[i].color + "'>" + (i+1) + ". " + standings[i].name + " with a score of " + standings[i].score + "</font></div>";
+		}
+		$('#legend').html(legendHtml);
 	});
-
-	var legend = document.getElementById("legend");
-	var legendHtml = ""
-	for (var i=0; i<standings.length; i++) {
-		legendHtml += "<div><font color='" + standings[i].color + "'>" + (i+1) + ". " + standings[i].name + " with a score of " + standings[i].score + "</font></div>";
-	}
-	$('#legend').html(legendHtml);
 </script>
 </body>
 </html>
