@@ -66,8 +66,8 @@
 	</div>
 
 <script>
-	$(document).ready(function() {
-		setTimeout(function(){alert("timeout")}, 5000);
+	setTimeout(function(){
+		alert("after timeout");
 		var textFile = document.getElementById("file").value;
 		//break up the email entries
 		console.log(document.getElementById("file").value);
@@ -251,7 +251,7 @@
 			legendHtml += "<div><font color='" + standings[i].color + "'>" + (i+1) + ". " + standings[i].name + " with a score of " + standings[i].score + "</font></div>";
 		}
 		$('#legend').html(legendHtml);
-	});
+	}, 2000);
 </script>
 </body>
 </html>
