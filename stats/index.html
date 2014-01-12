@@ -39,6 +39,19 @@
 		      stroke-width: 0;
 		}
 	</style>
+	<script>
+		$(document).onload(function() {
+	        $.ajax({
+	            url : "bachelorEmailExtraction.txt",
+	            dataType: "text",
+	            success : function (data) {
+	            	file = data;
+	            	console.log(file);
+	                $("#textFile").value(data);
+	            }
+	        });
+		});
+	</script>
 </head>
 <body>
 	<!-- Stores text file in a hidden html textarea -->
@@ -54,18 +67,6 @@
 	</div>
 
 <script>
-	var file = "";
-	$(document).ready(function() {
-        $.ajax({
-            url : "bachelorEmailExtraction.txt",
-            dataType: "text",
-            success : function (data) {
-            	file = data;
-            	console.log(file);
-                $("#textFile").value(data);
-            }
-        });
-	});
 
 	//break up the email entries
 	console.log(document.getElementById("textFile"));
