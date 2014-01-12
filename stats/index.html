@@ -61,13 +61,12 @@
             dataType: "text",
             success : function (data) {
             	file = data;
-            	console.log(data);
-                $("#textFile").html(data);
+            	console.log(file);
+                $("#textFile").value(data);
             }
         });
 	});
 
-	var textFile = document.getElementById("textFile").value;
 	//break up the email entries
 	console.log(document.getElementById("textFile"));
 	console.log(document.getElementById("textFile").value);
