@@ -71,11 +71,12 @@
 	var textFile = document.getElementById("textFile").value;
 	//break up the email entries
 	console.log(document.getElementById("textFile"));
-	if (textFile.indexOf("\n")) {
-		console.log("Should have found new line");
+	console.log(document.getElementById("textFile").value);
+	if (textFile.indexOf("a") != -1) {
+		console.log("Should have found a");
 	}
 
-	if (textFile.indexOf("\r")) {
+	if (textFile.indexOf("\r") != -1) {
 		console.log("Should have found return");
 	}
 	console.log(textFile[12], textFile[13], textFile[14], textFile[14], textFile[15]);
