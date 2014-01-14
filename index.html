@@ -14,7 +14,7 @@
 	<style>
 		#sortable { float: left; width: 65%; min-height: 12em;}
   		  .sortable.custom-state-active { background: #eee; }
-		  .sortable li { float: left; width:130px; height: 214px; margin: 3px 3px 3px 0; padding: 1px; text-align: center; }
+		  .sortable li { float: left; width:130px; height: 214px; margin: 3px 3px 3px 0; padding: 1px; text-align: center;}
 		  .sortable li a { float: right; }
 		  .sortable li img { width: 100%; cursor: move; }
 
@@ -57,10 +57,14 @@
 			color: red;
         	font: 30px 'LeagueGothicRegular';
 			transform:rotate(305deg);
+			-ms-transform:rotate(305deg);
+			-moz-transform: rotate(305deg);
 			-webkit-transform:rotate(305deg); /* Safari and Chrome */
 		}
 
 	</style>
+	</head>
+<body>
 
 	<script>
 
@@ -82,11 +86,12 @@
 		      cancel: "a.glyphicon", // clicking an icon won't initiate dragging
 		      revert: "invalid", // when not dropped, the item will revert back to its initial position
 		      containment: "document",
-		      appendTo: "body",
+		      appendTo: $(".row"),
 		      helper: "clone",
 		      cursor: "move",
 		      start: function(event, ui) {
-		      	ui.helper.css({width:'130px',height:'214px', position:'relataive', top: '20px'});
+		      	var offset = $(document).scrollTop();
+		      	ui.helper.css({width:'130px',height:'214px', position:'absolute', bottom:"100px"});
 		      }
 		    });
 
@@ -515,8 +520,6 @@
 			$('#alertError').addClass("hidden");
 		});
 	</script>
-</head>
-<body>
 
 <h1 style = "position: relative; bottom: 10px; left: 10px; color:white;"><strong><span class="threeDHeader" >The Bachelor Bracket!</span></strong></h1>
 <!-- Initially hidden alert class to be set by alert functions -->
