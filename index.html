@@ -52,14 +52,14 @@
 			position:relative;
 			text-shadow: 0px -1px 4px red, 0px -2px 10px yellow, 0px -10px 20px #ff8000, 0px -18px 40px orange;
 			opacity: 1;
-			bottom:130px;
-			right: 14px;
+			bottom:110px;
+			right: 5px;
 			color: red;
-        	font: 30px 'LeagueGothicRegular';
-			transform:rotate(305deg);
-			-ms-transform:rotate(305deg);
-			-moz-transform: rotate(305deg);
-			-webkit-transform:rotate(305deg); /* Safari and Chrome */
+        	font: 25px 'LeagueGothicRegular';
+			transform:rotate(335deg);
+			-ms-transform:rotate(335deg);
+			-moz-transform: rotate(335deg);
+			-webkit-transform:rotate(335deg); /* Safari and Chrome */
 		}
 
 	</style>
@@ -159,10 +159,10 @@
 			  	var str = $(ui.draggable).attr('id');
 			  	var id = str.replace("_", " ");
 			  	var listLength = $('#container2 li').length;
-			  	document.getElementById("numberPicked2").innerHTML = listLength == 10 ? 10 : listLength+1;
+			  	document.getElementById("numberPicked2").innerHTML = listLength == 11 ? 11 : listLength+1;
 
-			  	if ($('#container2 li').length == 10)
-			  		alertError("Nice try,", " but you can't add more than 10 dudes for this week.");
+			  	if ($('#container2 li').length == 11)
+			  		alertError("Nice try,", " but you can't add more than 11 dudes for this week.");
 
 			  	else if (duplicateman.length > 0) {
 			  		document.getElementById("numberPicked2").innerHTML = $('#container2 li').length; 
@@ -207,10 +207,10 @@
 			  	var str = $(ui.draggable).attr('id');
 			  	var id = str.replace("_", " ");
 			  	var listLength = $('#container3 li').length;
-			  	document.getElementById("numberPicked3").innerHTML = listLength == 7 ? 7 : listLength+1;
+			  	document.getElementById("numberPicked3").innerHTML = listLength == 8 ? 8 : listLength+1;
 
-			  	if ($('#container3 li').length == 7)
-			  		alertError("Nice try,", " but you can't add more than 7 dudes for this week.");
+			  	if ($('#container3 li').length == 8)
+			  		alertError("Nice try,", " but you can't add more than 8 dudes for this week.");
 
 			  	else if (duplicateman.length > 0) {
 			  		document.getElementById("numberPicked3").innerHTML = $('#container3 li').length; 
@@ -706,12 +706,13 @@
 	  				  	</a>&nbsp&nbsp&nbsp&nbsp Dylan &nbsp&nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Dylan')"></a></h5>
 	  			</li>
-	  			<li name = "Emil" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Emil">
+	  			<li name = "Emil" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedmen" id = "Emil">
 	  				<img title="Emil" src="pics/Emil.jpg" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
 	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Emil.jpg')">
 	  				  	</a>&nbsp&nbsp&nbsp Emil &nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Emil')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
 	  			</li>
 	  			<li name = "Eric" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Eric">
 	  				<img title="Eric" src="pics/Eric.jpg" class="img-responsive">
@@ -720,12 +721,13 @@
 	  				  	</a>&nbsp&nbsp&nbsp&nbsp Eric &nbsp&nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Eric')"></a></h5>
 	  			</li>
-	  			<li name = "Jason" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Jason">
+	  			<li name = "Jason" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedmen" id = "Jason">
 	  				<img title="Jason" src="pics/Jason.jpg" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
 	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Jason.jpg')">
 	  				  	</a>&nbsp&nbsp&nbsp&nbsp Jason &nbsp&nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Jason')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
 	  			</li>
 	  			<li name = "JJ" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "JJ">
 	  				<img title="JJ" src="pics/JJ.jpg" class="img-responsive">
@@ -734,12 +736,13 @@
 	  				  	</a>&nbsp&nbsp&nbsp JJ &nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('JJ')"></a></h5>
 	  			</li>
-	  			<li name = "Josh B" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Josh_B">
+	  			<li name = "Josh B" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedmen" id = "Josh_B">
 	  				<img title="Josh B" src="pics/Josh B.jpg" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
 	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Josh B.jpg')">
 	  				  	</a>&nbsp&nbsp&nbsp&nbsp Josh B &nbsp&nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Josh_B')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
 	  			</li>
 	  			<li name = "Josh M" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Josh_M">
 	  				<img title="Josh M" src="pics/Josh M.jpg" class="img-responsive">
@@ -762,12 +765,13 @@
 	  				  	</a>&nbsp&nbsp&nbsp&nbsp Marquel &nbsp&nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Marquel')"></a></h5>
 	  			</li>
-	  			<li name = "Mike" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Mike">
+	  			<li name = "Mike" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedmen" id = "Mike">
 	  				<img title="Mike" src="pics/Mike.jpg" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
 	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Mike.jpg')">
 	  				  	</a>&nbsp&nbsp&nbsp&nbsp Mike &nbsp&nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Mike')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
 	  			</li>
 	  			<li name = "Nick S" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Nick_S">
 	  				<img title="Nick S" src="pics/Nick S.jpg" class="img-responsive">
@@ -797,19 +801,21 @@
 	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp Ron &nbsp&nbsp&nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Ron')"></a></h5>
 	  			</li>
-	  			<li name = "Rudie" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Rudie">
+	  			<li name = "Rudie" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedmen" id = "Rudie">
 	  				<img title="Rudie" src="pics/Rudie.jpg" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
 	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Rudie.jpg')">
 	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Rudie &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Rudie')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
 	  			</li>
-	  			<li name = "Steven" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Steven">
+	  			<li name = "Steven" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedmen" id = "Steven">
 	  				<img title="Steven" src="pics/Steven.jpg" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
 	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Steven.jpg')">
 	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp Steven &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Steven')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
 	  			</li>
 	  			<li name = "Tasos" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Tasos">
 	  				<img title="Tasos" src="pics/Tasos.jpg" class="img-responsive">
@@ -823,8 +829,10 @@
 
 	<!-- Tabs -->
 		<div class = "col-md-7" style = "position:fixed; right: -5px; width: 800px">
-			<form role = "form" id = "submissionForm" style = "position:relative; top: -20px; color:white;" class = "form-horizontal" 
-					action="mailto:bachelorbracket18@gmail.com?Subject=Bracket Entry" method="post" enctype="text/plain">
+			<!-- <form role = "form" id = "submissionForm" style = "position:relative; top: -20px; color:white;" class = "form-horizontal" 
+					action="mailto:bachelorbracket18@gmail.com?Subject=Bracket Entry" method="post" enctype="text/plain"> -->
+			<form id="submissionForm" action="https://docs.google.com/forms/d/1VfE7v7hmYYE84rKREQVX2Rbr2LgAohxd_EwC96QxjuA/formResponse" role="form"
+				style = "position:relative; top: -20px; color:white;" class = "form-horizontal">
 				<div id="tabs">
 					<ul>
 						<li><a href="#tabs-1">Week 3</a></li>
@@ -846,14 +854,14 @@
 					</div>
 					<div id="tabs-2">
 						<div class="ui-widget ui-helper-clearfix" style = "width:col-md-7;">
-							<p><strong>Choose 10 dudes for this week. You have picked <span id = "numberPicked2">0</span>/10</strong></p>
+							<p><strong>Choose 11 dudes for this week. You have picked <span id = "numberPicked2">0</span>/11</strong></p>
 							<div id="container2" class="dropContainer ui-widget-content ui-state-default">
 							</div>
 						</div>
 					</div>
 					<div id="tabs-3">
 						<div class="ui-widget ui-helper-clearfix" style = "width:col-md-7;">
-							<p><strong>Choose 7 dudes for this week. You have picked <span id = "numberPicked3">0</span>/7</strong></p>
+							<p><strong>Choose 8 dudes for this week. You have picked <span id = "numberPicked3">0</span>/8</strong></p>
 							<div id="container3" class="dropContainer ui-widget-content ui-state-default">
 							</div>
 						</div>
@@ -896,10 +904,12 @@
 				</div> <!--End Tabs -->
 
 			  <h5>Done? Choose your name and submit. This will open your default email client. Just send the email. Don't edit the email in any way.</h5>
+
 			  <div class="form-group">
 			    <label for="name" class = "col-md-2 control-label">Name:</label>
 			    <div class = "col-md-4">
-			    	<select class="form-control selectpicker" name="name" id = "nameSelect">
+			    	<!-- Name and Id given by Google Form -->
+			    	<select name="entry.206844228" id="entry_206844228" class="form-control selectpicker valid">
 			    		<option>Choose your name</option>
 			    		<option>Hack</option>
 			    		<option>James</option>
@@ -914,14 +924,7 @@
 			  </div>
 
 			  <div class = "form-group hide">
-			  	<input name = "week3" id = "week3List">
-			  	<input name = "week4" id = "week4List">
-			  	<input name = "week5" id = "week5List">
-			  	<input name = "week6" id = "week6List">
-			  	<input name = "week7" id = "week7List">
-			  	<input name = "week8" id = "week8List">
-			  	<input name = "week9" id = "week9List">
-			  	<input name = "week10" id = "week10List">
+			  	<textarea name="entry.1299310825" id="entry_1299310825"></textarea>
 			  </div>
 
 			  <div class = "form-group">
@@ -981,19 +984,14 @@
 			week10picks += $( this ).attr('id') + ";";
 		});
 
-		document.getElementById("week3List").value = week3picks;
-		document.getElementById("week4List").value = week4picks;
-		document.getElementById("week5List").value = week5picks;
-		document.getElementById("week6List").value = week6picks;
-		document.getElementById("week7List").value = week7picks;
-		document.getElementById("week8List").value = week8picks;
-		document.getElementById("week9List").value = week9picks;
-		document.getElementById("week10List").value = week10picks;
+		document.getElementById("entry_1299310825").value = "week3="+week3picks+"\n"+ "week4="+week4picks+"\n"+ "week5="+week5picks+"\n"+
+															"week6="+week6picks+"\n"+ "week7="+week7picks+"\n"+ "week8="+week8picks+"\n"+
+															"week9="+week9picks+"\n"+ "week10="+week10picks;
 	});
 
 	$('#submissionForm').on('submit', function() {
 		$('#alertError').hide(); //hide any errors after a new submit
-		if ($('#nameSelect').val() == "Choose your name") {
+		if ($('#entry_206844228').val() == "Choose your name") {
 			alertError("You need to choose your name.", "");
 			return false;
 		}
@@ -1003,11 +1001,11 @@
 			alertError("", "Week 3 has not been completed yet.");
 			return false;
 		}
-		else if ($('#container2 li').length != 10) {
+		else if ($('#container2 li').length != 11) {
 			alertError("", "Week 4 has not been completed yet.");
 			return false;
 		}
-		else if ($('#container3 li').length != 7) {
+		else if ($('#container3 li').length != 8) {
 			alertError("", "Week 5 has not been completed yet.");
 			return false;
 		}
