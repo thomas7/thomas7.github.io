@@ -1,0 +1,1085 @@
+<!doctype html>
+<html lang="us">
+<head>
+	<meta charset="utf-8">
+	<title>The Bachelor Bracket</title>
+	<link href="css/dark-hive/jquery-ui-1.10.3.custom.css" rel="stylesheet">
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/bootstrap-select.min.css" rel="stylesheet">
+	<script src="js/jquery-1.9.1.js"></script>
+	<script src="js/jquery-ui-1.10.3.custom.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/bootstrap-select.min.js"></script>
+
+	<style>
+		#sortable { float: left; width: 65%; min-height: 12em;}
+  		  .sortable.custom-state-active { background: #eee; }
+		  .sortable li { float: left; width:175px; height: 120px; margin: 3px 3px 3px 0; padding: 1px; text-align: center;}
+		  .sortable li a { float: right; }
+		  .sortable li img { width: 100%; cursor: move; }
+
+  		.dropContainer {height: 257px; padding: 1%; }
+  		.dropContainer h4 { line-height: 16px; margin: 0 0 0.4em; }
+		.dropContainer h4 .ui-icon { float: left; }
+		.dropContainer .sortable h5 { display: none;}
+
+		body {
+			background-image: url(pics/background.jpg);
+			background-size: cover;
+		}
+
+		.podbar {
+		    bottom:0;
+		    position:fixed;
+		    z-index:150;
+		    height:45px;
+		    width:100%;
+		}
+
+		.hidden {
+			pointer-events: none;
+		}
+
+		.threeDHeader {
+			display:block;
+			color: #fff;
+        	text-shadow: 0px 1px 0px #999, 0px 2px 0px #888, 0px 3px 0px #777, 0px 4px 0px #666, 0px 5px 0px #555, 0px 6px 0px #444, 0px 7px 0px #333, 0px 8px 7px #001135;
+        	font: 50px 'ChunkFiveRegular';
+		}
+
+		.eliminatedText {
+			display:block;
+			position:relative;
+			text-shadow: 0px -1px 4px red, 0px -2px 10px yellow, 0px -10px 20px #ff8000, 0px -18px 40px orange;
+			opacity: 1;
+			bottom:110px;
+			right: 5px;
+			color: red;
+        	font: 25px 'LeagueGothicRegular';
+			transform:rotate(335deg);
+			-ms-transform:rotate(335deg);
+			-moz-transform: rotate(335deg);
+			-webkit-transform:rotate(335deg); /* Safari and Chrome */
+		}
+
+	</style>
+	</head>
+<body>
+
+	<script>
+
+	    $(function() {
+	    	$( "#tabs" ).tabs();
+
+	        var $sortable = $( "#sortable" ),
+	        $dropContainer = $( "#container1" );
+	        var $dropContainer2 = $("#container2");
+	        var $dropContainer3 = $("#container3");
+	        var $dropContainer4 = $("#container4");
+	        var $dropContainer5 = $("#container5");
+	        var $dropContainer6 = $("#container6");
+	        var $dropContainer7 = $("#container7");
+	        var $dropContainer8 = $("#container8");
+		 
+		    // let the men be draggable items
+		    $( "li", $sortable ).draggable({
+		      cancel: "a.glyphicon", // clicking an icon won't initiate dragging
+		      revert: "invalid", // when not dropped, the item will revert back to its initial position
+		      containment: "document",
+		      appendTo: $(".row"),
+		      helper: "clone",
+		      cursor: "move",
+		      start: function(event, ui) {
+		      	var offset = $(document).scrollTop();
+		      	ui.helper.css({width:'175px',height:'120px', position:'absolute', bottom:"100px"});
+		      }
+		    });
+
+		    // Make the group of men droppable as well so that they can be put back into the list
+		    $sortable.droppable({
+		      accept: ".dropContainer li",
+		      activeClass: "custom-state-active",
+		      drop: function( event, ui ) {
+		        removePic( ui.draggable );
+		        $(ui.helper).remove(); //destroy clone
+           	    $(ui.draggable).remove(); //remove from list
+		      }
+		    });
+
+		    $('.eliminatedmen').draggable({disabled:true });
+		 
+		    //drop men into the container
+		    $dropContainer.droppable({
+		      accept: "#sortable > li",
+			  drop: function( event, ui ) {
+			  	var duplicateman = $(this).find("#" + $(ui.draggable).attr('id'));
+			  	var str = $(ui.draggable).attr('id');
+			  	var id = str.replace("_", " ");
+			  	var listLength = $('#container1 li').length;
+			  	document.getElementById("numberPicked1").innerHTML = listLength == 13 ? 13 : listLength+1;
+
+			  	if (listLength == 13)
+			  		alertError("Nice try,", " but you can't add more than 13 dudes for this week.");
+
+			  	else if (duplicateman.length > 0) {
+			  		document.getElementById("numberPicked1").innerHTML = $('#container1 li').length; 
+			  		alertError("You may have a man crush on " + id, ", but you can't pick him twice. Pick someone else.");
+			  	}
+
+			  	else {
+			  		var copy = $(ui.draggable).clone().draggable({
+				      revert: function(valid_drop) {
+				      		if(!valid_drop) {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked1").innerHTML = $('#container1 li').length;
+				      			return true; 
+				      		}
+				      		else {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked1").innerHTML = $('#container1 li').length; 
+				      		}
+				      	}, // when not dropped, the item will revert back to its initial position
+				      containment: "document",
+				      cursor: "move",
+				      drag: function(event, ui) {
+		        	  	document.getElementById("numberPicked1").innerHTML = $('#container1 li').length-1;
+		      		  },
+				    });
+					addPic(copy, $(this)); //add a clone so that the original will stay in the list
+			    }
+			  }
+		    });
+
+		    //drop men into the container
+		    $dropContainer2.droppable({
+		      accept: "#sortable > li",
+			  drop: function( event, ui ) {
+			  	var duplicateman = $(this).find("#" + $(ui.draggable).attr('id'));
+			  	var previousWeekCheck = $dropContainer.find("#" + $(ui.draggable).attr('id'));
+			  	var str = $(ui.draggable).attr('id');
+			  	var id = str.replace("_", " ");
+			  	var listLength = $('#container2 li').length;
+			  	document.getElementById("numberPicked2").innerHTML = listLength == 11 ? 11 : listLength+1;
+
+			  	if ($('#container2 li').length == 11)
+			  		alertError("Nice try,", " but you can't add more than 11 dudes for this week.");
+
+			  	else if (duplicateman.length > 0) {
+			  		document.getElementById("numberPicked2").innerHTML = $('#container2 li').length; 
+			  		alertError("You may have a man crush on " + id, ", but you can't pick him twice. Pick someone else.");
+			  	}
+
+			  	else if (previousWeekCheck.length < 1) {
+			  		document.getElementById("numberPicked2").innerHTML = $('#container2 li').length;
+			  		alertError(id, " wasn't picked last week. Go change your picks, or choose a different man.");
+			  	}
+
+			  	else {
+			  		var copy = $(ui.draggable).clone().draggable({
+				      revert: function(valid_drop) {
+				      		if(!valid_drop) {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked2").innerHTML = $('#container2 li').length;
+				      			return true; 
+				      		}
+				      		else {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked2").innerHTML = $('#container2 li').length; 
+				      		}
+				      	}, // when not dropped, the item will revert back to its initial position
+				      containment: "document",
+				      cursor: "move",				      
+				      drag: function(event, ui) {
+		        	  	document.getElementById("numberPicked2").innerHTML = $('#container2 li').length-1;
+		      		  },
+				    });
+					addPic(copy, $(this)); //add a clone so that the original will stay in the list
+			    }
+			  }
+		    });
+
+		     //drop men into the container
+		    $dropContainer3.droppable({
+		      accept: "#sortable > li",
+			  drop: function( event, ui ) {
+			  	var duplicateman = $(this).find("#" + $(ui.draggable).attr('id'));
+			  	var previousWeekCheck = $dropContainer2.find("#" + $(ui.draggable).attr('id'));
+			  	var str = $(ui.draggable).attr('id');
+			  	var id = str.replace("_", " ");
+			  	var listLength = $('#container3 li').length;
+			  	document.getElementById("numberPicked3").innerHTML = listLength == 8 ? 8 : listLength+1;
+
+			  	if ($('#container3 li').length == 8)
+			  		alertError("Nice try,", " but you can't add more than 8 dudes for this week.");
+
+			  	else if (duplicateman.length > 0) {
+			  		document.getElementById("numberPicked3").innerHTML = $('#container3 li').length; 
+			  		alertError("You may have a man crush on " + id, ", but you can't pick him twice. Pick someone else.");
+			  	}
+
+			  	else if (previousWeekCheck.length < 1) {
+			  		document.getElementById("numberPicked3").innerHTML = $('#container3 li').length; 
+			  		alertError(id, " wasn't picked last week. Go change your picks, or choose a different man.");
+			  	}
+			  	else {
+			  		var copy = $(ui.draggable).clone().draggable({
+				      revert: function(valid_drop) {
+				      		if(!valid_drop) {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked3").innerHTML = $('#container3 li').length;
+				      			return true; 
+				      		}
+				      		else {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked3").innerHTML = $('#container3 li').length; 
+				      		}
+				      	}, // when not dropped, the item will revert back to its initial position
+				      containment: "document",
+				      cursor: "move",				      
+				      drag: function(event, ui) {
+		        	  	document.getElementById("numberPicked3").innerHTML = $('#container3 li').length-1;
+		      		  },
+				    });
+					addPic(copy, $(this)); //add a clone so that the original will stay in the list
+			    }
+			  }
+		    });
+
+		    //drop men into the container
+		    $dropContainer4.droppable({
+		      accept: "#sortable > li",
+			  drop: function( event, ui ) {
+			  	var duplicateman = $(this).find("#" + $(ui.draggable).attr('id'));
+			  	var previousWeekCheck = $dropContainer3.find("#" + $(ui.draggable).attr('id'));
+			  	var str = $(ui.draggable).attr('id');
+			  	var id = str.replace("_", " ");
+			  	var listLength = $('#container4 li').length;
+			  	document.getElementById("numberPicked4").innerHTML = listLength == 5 ? 5 : listLength+1;
+
+			  	if ($('#container4 li').length == 5)
+			  		alertError("Nice try,", " but you can't add more than 5 dudes for this week.");
+
+			  	else if (duplicateman.length > 0) {
+			  		document.getElementById("numberPicked4").innerHTML = $('#container4 li').length; 
+			  		alertError("You may have a man crush on " + id, ", but you can't pick him twice. Pick someone else.");
+			  	}
+
+			  	else if (previousWeekCheck.length < 1) {
+			  		document.getElementById("numberPicked4").innerHTML = $('#container4 li').length; 
+			  		alertError(id, " wasn't picked last week. Go change your picks, or choose a different man.");
+			  	}
+
+			  	else {
+			  		var copy = $(ui.draggable).clone().draggable({
+				      revert: function(valid_drop) {
+				      		if(!valid_drop) {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked4").innerHTML = $('#container4 li').length;
+				      			return true; 
+				      		}
+				      		else {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked4").innerHTML = $('#container4 li').length; 
+				      		}
+				      	}, // when not dropped, the item will revert back to its initial position
+				      containment: "document",
+				      cursor: "move",				      
+				      drag: function(event, ui) {
+		        	  	document.getElementById("numberPicked4").innerHTML = $('#container4 li').length-1;
+		      		  },
+				    });
+					addPic(copy, $(this)); //add a clone so that the original will stay in the list
+			    }
+			  }
+		    });
+
+		   	//drop men into the container
+		    $dropContainer5.droppable({
+		      accept: "#sortable > li",
+			  drop: function( event, ui ) {
+			  	var duplicateman = $(this).find("#" + $(ui.draggable).attr('id'));
+			  	var previousWeekCheck = $dropContainer4.find("#" + $(ui.draggable).attr('id'));
+			  	var str = $(ui.draggable).attr('id');
+			  	var id = str.replace("_", " ");
+			  	var listLength = $('#container5 li').length;
+			  	document.getElementById("numberPicked5").innerHTML = listLength == 4 ? 4 : listLength+1;
+
+			  	if ($('#container5 li').length == 4)
+			  		alertError("Nice try,", " but you can't add more than 4 dudes for this week.");
+
+			  	else if (duplicateman.length > 0) {
+			  		document.getElementById("numberPicked5").innerHTML = $('#container5 li').length; 
+			  		alertError("You may have a man crush on " + id, ", but you can't pick him twice. Pick someone else.");
+			  	}
+
+			  	else if (previousWeekCheck.length < 1) {
+			  		document.getElementById("numberPicked5").innerHTML = $('#container5 li').length; 
+			  		alertError(id, " wasn't picked last week. Go change your picks, or choose a different man.");
+			  	}
+			  	else {
+			  		var copy = $(ui.draggable).clone().draggable({
+				      revert: function(valid_drop) {
+				      		if(!valid_drop) {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked5").innerHTML = $('#container5 li').length;
+				      			return true; 
+				      		}
+				      		else {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked5").innerHTML = $('#container5 li').length; 
+				      		}
+				      	}, // when not dropped, the item will revert back to its initial position
+				      containment: "document",
+				      cursor: "move",				      
+				      drag: function(event, ui) {
+		        	  	document.getElementById("numberPicked5").innerHTML = $('#container5 li').length-1;
+		      		  },
+				    });
+					addPic(copy, $(this)); //add a clone so that the original will stay in the list
+			    }
+			  }
+		    });
+
+		    //drop men into the container
+		    $dropContainer6.droppable({
+		      accept: "#sortable > li",
+			  drop: function( event, ui ) {
+			  	var duplicateman = $(this).find("#" + $(ui.draggable).attr('id'));
+			  	var previousWeekCheck = $dropContainer5.find("#" + $(ui.draggable).attr('id'));
+			  	var str = $(ui.draggable).attr('id');
+			  	var id = str.replace("_", " ");
+			  	var listLength = $('#container6 li').length;
+			  	document.getElementById("numberPicked6").innerHTML = listLength == 3 ? 3 : listLength+1;
+
+			  	if ($('#container6 li').length == 3)
+			  		alertError("Nice try,", " but you can't add more than 3 dudes for this week.");
+
+			  	else if (duplicateman.length > 0) {
+			  		document.getElementById("numberPicked6").innerHTML = $('#container6 li').length; 
+			  		alertError("You may have a man crush on " + id, ", but you can't pick him twice. Pick someone else.");
+			  	}
+
+			  	else if (previousWeekCheck.length < 1) {
+			  		document.getElementById("numberPicked6").innerHTML = $('#container6 li').length;
+			  		alertError(id, " wasn't picked last week. Go change your picks, or choose a different man.");
+			  	}
+			  	else {
+			  		var copy = $(ui.draggable).clone().draggable({
+				      revert: function(valid_drop) {
+				      		if(!valid_drop) {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked6").innerHTML = $('#container6 li').length;
+				      			return true; 
+				      		}
+				      		else {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked6").innerHTML = $('#container6 li').length; 
+				      		}
+				      	}, // when not dropped, the item will revert back to its initial position
+				      containment: "document",
+				      cursor: "move",				      
+				      drag: function(event, ui) {
+		        	  	document.getElementById("numberPicked6").innerHTML = $('#container6 li').length-1;
+		      		  },
+				    });
+					addPic(copy, $(this)); //add a clone so that the original will stay in the list
+			    }
+			  }
+		    });
+
+		    //drop men into the container
+		    $dropContainer7.droppable({
+		      accept: "#sortable > li",
+			  drop: function( event, ui ) {
+			  	var duplicateman = $(this).find("#" + $(ui.draggable).attr('id'));
+			  	var previousWeekCheck = $dropContainer6.find("#" + $(ui.draggable).attr('id'));
+			  	var str = $(ui.draggable).attr('id');
+			  	var id = str.replace("_", " ");
+			  	var listLength = $('#container7 li').length;
+			  	document.getElementById("numberPicked7").innerHTML = listLength == 2 ? 2 : listLength+1;
+
+			  	if ($('#container7 li').length == 2)
+			  		alertError("Nice try,", " but you can't add more than 2 dudes for this week.");
+
+			  	else if (duplicateman.length > 0) {
+			  		document.getElementById("numberPicked7").innerHTML = $('#container7 li').length; 
+			  		alertError("You may have a man crush on " + id, ", but you can't pick him twice. Pick someone else.");
+			  	}
+
+			  	else if (previousWeekCheck.length < 1) {
+			  		document.getElementById("numberPicked7").innerHTML = $('#container7 li').length; 
+			  		alertError(id, " wasn't picked last week. Go change your picks, or choose a different man.");
+			  	}
+			  	else {
+			  		var copy = $(ui.draggable).clone().draggable({
+				      revert: function(valid_drop) {
+				      		if(!valid_drop) {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked7").innerHTML = $('#container7 li').length;
+				      			return true; 
+				      		}
+				      		else {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked7").innerHTML = $('#container7 li').length;
+				      		}
+				      	}, // when not dropped, the item will revert back to its initial position
+				      containment: "document",
+				      cursor: "move",				      
+				      drag: function(event, ui) {
+		        	  	document.getElementById("numberPicked7").innerHTML = $('#container7 li').length-1;
+		      		  },
+				    });
+					addPic(copy, $(this)); //add a clone so that the original will stay in the list
+			    }
+			  }
+		    });
+
+		    //drop men into the container
+		    $dropContainer8.droppable({
+		      accept: "#sortable > li",
+			  drop: function( event, ui ) {
+			  	var duplicateman = $(this).find("#" + $(ui.draggable).attr('id'));
+			  	var previousWeekCheck = $dropContainer7.find("#" + $(ui.draggable).attr('id'));
+			  	var str = $(ui.draggable).attr('id');
+			  	var id = str.replace("_", " ");
+			  	var listLength = $('#container8 li').length;
+			  	document.getElementById("numberPicked8").innerHTML = listLength == 1 ? 1 : listLength+1;
+
+			  	if ($('#container8 li').length == 1)
+			  		alertError("Nice try,", " but you can't add more than 1 dude for this week.");
+
+			  	else if (duplicateman.length > 0) {
+			  		document.getElementById("numberPicked8").innerHTML = $('#container8 li').length; 
+			  		alertError("You may have a man crush on " + id, ", but you can't pick him twice. Pick someone else.");
+			  	}
+
+			  	else if (previousWeekCheck.length < 1) {
+			  		document.getElementById("numberPicked8").innerHTML = $('#container8 li').length; 
+			  		alertError(id, " wasn't picked last week. Go change your picks, or choose a different man.");
+			  	}
+			  	else {
+			  		var copy = $(ui.draggable).clone().draggable({
+				      revert: function(valid_drop) {
+				      		if(!valid_drop) {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked8").innerHTML = $('#container8 li').length;
+				      			return true; 
+				      		}
+				      		else {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked8").innerHTML = $('#container8 li').length; 
+				      		}
+				      	}, // when not dropped, the item will revert back to its initial position
+				      containment: "document",
+				      cursor: "move",				      
+				      drag: function(event, ui) {
+		        	  	document.getElementById("numberPicked8").innerHTML = $('#container8 li').length-1;
+		      		  },
+				    });
+					addPic(copy, $(this)); //add a clone so that the original will stay in the list
+			    }
+			  }
+		    });
+		 
+		    function addPic($pic, $container) {
+		      $pic.fadeOut(function() {
+		        var $list = $( "ul", $container ).length ?
+		          $( "ul", $container ) :
+		          $( "<ul class='sortable ui-helper-reset'/>" ).appendTo( $container );
+        		$pic.appendTo( $list ).fadeIn(function() {
+          		$pic
+            		.animate({ width: "100px", height:"58px" })
+        		});
+		      });
+		      $('#alertError').hide(); //hide the error message after a new man has been added
+		    }
+
+			function removePic( $pic ) {
+		      $pic.fadeOut(function() {
+          		$pic
+            		.animate({ width: "100px", height:"58px" })
+        	  });
+		    }
+		 });
+
+		function alertError(id, error) {
+				$('#alertError').removeClass("hidden");
+			    $('#alertError').html("<div class='alert alert-danger'>" + "<strong>" + id + "</strong>" + error + 
+			    	"<button type='button' id = 'closeButton' class='close' data-dismiss='alert' aria-hidden='true'>×</button> </div>");
+      			$('#alertError').slideDown("slow");
+		}
+
+		$('#alertError').bind('close.bs.alert', function() {
+			$('#alertError').addClass("hidden"); //Need hidden class so that the links at the bottom of the page can be clicked
+		})
+		//Above event won't call for whatever reason when you click the x button
+		//Need special click event for bootstrap close button, again, I have no idea why.
+		$(document).on("click", "#closeButton", function(event){
+			$('#alertError').addClass("hidden");
+		});
+	</script>
+
+<h1 style = "position: relative; bottom: 10px; left: 10px; color:white;"><strong><span class="threeDHeader" >The Bachelor Bracket!</span></strong></h1>
+<!-- Initially hidden alert class to be set by alert functions -->
+<div id = "alertError" class = "podbar hidden">
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+  <!-- papER Town -->
+    <div class="modal-content" id = "myModalBackground" style = "background-color:lavender">
+      <div class="modal-body">
+      	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      	<div id="myModalBody"></div>
+      	<div id="bio_Andrew" class = "hide allBios">
+      		<br>
+			<p><strong>Who do you admire most in the world and why?</strong><br>My father, because he raised a strong family, built a business, and remains a good father and husband.</p>
+			<div><strong>Do you like being the center of attention, or do you prefer being more mysterious and why?</strong><br>Mysterious. I've been told I am mysterious and kind of like the title.<br><br><strong>What is the longest relationship you have been in, and why didn't it work out?<br></strong>2.5 years. Too young/still had lots of life to live.<strong><br><br>I hate it when my date....<br></strong>Doesn't ask me any questions about myself/talks about herself incessantly.<strong><br></strong><br><strong>If you could have one superpower, what would it be and why? How would you use it?<br></strong>Flying -- to explore, feel freedom, speed.<br><br></div>
+      	</div>
+      	<div id="bio_Bradley" class = "hide allBios">
+      		<br>
+			<p><strong>What are your 3 best attributes?</strong><br> Authenticity, Empathy, Passion for the things I love.<br><strong><br>If you could have lunch with one person, who would it be and why?</strong><br> Pavarotti, one of the greatest tenors of all time. Talk about what he had to do to fulfill all his dreams.<br><br><strong>What does your ideal mate look like?</strong><strong><br></strong>She looks like the one that is right for me!<strong><br><br>What's your worst date memory?<br></strong>Realizing there was no compatibility.<br><br><strong>What are deal-breakers when it comes to relationships?</strong><br>Recently divorced with children.<br><br><strong>What are the top 3 things on your bucket list, and why?</strong><br>1. &nbsp;Get my pilot's license -- something I wanted to pursue since I was little.<br>2. &nbsp;Build a Church -- A place so anyone (of all religious views) can be themselves and have no fear. Be encouraged to follow their dreams and let go.<br>3. &nbsp;To make a difference in people's lives through my voice. Using my voice and traveling around the world helping others. Giving back to the world, leave my mark.</p>
+      	</div>
+      	<div id="bio_Brett" class = "hide allBios">
+      		<br>
+			<p><strong>What is the most outrageous thing you have ever done?</strong><br> Cliff jumping in Jamaica.<br><strong><br>Do you like being the center of attention, or do you prefer being more mysterious and why?</strong><br> I feel I'm in between. Being the youngest, I grew up the center of attention. But being mysterious is always nice too.<br><br><strong>What is the most romantic present you have ever received and why?</strong><strong><br></strong>A calendar photo shoot from an ex. It was thoughtful and creative. Very sweet gift.<strong><br><br>What is your ideal mate's personailty like?<br></strong>Very outgoing, no snobs or divas, caring, funny, family oriented, hard worker, independent, not needy!<br><br><strong>I hate it when my date...</strong><br>Is on her phone the whole time.<br><br><strong>If you could have one superpower, what would it be and why? How would you use it?</strong><br>Invisible -- to see all the weird stuff people do when they're alone.</p>
+      	</div>
+      	<div id="bio_Brian" class = "hide allBios">
+      		<br>
+			<p><strong>If you were stranded on a desert island, what 3 things would you bring with you and why?</strong><br> The Bible, suncreen and a surf board. It'll keep me busy and safe.<br><strong><br>What is your most embarrassing moment?</strong><br> I airballed my first shot in the district championship basketball game in front of a huge crowd and all my friends.<br><br><strong>What is the most romantic present you have every given? Why?</strong><strong><br></strong>I gave my last girlfriend a "welcome home surprise party" along with some house warming gifts.<strong><br><br>What does your ideal mate look like?<br></strong>Cute, athletic, and natural looking. Someone that doesn't need to make up to look beautiful. Great smile.<br><br><strong>What is your best date memory?</strong><br>Being on the "kiss cam" at a hockey game.<br><br><strong>What's your worst date memory?</strong><br>Running into my ex-girlfriend on a date with a girl I actually really liked. One thing lead to another and they were yelling.</p>
+      	</div>
+      	<div id="bio_Carl" class = "hide allBios">
+      		<br>
+			<p><strong>Do you have any pets and if so, what kind?</strong><br> I have a four-year-old American Bulldog named Archie.<br><strong><br>What is your greatest achievement to date?</strong><br> Getting my career at a young age, and deciding to see the world early.<br><br><strong>What is your ideal mate's personality?</strong><strong><br></strong>Funny, down-to-earth, smart, easy to talk to. &nbsp;Just an all-around cool gal.<strong><br><br>What's your worst date memory?<br></strong>Burning a roast that I prepared all day.<br><br><strong>If you could have one superpower, what would it be and why? </strong><br>Incredible strength. My passion is crossfit and I compete regularly and train very hard and it seems some of the elite athletes in the sport already have super powers.<br><strong><br></strong></p>
+      	</div>
+      	<div id="bio_Chris" class = "hide allBios">
+      		<br>
+			<p><strong>If you could have lunch with one person, who would it be with and why?</strong><br> Jim Harbaugh! He has such passion for the game (football) that I love as well. He has had so much success in the most competitive leagues in the world. Anyone with that kind of ability to win could share some great insights.<br><strong><br>Do you consider yourself a romantic and why?</strong><br> I do when I am with the right person. It makes me excited to feel the excitement in someone when you do something really special for them.<br><br><strong>What does your ideal mate look like?</strong><strong><br></strong>Slender, athletic, beautiful.<strong><br><br>What's your biggest date fear?<br></strong>Accidental diarrhea.<br><br><strong>I love it when my date...</strong><br>Is beautiful, funny, smart and can hold an amazing conversation.<br><strong><br></strong></p>
+      	</div>
+      	<div id="bio_Cody" class = "hide allBios">
+      		<br>
+			<p><strong>If you could be someone else for just one day, who would it be and why?</strong><br> I would be a lead singer in a band. How cool would it be to control an entire crowd with the power of your voice!<br><br><strong>What is your most embarrassing moment?</strong><strong><br></strong>Seventh grade wrestling -- I actually pinned myself. Yes, I did cry!<strong><br><br><strong>Do you have any Tattoos?</strong><br></strong>You don't put bumper stickers on a Mercedes =). No tattoos but I do think tattoos are cool.<strong><br></strong><br><strong>Do you consider yourself a romantic and why?</strong><br>Not a cheesy romantic but I would consider myself romantic. I really enjoy pleasing the girl I am with.<br><br><strong>What does being married mean to you?</strong><br>Being married means finding your best friend, who is going to experience this crazy life with you through the thick and the thin.<br></p>
+      	</div>
+      	<div id="bio_Craig" class = "hide allBios">
+      		<br>
+			<p><strong>The most outrageous thing you've ever done?</strong><br>Two Hole-In-Ones (Golf).<br><br><strong>What is your most embarrassing moment?</strong><strong><br></strong>Dressing as a stripper and stripping for my uncle's 50th birthday! OUCH!<strong><br><br><strong>What is the most romantic present you have ever received and why?</strong><br></strong>A book of pictures of our relationship and a story underneath! It is awesome.<strong><br></strong><br><strong>What does your ideal mate look like?</strong><br>Great complexion, beautiful hair.<br><br><strong>What's your worst date memory?</strong><br>Puking on her =(<br></p>
+      	</div>
+      	<div id="bio_Dylan" class = "hide allBios">
+      		<br>
+			<p><strong>If you could be someone else for just one day, who would it be and why?</strong><br>Tom Brady -- seems like he has everything going for him and is determined to do things right.<br><br><strong>What are your top three all-time favorite movies?<br></strong><em>Dumb &amp; Dumber, Good Will Hunting, Shawshank Redemption</em>.<strong><br><br><strong>What is the most romantic present you have ever given? Why?</strong><br></strong>I set up a scavenger hunt in college at the girlfriend's house while she was in class.<strong><br></strong><br><strong>What's your biggest date fear?</strong><br>The girl being a mute and just having an awkward time.<br><br><strong>If you could do/have any job in the world, what would it be and why?</strong><br>General Manager for Boston Red Sox/gym teacher. I love sports and teaching people.<br></p>
+      	</div>
+      	<div id="bio_Emil" class = "hide allBios">
+      		<br>
+			<p><strong>Who do you admire the most in the world and why?</strong><br>My uncle Austin. He was a pilot in the Air Force for 33 years and flew combat missions in WWII, Korean War and Vietnam. He is 92 years old and has bone cancer but still one of the sharpest men I know.<br><br><strong>Do you like being the center of attention or do you prefer being more mysterious and why?<br></strong>I prefer being the center of attention, not sure why. It bothers me when I see other people trying to be the center of attention. But I still enjoy being laid back and just enjoying the company I'm with.<strong><br><br><strong>Who is your favorite author?</strong><br></strong>C.S. Lewis. Many great pieces of literature both fictional and non-fictional and many inspiring quotes. My favorite, "Failures are finger posts on the road to achievement."<strong><br></strong><br><strong>If you could go anywhere in the U.S., where would you go and why?</strong><br>I've been to 42 states and been almost everywhere. I've wanted to go to Chicago. I woud like to experience that city.<br><br><strong>What is the most romantic present you have ever given? Why?</strong><br>I gave my girlfriend a card and in that card I had written a sentence about what happened that day, everyday for three months since we started dating.<br></p>
+      	</div>
+      	<div id="bio_Eric" class = "hide allBios">
+      		<br>
+				<p><strong>Do you consider yourself a romantic?</strong><br> Yes, because when I'm into a girl I'm constantly thinking of creative ways to show her she's something special to me. As much thought as I give it, most of the time it ends up spontaneous anyway.<br><strong><br>If you could live in any other time period, what would it be?<br></strong>Three thousand years from now...simply out of sheer curiosity. I'm willing to take the risk that it's a much worse place.<strong><br><br><strong>Who is your favorite author?</strong><br></strong>The public. I have to say Wikipedia has got to be the most interesting thing I've ever read!<strong><br></strong><br><b>Do you prefer a woman who wants to be pursued or a woman who pursues you?</b><br>A woman who pursues me. Not to say I won't pursue her back, but the games are tired. If we are pursuing each other, things are magic.<br><br><strong>If you could be someone else for one day, who would you be and why?</strong><br>Nick Vujicic, the man born with no arms and no legs. If I could be as happy as he is in the state&nbsp; he is in, I would never have another worry in my life.</p>
+      	</div>
+      	<div id="bio_Jason" class = "hide allBios">
+      		<br>
+      		<p><strong>Do you consider yourself a romantic?</strong><br> Yes, because when I'm into a girl I'm constantly thinking of creative ways to show her she's something special to me. As much thought as I give it, most of the time it ends up spontaneous anyway.<br><strong><br>If you could live in any other time period, what would it be?<br></strong>Three thousand years from now...simply out of sheer curiosity. I'm willing to take the risk that it's a much worse place.<strong><br><br><strong>Who is your favorite author?</strong><br></strong>The public. I have to say Wikipedia has got to be the most interesting thing I've ever read!<strong><br></strong><br><b>Do you prefer a woman who wants to be pursued or a woman who pursues you?</b><br>A woman who pursues me. Not to say I won't pursue her back, but the games are tired. If we are pursuing each other, things are magic.<br><br><strong>If you could be someone else for one day, who would you be and why?</strong><br>Nick Vujicic, the man born with no arms and no legs. If I could be as happy as he is in the state&nbsp; he is in, I would never have another worry in my life.</p>
+      	</div>
+      	<div id="bio_JJ" class = "hide allBios">
+      		<br>
+			<p><strong>Who do you admire most in the world?</strong><br> My grandfather -- he became blind at age 30 (my age) after starting a successful law career that he had to leave behind. He never let it get him down and dedicated his life to raising an amazing family. He battled cancer six times before it finally took his life.<br><br><strong>What is your favorite memory from your childhood?</strong><strong><br></strong>Playing Gaston (from Beauty and the Beast) in my 4th grade play. It was my first time acting and I had an amazing time -- plus all the love and support I got from my family doing it was incredible.<strong><br><br><strong>What is the most romantic present you have ever received and why?</strong><br></strong>My girlfriend was living in China for the summer and surprised me by booking a trip to see me in Boston. She brought with her this amazing custom light-up costume she had made for me for Burning Man. It was so thoughtful.<strong><br></strong><br><strong>What does being married mean to you?</strong><br>Being married means finding someone who you live for and care for more than yourself, whose happiness and well-being comes above your own, and who the thought of not waking up next to each morning is the most depressing thought you could have.<br><br><strong>If you could have one superpower, what would it be and why?</strong><br>To never have to sleep/never get tired. I love my sleep but can only imagine all I could do and learn if I had an extra 6-8 hours in my day.</p>	
+      	</div>
+      	<div id="bio_Josh_B" class = "hide allBios">
+      		<br>
+			<p><strong>What do you like to do for fun in your hometown?</strong><br> Hiking. Evergreen is one of the most beautiful mountain towns I have ever been to and I love exploring new trails and hiking to the peaks of mountains.<br><br><strong>What's the most romantic present you have ever received?</strong><strong><br></strong>A picture collage of my girlfriend and I for our one-year anniversary. It was so sweet and had thought/meaning behind it.<strong><br><br><strong>What does being married mean to you?</strong><br></strong>Having a true bond with one another. Sharing every feeling, thought, emotion, and experience with each other. Knowing they will be there for you no matter how up or down you are.<strong><br></strong><br><strong>If you could have one superpower, what would it be and why?</strong><br>Teleportation. I would go around the world and see as much as I can.<br><br><strong>If you could do/have any job in the world, what would it be and why?</strong><br>Professional golfer -- they get to play on beautiful courses all around the world, get paid way too much, rarely get hurt, and can play until they're 80. I would then take all my money and be a philanthropist.</p>
+      	</div>
+      	<div id="bio_Josh_M" class = "hide allBios">
+      		<br>
+				<p><strong>If you were stranded on a desert island, what 3 things would you bring with you and why?</strong><br> A woman to be with and to have company, a gun to easily kill animals to eat, and a knife to carve them up.<br><br><strong>Do you consider yourself a romantic?</strong><strong><br></strong>Yes, I love to wine and dine and treat a woman how she should be treated. I like to please.<strong><br><br><strong>What's your biggest date fear?</strong><br></strong>She won't like me as much as I like her.<strong><br></strong><br><strong>If you could have one superpower, what would it be and why?</strong><br>Travel back in time to change some things.<br><br><strong>If you could do/have any job in the world, what would it be and why?</strong><br>Professional golfer, because I could do that until I'm 70 years old.</p>
+      	</div>
+      	<div id="bio_Marcus" class = "hide allBios">
+      		<br>
+				<p><strong>Who do you admire most in the world and why?</strong><br> I have never told her, but it's my mother. Never realized it until I was older, but she is the most hardworking, loving person I know. And she never asks for anything in return.<br><strong><br>Would you describe yourself more as "the party-starter," "the wingman," or "the laid-back one"?</strong><br> More of the laid-back one. I know how to have a good time but I'm not usually the party starter.<br><br><strong>If you could be someone else for just one day, who would it be and why?</strong><br>I wouldn't want to be anyone else but me. Even if it was for a day, to me it would feel like I couldn't accomplish what they have, and that's simply untrue.<br><br><strong>Describe your idea of the ultimate date.</strong><strong><br></strong>Being alone on an island, walking on a beach with a full moon and drinking, eating, talking on the beach the rest of the night. It's corny but corny is good, I think.<strong><br></strong><br><strong>Do you consider yourself a romantic, and why?</strong><br>I do. I just put thought into dates and presents for women I'm dating. Romance is not that common anymore and it's something guys have forgotten about.</p>
+      	</div>
+      	<div id="bio_Marquel" class = "hide allBios">
+      		<br>
+				<p><strong>What is a typical Saturday night like for you?</strong><br> My Saturday night consists of Netflix, cookies, and a glass of wine.<br><strong><br>What does being married mean to you?</strong><br> On a spiritual level it's a promise before God to become one. Selfless.<br><br><strong>Do you prefer a woman who wants to be pursued or a woman who pursues you?</strong><strong><br></strong>A woman who wants to be pursued without coming off as stuck up. It shows class.<strong><br><br><strong>If you could be someone else for just one day, who would it be and why?</strong><br></strong>Batman. He's a beast.<strong><br></strong><br><strong>If you could have one superpower, what would it be and why?</strong><br>The power to have incredible strength. I'd be an athlete and dominate.</p>
+      	</div>
+      	<div id="bio_Mike" class = "hide allBios">
+      		<br>
+				<p><strong>What is the best date you have ever been on in the city where you liv</strong><b>e, and why?</b><br> Hiking up the mountain at full moon, sipping hot chocolate under the stars. Do I have to explain why? You know you'd like that date.<br><strong><br>What is the most romanti</strong><b>c gift you've ever given?</b><br> A Valentine's Day scavenger hunt with roses, poems, etc., that ended with a wine and cheese picnic in the snow.<br><br><strong>If you could be someone else for just one day, who would it be and why?</strong><br>My brother Joe on a day he runs a 100-miler -- just to see what goes on in your head for 24 hours of running.<br><br><strong>What is your most embarrassing moment?</strong><strong><br></strong>I don't embarrass easily. It could be this.<strong><br></strong><br><strong>If you could do/have any job in the world, what would it be and why?</strong><br>Mine -- it's fun, it's easy, I get to meet lots of people, I get to ski every day while working and I get summers off to travel.</p>
+      	</div>
+      	<div id="bio_Nick_S" class = "hide allBios">
+      		<br>
+				<p><strong>What is your greatest achievement to date?</strong><br> Playing soccer at Indiana University, the school I wanted to play at since I was 9. When I truly set a goal and my mind is clear on that goal then nothing can stop me. I accomplish my goals.<br><strong><br><strong>Do have a serious fear of any kind of animal?</strong></strong><br> Depends on the situation. If I'm in a room alone with a tiger you better believe I'd be seriously afraid. But if I'm safe, then no. <br><br><strong>What does being married mean to you?</strong><strong><br></strong>A teammate and best friend for life. Someone who through good and bad loves you unconditionally for who you are. Someone who won't give up on you. It's a commitment.<strong><br></strong><br><strong>If you could have lunch with one person, who would it be and why?</strong><br>Michael Jackson. He was the greatest entertainer of all time. I love him and have since I was super young.<br><br><strong>If you could be someone else for just one day, who would it be and why?</strong><br>President of the United States. I would just like to know what it feel like to be the most powerful person in the world.<br></p>
+      	</div>
+      	<div id="bio_Nick_V" class = "hide allBios">
+      		<br>
+				<p><strong>What is your ideal mate's personality like?</strong><br> Someone who is truly confident in herself and expects a lot but gives as much. Someone who wants to bring out the best in me.<br><strong><br><strong>What is the most romantic present you have ever received</strong> and why?</strong><br> 100 reasons why they love me. &nbsp;It was genius!<br><strong><br>What's your biggest date fear?<br></strong>I don't really have one, but going on a date with someone who ended up having a boyfriend and running into him would suck.<br><br><strong>If you could do/have any job in the world, what would it be and why?</strong><br>It would be awesome to know how to sing and be some sort of performer; to feed off other's people's energy is intense. The feeling they must feel would be cool. Too bad I can't sing.</p>
+      	</div>
+      	<div id="bio_Patrick" class = "hide allBios">
+      		<br>
+				<p><strong>What do you like to do for fun?</strong><br> Top Down Drives, Sailing, Outdoor Activities<br><strong><br><strong>What is the most romantic present you have ever received</strong> and why?</strong><br> A surprise -- an artistic photo I took and loved was put onto a 36x20-inch canvas.<br><br><strong>What is the most romantic present you have ever given?</strong><strong><br></strong>I was on a long vacation with my girlffriend at the time. I called ahead to the hotel we were staying at and had the room bed and dloor decorated with roses/rose petals. On the bed was a heart with jewelry and a spa/massage reservation at the resort. Then we had a bottle of champagne and chocolate-covered strawberries. no special occasion, I just wanted to do something nice. I love surprises.<strong><br><br>What is your favorite holiday and why?<br></strong>Halloween. I love scary movies and it's the one night of the year everyone gets to be someone else.<br><br><strong>If you could have one superpower, what would it be and why?</strong><br>Fly, so I could travel more and help others when possible.</p>
+      	</div>
+      	<div id="bio_Ron" class = "hide allBios">
+      		<br>
+				<p><strong>Describe your perfect hometown date.</strong><br> Dinner by the beach, followed by a fun night out in St. Lawrence Gap (in Barbados) at the Reggae Lounge. Head down to the beach and wait for sunrise.<br><br><b>I hate it when my date...</b><br> Tries too hard.<br><br><strong>What is the most romantic present you have ever received?</strong><strong><br></strong>A card. People's words are pretty powerful when they write them down.<strong><br><br>If you could have one superpower, what would it be and why?<br></strong>I would be able to be where I wanted, when I wanted. Some sort of speed travel.<br><br><strong>If you could be someone else for just a day, who would it be and why?</strong><br>A random dude renting jet skis on a nice island, because he's living pretty stress-free. No worries.</p>
+      	</div>
+      	<div id="bio_Rudie" class = "hide allBios">
+      		<br>
+				<p><strong>Describe your idea of the ultimate date.</strong><br> Easy...restaurant by the beach and a great conversation. I want to talk and learn about my date, then a walk on the sand or something adventurous later.<br><br><strong>I love it when my date...</strong><br> Lets me know they are having fun and/or lets me know they are attracted to me...it's nice to know when you're doing something right.<br><br><strong>What is the best trip you have ever been on and why?</strong><strong><br></strong>A surf trip to El Salvador with my Uncle Mitch. The surf was killer and I made new surf friends in Los Angeles, Orange County and San Francisco who I still get together with.<strong><br><br>Do you consider yourself a romantic?<br></strong>Yes, my aim when dating is to make my date feel beautiful and amazing. Part of that is doing the extra things like getting a window seat of a restaurant, opening doors, and lighting candles, etc.<br><br><strong>If you could be have lunch with one person, who would it be and why?</strong><br>The Dalai Lama, he's rad and one super-happy dude!</p>
+	      	</div>
+      	<div id="bio_Steven" class = "hide allBios">
+      		<br>
+				<p><strong>What do you like to do for fun?</strong><br> I like to surf, run on the beach, go to the beach, hike, go on bike rides, go shooting, relax and hang with friends. I like being outdoors.<br><br><strong>What's the best trip you have ever been on and why?</strong><br> I did a solo trip to Bali. I was there 16 days and had no agenda, just surfed and relaxed. I didn't have my computer with me so I was able to turn off my brain and fully relax.<br><br><strong>What is the most romantic present you have ever given?</strong><strong><br></strong>Flew my girlfriend to Lake Tahoe for Valentine's Day. We went snowboarding in the morning and then went on a horse-drawn carriage in the snow because she loves horses, and then took her out to a nice dinner.<strong><br><br>Meatloaf said he would do anything for love, but he won't do that. What will you not do? <br></strong>I won't switch my cell phone carrier because I am grandfathered in with unlimited data.<br><br><strong>If you could live in any other time period, <strong>what would it be?</strong></strong><br>Probably the Cretaceous period. It would be awesome to see a T-Rex.</p>
+      	</div>
+      	<div id="bio_Tasos" class = "hide allBios">
+      		<br>
+				<p><strong>What is the most romantic gift you've ever been given and why?</strong><br> I was given a guitar and some money to pursue a musical career. It was more the encouragement and how the other person believed in me and my dreams.<br><br><strong>Who do you admire most in the world and why?</strong><br> Other than my parents for being an amazing and positive influence in my life, I admire anyone who is willing to take chances to make a difference.<br><br><strong>What is your favorite</strong><strong> memory from your <strong>childhood</strong>?<br></strong>Playing on the beach pretending to be a Thundercat.<strong><br></strong><br><strong>If you could be someone else for just one day, who would it be and why?<br></strong>Mick Jagger for the rock star life and fortune. I already have the moves.<br><br><strong>If you could live in any other time period, <strong>what would it be?</strong></strong><br>Ancient Egypt, 2686-2181 B.C. By far a completely different world &amp; mentality.</p>
+      	</div>
+      </div> <!-- /.modal-body -->
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class = "row" style = "position:relative; left: 10px">
+	<div class="ui-widget ui-helper-clearfix" style = "width:100%">
+		<div class = "col-md-5">
+	 		<ul id="sortable" class="sortable ui-helper-reset ui-helper-clearfix" style = "width:100%;">
+	  			<li name = "Andrew" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Andrew">
+	  				<img title="Andrew" src="pics/Andrew.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Andrew.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Andrew &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Andrew')"></a></h5>
+	  			</li>
+
+	  			<li name = "Bradley" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Bradley">
+	  				<img title="Bradley" src="pics/Bradley.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Bradley.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp Bradley &nbsp&nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Bradley')"></a></h5>
+	  			</li>
+	  			<li name = "Brett" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Brett">
+	  				<img title="Brett" src="pics/Brett.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Brett.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Brett &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Brett')"></a></h5>
+	  			</li>
+	  			<li name = "Brian" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Brian">
+	  				<img title="Brian" src="pics/Brian.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Brian.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp Brian &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Brian')"></a></h5>
+	  			</li>
+	  			<li name = "Carl" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedmen" id = "Carl">
+	  				<img title="Carl" src="pics/Carl.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Carl.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Carl &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Carl')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
+	  			</li>
+	  			<li name = "Chris" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Chris">
+	  				<img title="Chris" src="pics/Chris.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Chris.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp Chris &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Chris')"></a></h5>
+	  			</li>
+	  			<li name = "Cody" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Cody">
+	  				<img title="Cody" src="pics/Cody.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Cody.jpg')">
+	  				  	</a>&nbsp&nbsp Cody &nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Cody')"></a></h5>
+	  			</li>
+	  			<li name = "Craig" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedmen" id = "Craig">
+	  				<img title="Craig" src="pics/Craig.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Craig.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp Craig &nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Craig')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
+	  			</li>
+	  			<li name = "Dylan" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Dylan">
+	  				<img title="Dylan" src="pics/Dylan.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Dylan.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp Dylan &nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Dylan')"></a></h5>
+	  			</li>
+	  			<li name = "Emil" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedmen" id = "Emil">
+	  				<img title="Emil" src="pics/Emil.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Emil.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp Emil &nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Emil')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
+	  			</li>
+	  			<li name = "Eric" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Eric">
+	  				<img title="Eric" src="pics/Eric.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Eric.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp Eric &nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Eric')"></a></h5>
+	  			</li>
+	  			<li name = "Jason" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedmen" id = "Jason">
+	  				<img title="Jason" src="pics/Jason.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Jason.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp Jason &nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Jason')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
+	  			</li>
+	  			<li name = "JJ" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "JJ">
+	  				<img title="JJ" src="pics/JJ.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/JJ.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp JJ &nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('JJ')"></a></h5>
+	  			</li>
+	  			<li name = "Josh B" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedmen" id = "Josh_B">
+	  				<img title="Josh B" src="pics/Josh B.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Josh B.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp Josh B &nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Josh_B')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
+	  			</li>
+	  			<li name = "Josh M" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Josh_M">
+	  				<img title="Josh M" src="pics/Josh M.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Josh M.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp Josh M &nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Josh_M')"></a></h5>
+	  			</li>
+	  			<li name = "Marcus" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Marcus">
+	  				<img title="Marcus" src="pics/Marcus.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Marcus.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp Marcus &nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Marcus')"></a></h5>
+	  			</li>
+	  			<li name = "Marquel" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Marquel">
+	  				<img title="Marquel" src="pics/Marquel.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Marquel.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp Marquel &nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Marquel')"></a></h5>
+	  			</li>
+	  			<li name = "Mike" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedmen" id = "Mike">
+	  				<img title="Mike" src="pics/Mike.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Mike.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp Mike &nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Mike')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
+	  			</li>
+	  			<li name = "Nick S" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedmen" id = "Nick_S">
+	  				<img title="Nick S" src="pics/Nick S.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Nick S.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp Nick S &nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Nick_S')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
+	  			</li>
+	  			<li name = "Nick V" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Nick_V">
+	  				<img title="Nick V" src="pics/Nick V.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Nick V.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp Nick V &nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Nick_V')"></a></h5>
+	  			</li>
+	  			<li name = "Patrick" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Patrick">
+	  				<img title="Patrick" src="pics/Patrick.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Patrick.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Patrick &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Patrick')"></a></h5>
+	  			</li>
+	  			<li name = "Ron" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Ron">
+	  				<img title="Ron" src="pics/Ron.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Ron.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp Ron &nbsp&nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Ron')"></a></h5>
+	  			</li>
+	  			<li name = "Rudie" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedmen" id = "Rudie">
+	  				<img title="Rudie" src="pics/Rudie.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Rudie.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Rudie &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Rudie')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
+	  			</li>
+	  			<li name = "Steven" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedmen" id = "Steven">
+	  				<img title="Steven" src="pics/Steven.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Steven.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp Steven &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Steven')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
+	  			</li>
+	  			<li name = "Tasos" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Tasos">
+	  				<img title="Tasos" src="pics/Tasos.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Tasos.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp Tasos &nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Tasos')"></a></h5>
+	  			</li>
+			</ul>
+		</div>
+
+	<!-- Tabs -->
+		<div class = "col-md-7" style = "position:fixed; right: -5px; width: 800px">
+			<!-- <form role = "form" id = "submissionForm" style = "position:relative; top: -20px; color:white;" class = "form-horizontal" 
+					action="mailto:bachelorbracket18@gmail.com?Subject=Bracket Entry" method="post" enctype="text/plain"> -->
+			<form id="submissionForm" action="https://docs.google.com/forms/d/1VfE7v7hmYYE84rKREQVX2Rbr2LgAohxd_EwC96QxjuA/formResponse" role="form"
+				style = "position:relative; top: -20px; color:white;" class = "form-horizontal">
+				<div id="tabs">
+					<ul>
+						<li><a href="#tabs-1">Week 3</a></li>
+						<li><a href="#tabs-2">Week 4</a></li>
+						<li><a href="#tabs-3">Week 5</a></li>
+						<li><a href="#tabs-4">Week 6</a></li>
+						<li><a href="#tabs-5">Week 7</a></li>
+						<li><a href="#tabs-6">Week 8</a></li>
+						<li><a href="#tabs-7">Week 9</a></li>
+						<li><a href="#tabs-8">Week 10</a></li>
+					</ul>
+
+					<div id="tabs-1">
+						<div class="ui-widget ui-helper-clearfix" style = "width:col-md-7;">
+							<p><strong>Choose 13 dudes for this week. You have picked <span id = "numberPicked1">0</span>/13</strong></p>
+							<div id="container1" class="dropContainer ui-widget-content ui-state-default">
+							</div>
+						</div>
+					</div>
+					<div id="tabs-2">
+						<div class="ui-widget ui-helper-clearfix" style = "width:col-md-7;">
+							<p><strong>Choose 11 dudes for this week. You have picked <span id = "numberPicked2">0</span>/11</strong></p>
+							<div id="container2" class="dropContainer ui-widget-content ui-state-default">
+							</div>
+						</div>
+					</div>
+					<div id="tabs-3">
+						<div class="ui-widget ui-helper-clearfix" style = "width:col-md-7;">
+							<p><strong>Choose 8 dudes for this week. You have picked <span id = "numberPicked3">0</span>/8</strong></p>
+							<div id="container3" class="dropContainer ui-widget-content ui-state-default">
+							</div>
+						</div>
+					</div>
+					<div id="tabs-4">
+						<div class="ui-widget ui-helper-clearfix" style = "width:col-md-7;">
+							<p><strong>Choose 5 dudes for this week. You have picked <span id = "numberPicked4">0</span>/5</strong></p>
+							<div id="container4" class="dropContainer ui-widget-content ui-state-default">
+							</div>
+						</div>
+					</div>
+					<div id="tabs-5">
+						<div class="ui-widget ui-helper-clearfix" style = "width:col-md-7;">
+							<p><strong>Choose 4 dudes for this week. You have picked <span id = "numberPicked5">0</span>/4</strong></p>
+							<div id="container5" class="dropContainer ui-widget-content ui-state-default">
+							</div>
+						</div>
+					</div>
+					<div id="tabs-6">					
+						<div class="ui-widget ui-helper-clearfix" style = "width:col-md-7;">
+							<p><strong>Choose 3 dudes for this week. You have picked <span id = "numberPicked6">0</span>/3</strong></p>
+							<div id="container6" class="dropContainer ui-widget-content ui-state-default">
+							</div>
+						</div>
+					</div>
+					<div id="tabs-7">
+						<div class="ui-widget ui-helper-clearfix" style = "width:col-md-7;">
+							<p><strong>Choose 2 dudes for this week. You have picked <span id = "numberPicked7">0</span>/2</strong></p>
+							<div id="container7" class="dropContainer ui-widget-content ui-state-default">
+							</div>
+						</div>
+					</div>
+					<div id="tabs-8">					
+						<div class="ui-widget ui-helper-clearfix" style = "width:col-md-7;">
+							<p><strong>Choose the final man! You have picked <span id = "numberPicked8">0</span>/1</strong></p>
+							<div id="container8" class="dropContainer ui-widget-content ui-state-default">
+							</div>
+						</div>
+					</div>
+				</div> <!--End Tabs -->
+
+			  <h5>Done? Choose your name and submit by the beauty that is Google Forms.</h5>
+
+			  <div class="form-group">
+			    <label for="name" class = "col-md-2 control-label">Name:</label>
+			    <div class = "col-md-4">
+			    	<!-- Name and Id given by Google Form -->
+			    	<select name="entry.206844228" id="entry_206844228" class="form-control selectpicker valid">
+			    		<option>Choose your name</option>
+			    		<option>Hack</option>
+			    		<option>James</option>
+			    		<option>Matthew</option>
+			    		<option>Riyaz</option>
+			    		<option>Ryan</option>
+			    		<option>Sanchit</option>
+			    		<option>Sarah</option>
+			    		<option>Thomas</option>
+			    	</select>
+			    </div>
+			  </div>
+
+			  <div class = "form-group hide">
+			  	<textarea name="entry.1299310825" id="entry_1299310825"></textarea>
+			  </div>
+
+			  <div class = "form-group">
+			  	  <label for="name" class = "col-md-2 control-label"></label>
+				  <div class ="col-md-2">
+				  	<button id = "formfill" class="btn btn-primary">Submit</button>
+				  </div>
+			  </div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script>
+	$('a').tooltip({placement:"bottom"});
+	$('.selectpicker').selectpicker();
+
+	$('#formfill').click(function() {
+		var week3picks = "";
+		var week4picks = "";
+		var week5picks = "";
+		var week6picks = "";
+		var week7picks = "";
+		var week8picks = "";
+		var week9picks = "";
+		var week10picks = "";
+
+		$( "#container1 li" ).each(function( index ) {
+			week3picks += $( this ).attr('id') + ";";
+		});
+
+		$( "#container2 li" ).each(function( index ) {
+			week4picks += $( this ).attr('id') + ";";
+		});
+		
+		$( "#container3 li" ).each(function( index ) {
+			week5picks += $( this ).attr('id') + ";";
+		});
+		
+		$( "#container4 li" ).each(function( index ) {
+			week6picks += $( this ).attr('id') + ";";
+		});
+		
+		$( "#container5 li" ).each(function( index ) {
+			week7picks += $( this ).attr('id') + ";";
+		});
+
+		$( "#container6 li" ).each(function( index ) {
+			week8picks += $( this ).attr('id') + ";";
+		});
+
+		$( "#container7 li" ).each(function( index ) {
+			week9picks += $( this ).attr('id') + ";";
+		});
+
+		$( "#container8 li" ).each(function( index ) {
+			week10picks += $( this ).attr('id') + ";";
+		});
+
+		document.getElementById("entry_1299310825").value = "week3="+week3picks+"\n"+ "week4="+week4picks+"\n"+ "week5="+week5picks+"\n"+
+															"week6="+week6picks+"\n"+ "week7="+week7picks+"\n"+ "week8="+week8picks+"\n"+
+															"week9="+week9picks+"\n"+ "week10="+week10picks;
+	});
+
+	$('#submissionForm').on('submit', function() {
+		$('#alertError').hide(); //hide any errors after a new submit
+		if ($('#entry_206844228').val() == "Choose your name") {
+			alertError("You need to choose your name.", "");
+			return false;
+		}
+
+		//Check all lengths before submission
+		if ($('#container1 li').length != 13) {
+			alertError("", "Week 3 has not been completed yet.");
+			return false;
+		}
+		else if ($('#container2 li').length != 11) {
+			alertError("", "Week 4 has not been completed yet.");
+			return false;
+		}
+		else if ($('#container3 li').length != 8) {
+			alertError("", "Week 5 has not been completed yet.");
+			return false;
+		}
+		else if ($('#container4 li').length != 5) {
+			alertError("", "Week 6 has not been completed yet.");
+			return false;
+		}
+		else if ($('#container5 li').length != 4) {
+			alertError("", "Week 7 has not been completed yet.");
+			return false;
+		}
+		else if ($('#container6 li').length != 3) {
+			alertError("", "Week 8 has not been completed yet.");
+			return false;
+		}
+		else if ($('#container7 li').length != 2) {
+			alertError("", "Week 9 has not been completed yet.");
+			return false;
+		}
+		else if ($('#container8 li').length != 1) {
+			alertError("", "Week 10 has not been completed yet.");
+			return false;
+		}
+		var finalChecks = true;
+		var loopBreak = 0;
+		for(j = 8; j > 0; j--) {
+			console.log(j);
+			var containerIdStart = "#container" + j + " li";
+			$( containerIdStart ).each(function( index ) {
+				for(i = 1; i<j; i++) {
+					console.log("i=" + i);
+					containerId = "#container" + i
+					var prevCheck = $(containerId).find("#" + $( this ).attr('id'));
+					console.log(prevCheck.length);
+					if (prevCheck.length <= 0) {
+						if (loopBreak == 0) {
+							finalChecks = false;
+							var str = $(this).attr('id');
+					  		var id = str.replace("_", " ");
+							alertError(id + " is in week " + (j+2) + ", but not in week " + (i+2), "");
+							loopBreak = 1;
+							return false;
+						}
+					}
+				}
+			});
+		}
+		return finalChecks;
+    });
+
+	function enlargeImage(picURI) {
+		$('#myModalBackground').width("720px");
+		var picHeight = $(window).height()*.60+10; //fill 60% of the screen
+		$('#myModalBody').html("<img src='"+picURI+"' style='position:relative; left: -5px; height:"+picHeight+"px'>");
+		$('#myModal').modal();
+	}
+
+	function showBio(id) {
+		var picURI = "pics/bios/" + id + ".PNG";
+		var bioId = "#bio_" + id;
+		$('#myModalBackground').width("900px");
+		$('#myModalBackground').css( "left","-130px");
+		$('#myModalBody').html("<img src='"+picURI+"'>");
+		$(bioId).removeClass("hide");
+		$('#myModal').modal();
+	}
+
+	$('#myModal').on('hidden.bs.modal', function () {
+		//hide all bios after closing the modal
+		$('.allBios').addClass("hide");
+	})
+</script>
+</body>
+</html>
