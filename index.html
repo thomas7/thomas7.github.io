@@ -156,6 +156,7 @@
 			  drop: function( event, ui ) {
 			  	var duplicateWoman = $(this).find("#" + $(ui.draggable).attr('id'));
 			  	var previousWeekCheck = $dropContainer.find("#" + $(ui.draggable).attr('id'));
+			  	console.log("#" + $(ui.draggable).attr('id'));
 			  	var str = $(ui.draggable).attr('id');
 			  	var id = str.replace("_", " ");
 			  	var listLength = $('#container2 li').length;
@@ -446,7 +447,7 @@
 			  	document.getElementById("numberPicked8").innerHTML = listLength == 1 ? 1 : listLength+1;
 
 			  	if ($('#container8 li').length == 1)
-			  		alertError("Nice try,", " but you can't add more than 1 dude for this week.");
+			  		alertError("Nice try,", " but you can't add more than 1 woman for this week.");
 
 			  	else if (duplicateWoman.length > 0) {
 			  		document.getElementById("numberPicked8").innerHTML = $('#container8 li').length; 
@@ -500,13 +501,42 @@
             		.animate({ width: "100px", height:"58px" })
         	  });
 		    }
-		 });
+
+		    //When a tab is clicked hide profiles that can no longer be selected
+		    $( "#tabs" ).tabs({
+		    	activate: function(event, ui) {
+		    		var picks = [];
+		    		console.log("active tab: ", ui.newTab.index());
+		    		if (ui.newTab.index() != 0) {
+		    			$( "#container" + (ui.newTab.index()) + " li" ).each(function( index ) {
+							picks.push($( this ).attr('id')); //append list of picks from previous weeks container
+						});
+		    		}
+		    		hideDraggables(picks);
+		    	}
+		    });
+		});
 
 		function alertError(id, error) {
 				$('#alertError').removeClass("hidden");
 			    $('#alertError').html("<div class='alert alert-danger'>" + "<strong>" + id + "</strong>" + error + 
 			    	"<button type='button' id = 'closeButton' class='close' data-dismiss='alert' aria-hidden='true'>×</button> </div>");
       			$('#alertError').slideDown("slow");
+		}
+
+		function hideDraggables(exclusionList) {
+			if (exclusionList.length == 0) {
+				$( "#sortable li" ).each(function( index ) {
+					$(this).removeClass("hide");
+				});
+			}
+			
+			else {
+				$( "#sortable li" ).each(function( index ) {
+					if (exclusionList.indexOf($( this ).attr('id')) == -1)
+						$(this).addClass("hide"); //hide this pick since it isn't an option based on the previous week's picks
+				});
+			}
 		}
 
 		$('#alertError').bind('close.bs.alert', function() {
@@ -683,14 +713,14 @@
 	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Amber &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Amber')"></a></h5>
 	  			</li>
-	  			<li name = "Ashley I" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Ashley I">
+	  			<li name = "Ashley I" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Ashley_I">
 	  				<img title="Ashley_I" src="pics/Ashley I.PNG" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
 	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Ashley I.PNG')">
 	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp Ashley I &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Ashley_I')"></a></h5>
 	  			</li>
-	  			<li name = "Ashley S" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Ashley S">
+	  			<li name = "Ashley S" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Ashley_S">
 	  				<img title="Ashley S" src="pics/Ashley S.PNG" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
 	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Ashley S.PNG')">
