@@ -156,7 +156,6 @@
 			  drop: function( event, ui ) {
 			  	var duplicateWoman = $(this).find("#" + $(ui.draggable).attr('id'));
 			  	var previousWeekCheck = $dropContainer.find("#" + $(ui.draggable).attr('id'));
-			  	console.log("#" + $(ui.draggable).attr('id'));
 			  	var str = $(ui.draggable).attr('id');
 			  	var id = str.replace("_", " ");
 			  	var listLength = $('#container2 li').length;
@@ -506,11 +505,15 @@
 		    $( "#tabs" ).tabs({
 		    	activate: function(event, ui) {
 		    		var picks = [];
-		    		console.log("active tab: ", ui.newTab.index());
 		    		if (ui.newTab.index() != 0) {
 		    			$( "#container" + (ui.newTab.index()) + " li" ).each(function( index ) {
 							picks.push($( this ).attr('id')); //append list of picks from previous weeks container
 						});
+		    		}
+		    		else {
+		    			$( "#sortable li" ).each(function( index ) {
+		    				picks.push($( this ).attr('id')); //add everyone to the list for first week
+		    			});
 		    		}
 		    		hideDraggables(picks);
 		    	}
@@ -525,18 +528,11 @@
 		}
 
 		function hideDraggables(exclusionList) {
-			if (exclusionList.length == 0) {
-				$( "#sortable li" ).each(function( index ) {
-					$(this).removeClass("hide");
-				});
-			}
-			
-			else {
-				$( "#sortable li" ).each(function( index ) {
-					if (exclusionList.indexOf($( this ).attr('id')) == -1)
-						$(this).addClass("hide"); //hide this pick since it isn't an option based on the previous week's picks
-				});
-			}
+			$( "#sortable li" ).each(function( index ) {
+				$(this).removeClass("hide"); //unhide everyone first
+				if (exclusionList.indexOf($( this ).attr('id')) == -1)
+					$(this).addClass("hide"); //hide this pick since it isn't an option based on the previous week's picks
+			});
 		}
 
 		$('#alertError').bind('close.bs.alert', function() {
