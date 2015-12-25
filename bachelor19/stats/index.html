@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="us">
+<head>
+	<meta charset="utf-8">
+	<title>The Bachelor Stats</title>
+	<link href="../css/dark-hive/jquery-ui-1.10.3.custom.css" rel="stylesheet">
+	<link href="../css/bootstrap.min.css" rel="stylesheet">
+	<script src="../js/jquery-1.9.1.js"></script>
+	<script src="../js/jquery-ui-1.10.3.custom.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/d3.v3.min.js"></script>
+
+	<style>
+		/* tell the SVG path to be a thin blue line without any area fill */
+		path {
+			stroke: steelblue;
+			stroke-width: 1;
+			fill: none;
+		}
+
+		.axis path,
+		.axis line {
+		  fill: none;
+		  stroke: black;
+		  shape-rendering: crispEdges;
+		}
+
+		.line {
+		  fill: none;
+		  stroke: steelblue;
+		  stroke-width: 1.5px;
+		}
+
+		.grid .tick {
+		    stroke: lightgrey;
+		    opacity: 0.7;
+		}
+		.grid path {
+		      stroke-width: 0;
+		}
+	</style>
+</head>
+<body>
+	<!-- Stores text file in a hidden html textarea -->
+	<textarea id = "file" class = "hide">
+name=Thomas
+week3=Becca;Ashley_I;Britt;Jade;Carly;Kaitlyn;Kelsey;Megan;Jillian;Juelia;Samantha;Mackenzie;Whitney;
+week4=Ashley_I;Becca;Britt;Carly;Jade;Kaitlyn;Kelsey;Megan;Whitney;Juelia;Mackenzie;
+week5=Ashley_I;Becca;Britt;Carly;Jade;Kaitlyn;Kelsey;Megan;
+week6=Britt;Jade;Megan;Kaitlyn;Ashley_I;
+week7=Britt;Ashley_I;Jade;Kaitlyn;
+week8=Britt;Kaitlyn;Ashley_I;
+week9=Britt;Kaitlyn;
+week10=Britt;
+
+name=James
+week3=Ashley_I;Britt;Juelia;Kaitlyn;Mackenzie;Megan;Whitney;Becca;Jade;Jillian;Kelsey;Tracy;Nikki;
+week4=Britt;Ashley_I;Kaitlyn;Megan;Mackenzie;Juelia;Whitney;Becca;Jillian;Kelsey;Jade;
+week5=Ashley_I;Britt;Juelia;Kaitlyn;Megan;Whitney;Mackenzie;Becca;
+week6=Britt;Ashley_I;Kaitlyn;Megan;Whitney;
+week7=Britt;Ashley_I;Megan;Kaitlyn;
+week8=Britt;Megan;Kaitlyn;
+week9=Britt;Megan;
+week10=Britt;
+
+name=Matthew
+week3=Ashley_I;Becca;Britt;Jade;Jillian;Kaitlyn;Megan;Mackenzie;Whitney;Tracy;Samantha;Nikki;Kelsey;
+week4=Ashley_I;Britt;Becca;Kaitlyn;Megan;Jade;Whitney;Mackenzie;Jillian;Kelsey;Nikki;
+week5=Ashley_I;Becca;Britt;Jade;Jillian;Kaitlyn;Megan;Whitney;
+week6=Ashley_I;Becca;Britt;Jade;Kaitlyn;
+week7=Britt;Ashley_I;Kaitlyn;Becca;
+week8=Ashley_I;Britt;Kaitlyn;
+week9=Britt;Ashley_I;
+week10=Britt;
+
+name=Riyaz
+week3=Ashley_I;Ashley_S;Becca;Britt;Carly;Jade;Kaitlyn;Kelsey;Nikki;Tracy;Whitney;Megan;Mackenzie;
+week4=Britt;Becca;Jade;Kelsey;Whitney;Carly;Ashley_I;Nikki;Kaitlyn;Megan;Tracy;
+week5=Becca;Britt;Carly;Jade;Kaitlyn;Kelsey;Whitney;Ashley_I;
+week6=Becca;Britt;Jade;Kaitlyn;Whitney;
+week7=Becca;Jade;Whitney;Kaitlyn;
+week8=Whitney;Becca;Jade;
+week9=Whitney;Jade;
+week10=Whitney;
+	</textarea>
+	<div class = "row">
+		<div class = "col-md-9" id = "graph">
+		</div>
+		<div class = "col-md-3" style = "position:relative; top: 20px">
+			<strong style = "position:relative; right: 25px"><u><font size = "45px">Standings</font></u></strong>
+			<div id = "legend"></div>
+		</div>
+	</div>
+
+<script>
+	var textFile = document.getElementById("file").value;
+	//break up the email entries
+	var entries = textFile.split("\n\n");
+	//fix the new line characters that google app scripts add to the scrape for whatever reason
+	for(var i=0; i<entries.length; i++) {
+		for(var j=0; j<entries[i].length; j++) {
+			//j> 20 bad way to avoid the first line, but works
+			if (entries[i][j] == "\n" && entries[i][j-2] != ";" && j>20) {
+				entries[i] = entries[i].slice(0,j) + entries[i].slice(j+1, entries[i].length);
+			}
+		}
+	}
+
+	var entryObjs = [];
+	for(var i=0; i<entries.length; i++) {
+		var obj = {};
+		obj.name = entries[i].substring(5, entries[i].indexOf("\n")) //assume name is first line, start at 5 after chars "name="
+		var entryNoName = entries[i].substring(entries[i].indexOf("\n")+1, entries[i].length);
+		var weeks = entryNoName.split("=");
+		console.log(weeks)
+		obj.week = [];
+		obj.week[0] = weeks[1].substring(0, weeks[1].lastIndexOf(";")+1);
+		obj.week[1] = weeks[2].substring(0, weeks[2].lastIndexOf(";")+1);
+		obj.week[2] = weeks[3].substring(0, weeks[3].lastIndexOf(";")+1);
+		obj.week[3] = weeks[4].substring(0, weeks[4].lastIndexOf(";")+1);
+		obj.week[4] = weeks[5].substring(0, weeks[5].lastIndexOf(";")+1);
+		obj.week[5] = weeks[6].substring(0, weeks[6].lastIndexOf(";")+1);
+		obj.week[6] = weeks[7].substring(0, weeks[7].lastIndexOf(";")+1);
+		obj.week[7] = weeks[8].substring(0, weeks[8].lastIndexOf(";")+1);
+		entryObjs[i] = obj;
+		console.log(obj);
+	}
+	console.log(entryObjs);
+	var winners = [["Kaitlyn", "Becca", "Whitney", "Jade", "Samantha", "Juelia", "Mackenzie", "Kelsey", "Britt", "Megan", "Carly", "Ashley_S", "Nikki", "Jillian", "Ashley_I"], 
+				   ["Kaitlyn", "Becca", "Whitney", "Jade", "Samantha", "Mackenzie", "Kelsey", "Britt", "Megan", "Carly", "Ashley_I"], 
+				   ["Kaitlyn", "Becca", "Whitney", "Jade", "Kelsey", "Britt", "Megan", "Carly", "Ashley_I"], 
+				   ["Kaitlyn", "Becca", "Whitney", "Jade", "Britt", "Carly"], 
+				   ["Kaitlyn", "Becca", "Whitney", "Jade"], 
+				   ["Kaitlyn", "Becca", "Whitney"], 
+				   ["Becca", "Whitney"], 
+				   ["Whitney"]];
+
+	var weekValues = [1,2,3,5,8,13,21,34];
+
+	var scores = []; //an array of arrays of everyone's score
+	//loop through everyone's entry
+	for (var i=0; i<entryObjs.length; i++) {
+		var score = [0];
+		//loop through each week
+		for (var j=0; j<8; j++) {
+			score[j+1] = score[j]; //initialize score to score in previous week, j+1 because first value needs to stay 0
+			//loop through array of winners for corresponding week
+			for (var k=0; k< winners[j].length; k++) {
+				if (entryObjs[i].week[j].indexOf(winners[j][k]) != -1) {
+					score[j+1] = score[j+1] + weekValues[j];
+				}
+			}
+		}
+		scores[i] = score;
+		console.log(entryObjs[i].name, score);
+	}
+
+	var score = [0,1,2,3,4,5,6,7,8];
+	var xKeys = ["Start", "Week 3", "Week 4", "Week 5", "Week 6", "Week 7", "Week 8", "Week 9", "Week 10"];
+	var data = [];
+	for (var i=0; i<scores.length; i++) {
+		var tempData = [];
+		for (var j=0; j<scores[i].length; j++) {
+			var tempObj = {};
+	        tempObj.xValue = xKeys[j];
+	        tempObj.yValue = scores[i][j];
+	        tempData[j] = tempObj;
+	    }
+	    data[i] = tempData;
+	}
+
+    // define dimensions of graph
+	var margin = {top: 20, right: 20, bottom: 30, left: 50},
+    w = 960 - margin.left - margin.right,
+    h = 500 - margin.top - margin.bottom;
+    var allData = d3.merge(data);
+
+	var x = d3.scale.ordinal().domain(data[0].map(function(d) {return d.xValue;})).rangeRoundBands([0,w],1);
+	var y = d3.scale.linear().domain([0, d3.max(allData, function(d) {return d.yValue; })]).range([h, 0]);
+
+	var xAxis = d3.svg.axis()
+	    .scale(x)
+	    .orient("bottom")
+	    .ticks(10);
+
+	var yAxis = d3.svg.axis()
+	    .scale(y)
+	    .orient("left")
+	    .ticks(10);
+
+	var line = d3.svg.line()
+		.x(function(d) { return x(d.xValue); })
+		// .x(function(d) { if (d == 0) {return 0;} else {return xKeys[d];} })
+    	.y(function(d) { return y(d.yValue); });
+
+	var graph = d3.select("#graph").append("svg")
+	      .attr("width", w + margin.left + margin.right)
+	      .attr("height", h + margin.top + margin.bottom)
+	    .append("svg:g")
+	      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+	graph.append("svg:g")
+		  .attr("class", "x axis")
+	      .attr("transform", "translate(0," + h + ")")
+	      .call(xAxis);
+
+	graph.append("svg:g")
+		  .attr("class", "grid")
+	      .attr("transform", "translate(0," + h + ")")
+	      .call(xAxis
+            .tickSize(-h, 0, 0)
+            .tickFormat("")
+          );
+
+	// Y-Axis
+    graph.append("g")
+		  .attr("class", "y axis")
+	      .call(yAxis);
+
+	// Y-Axis Grid
+	graph.append("g")
+		  .attr("class", "grid")
+	      .call(yAxis
+	      	.tickSize(-w, 0, 0)
+          	.tickFormat("")
+          );
+
+	var colors = ["blue", "green", "orange", "red", "purple", "maroon", "black", "DeepPink"];
+	for (var i=0; i < data.length; i++) {
+		graph.append("path")
+		      .attr("class", "line")
+		      .style("stroke", colors[i%8])
+		      .attr("d", line(data[i]));
+	}
+
+	var standings = []
+	for (var i=0; i<entryObjs.length; i++) {
+		var obj = {}
+		obj.name = entryObjs[i].name;
+		obj.score = scores[i][8]; //the last score which is the current score no matter what week it is
+		obj.color = colors[i%8];
+		standings[i] = obj;
+	}
+
+	standings.sort(function(a,b) {
+		if (a.score > b.score) {
+			return -1
+		}
+		else if (a.score < b.score) {
+			return 1;
+		}
+		else
+			return 0;
+	});
+
+	var legend = document.getElementById("legend");
+	var legendHtml = ""
+	for (var i=0; i<standings.length; i++) {
+		legendHtml += "<div><font color='" + standings[i].color + "'>" + (i+1) + ". " + standings[i].name + " with a score of " + standings[i].score + "</font></div>";
+	}
+	$('#legend').html(legendHtml);
+</script>
+</body>
+</html>
