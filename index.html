@@ -67,6 +67,14 @@
 <body>
 
 	<script>
+		var week3Eliminations = 17;
+		var week4Eliminations = 14;
+		var week5Eliminations = 11;
+		var week6Eliminations = 8;
+		var week7Eliminations = 4;
+		var week8Eliminations = 3;
+		var week9Eliminations = 2;
+		var week10Eliminations = 1;
 
 	    $(function() {
 	    	$( "#tabs" ).tabs();
@@ -116,10 +124,10 @@
 			  	var str = $(ui.draggable).attr('id');
 			  	var id = str.replace("_", " ");
 			  	var listLength = $('#container1 li').length;
-			  	document.getElementById("numberPicked1").innerHTML = listLength == 13 ? 13 : listLength+1;
+			  	document.getElementById("numberPicked1").innerHTML = listLength == week3Eliminations ? week3Eliminations : listLength+1;
 
-			  	if (listLength == 13)
-			  		alertError("Nice try,", " but you can't add more than 13 women for this week.");
+			  	if (listLength == week3Eliminations)
+			  		alertError("Nice try,", " but you can't add more than " + week3Eliminations + " women for this week.");
 
 			  	else if (duplicateWoman.length > 0) {
 			  		document.getElementById("numberPicked1").innerHTML = $('#container1 li').length; 
@@ -159,10 +167,10 @@
 			  	var str = $(ui.draggable).attr('id');
 			  	var id = str.replace("_", " ");
 			  	var listLength = $('#container2 li').length;
-			  	document.getElementById("numberPicked2").innerHTML = listLength == 11 ? 11 : listLength+1;
+			  	document.getElementById("numberPicked2").innerHTML = listLength == week4Eliminations ? week4Eliminations : listLength+1;
 
-			  	if ($('#container2 li').length == 11)
-			  		alertError("Nice try,", " but you can't add more than 11 women for this week.");
+			  	if ($('#container2 li').length == week4Eliminations)
+			  		alertError("Nice try,", " but you can't add more than " + week4Eliminations + " women for this week.");
 
 			  	else if (duplicateWoman.length > 0) {
 			  		document.getElementById("numberPicked2").innerHTML = $('#container2 li').length; 
@@ -207,10 +215,10 @@
 			  	var str = $(ui.draggable).attr('id');
 			  	var id = str.replace("_", " ");
 			  	var listLength = $('#container3 li').length;
-			  	document.getElementById("numberPicked3").innerHTML = listLength == 8 ? 8 : listLength+1;
+			  	document.getElementById("numberPicked3").innerHTML = listLength == week5Eliminations ? week5Eliminations : listLength+1;
 
-			  	if ($('#container3 li').length == 8)
-			  		alertError("Nice try,", " but you can't add more than 8 women for this week.");
+			  	if ($('#container3 li').length == week5Eliminations)
+			  		alertError("Nice try,", " but you can't add more than" + week5Eliminations + " women for this week.");
 
 			  	else if (duplicateWoman.length > 0) {
 			  		document.getElementById("numberPicked3").innerHTML = $('#container3 li').length; 
@@ -254,10 +262,10 @@
 			  	var str = $(ui.draggable).attr('id');
 			  	var id = str.replace("_", " ");
 			  	var listLength = $('#container4 li').length;
-			  	document.getElementById("numberPicked4").innerHTML = listLength == 5 ? 5 : listLength+1;
+			  	document.getElementById("numberPicked4").innerHTML = listLength == week6Eliminations ? week6Eliminations : listLength+1;
 
-			  	if ($('#container4 li').length == 5)
-			  		alertError("Nice try,", " but you can't add more than 5 women for this week.");
+			  	if ($('#container4 li').length == week6Eliminations)
+			  		alertError("Nice try,", " but you can't add more than " + week6Eliminations + " women for this week.");
 
 			  	else if (duplicateWoman.length > 0) {
 			  		document.getElementById("numberPicked4").innerHTML = $('#container4 li').length; 
@@ -302,10 +310,10 @@
 			  	var str = $(ui.draggable).attr('id');
 			  	var id = str.replace("_", " ");
 			  	var listLength = $('#container5 li').length;
-			  	document.getElementById("numberPicked5").innerHTML = listLength == 4 ? 4 : listLength+1;
+			  	document.getElementById("numberPicked5").innerHTML = listLength == week7Eliminations ? week7Eliminations : listLength+1;
 
-			  	if ($('#container5 li').length == 4)
-			  		alertError("Nice try,", " but you can't add more than 4 women for this week.");
+			  	if ($('#container5 li').length == week7Eliminations)
+			  		alertError("Nice try,", " but you can't add more than " + week7Eliminations + " women for this week.");
 
 			  	else if (duplicateWoman.length > 0) {
 			  		document.getElementById("numberPicked5").innerHTML = $('#container5 li').length; 
@@ -349,10 +357,10 @@
 			  	var str = $(ui.draggable).attr('id');
 			  	var id = str.replace("_", " ");
 			  	var listLength = $('#container6 li').length;
-			  	document.getElementById("numberPicked6").innerHTML = listLength == 3 ? 3 : listLength+1;
+			  	document.getElementById("numberPicked6").innerHTML = listLength == week8Eliminations ? week8Eliminations : listLength+1;
 
-			  	if ($('#container6 li').length == 3)
-			  		alertError("Nice try,", " but you can't add more than 3 women for this week.");
+			  	if ($('#container6 li').length == week8Eliminations)
+			  		alertError("Nice try,", " but you can't add more than " + week8Eliminations + " women for this week.");
 
 			  	else if (duplicateWoman.length > 0) {
 			  		document.getElementById("numberPicked6").innerHTML = $('#container6 li').length; 
@@ -396,10 +404,10 @@
 			  	var str = $(ui.draggable).attr('id');
 			  	var id = str.replace("_", " ");
 			  	var listLength = $('#container7 li').length;
-			  	document.getElementById("numberPicked7").innerHTML = listLength == 2 ? 2 : listLength+1;
+			  	document.getElementById("numberPicked7").innerHTML = listLength == week9Eliminations ? week9Eliminations : listLength+1;
 
-			  	if ($('#container7 li').length == 2)
-			  		alertError("Nice try,", " but you can't add more than 2 women for this week.");
+			  	if ($('#container7 li').length == week9Eliminations)
+			  		alertError("Nice try,", " but you can't add more than " + week9Eliminations + " women for this week.");
 
 			  	else if (duplicateWoman.length > 0) {
 			  		document.getElementById("numberPicked7").innerHTML = $('#container7 li').length; 
@@ -443,10 +451,10 @@
 			  	var str = $(ui.draggable).attr('id');
 			  	var id = str.replace("_", " ");
 			  	var listLength = $('#container8 li').length;
-			  	document.getElementById("numberPicked8").innerHTML = listLength == 1 ? 1 : listLength+1;
+			  	document.getElementById("numberPicked8").innerHTML = listLength == week10Eliminations ? week10Eliminations : listLength+1;
 
-			  	if ($('#container8 li').length == 1)
-			  		alertError("Nice try,", " but you can't add more than 1 woman for this week.");
+			  	if ($('#container8 li').length == week10Eliminations)
+			  		alertError("Nice try,", " but you can't add more than " + week10Eliminations + " woman for this week.");
 
 			  	else if (duplicateWoman.length > 0) {
 			  		document.getElementById("numberPicked8").innerHTML = $('#container8 li').length; 
@@ -1088,12 +1096,13 @@
 	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp Becca &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Becca')"></a></h5>
 	  			</li>
-	  			<li name = "Breanne" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Breanne">
+	  			<li name = "Breanne" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Breanne">
 	  				<img title="Breanne" src="pics/Breanne.PNG" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
 	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Breanne.PNG')">
 	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Breanne &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Breanne')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
 	  			</li>
 	  			<li name = "Caila" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Caila">
 	  				<img title="Caila" src="pics/Caila.PNG" class="img-responsive">
@@ -1116,12 +1125,13 @@
 	  				  	</a>&nbsp&nbsp Haley &nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Haley')"></a></h5>
 	  			</li>
-	  			<li name = "Izzy" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Izzy">
+	  			<li name = "Izzy" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Izzy">
 	  				<img title="Izzy" src="pics/Izzy.PNG" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
 	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Izzy.PNG')">
 	  				  	</a>&nbsp&nbsp&nbsp Izzy &nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Izzy')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
 	  			</li>
 	  			<li name = "Jackie" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Jackie">
 	  				<img title="Jackie" src="pics/Jackie.PNG" class="img-responsive">
@@ -1144,12 +1154,13 @@
 	  				  	</a>&nbsp&nbsp&nbsp&nbsp Jennifer &nbsp&nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Jennifer')"></a></h5>
 	  			</li>
-	  			<li name = "Jessica" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Jessica">
+	  			<li name = "Jessica" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Jessica">
 	  				<img title="Jessica" src="pics/Jessica.PNG" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
 	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Jessica.PNG')">
 	  				  	</a>&nbsp&nbsp&nbsp&nbsp Jessica &nbsp&nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Jessica')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
 	  			</li>
 	  			<li name = "JoJo" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "JoJo">
 	  				<img title="JoJo" src="pics/JoJo.PNG" class="img-responsive">
@@ -1172,12 +1183,13 @@
 	  				  	</a>&nbsp&nbsp&nbsp Lace &nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Lace')"></a></h5>
 	  			</li>
-	  			<li name = "Laura" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Laura">
+	  			<li name = "Laura" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Laura">
 	  				<img title="Laura" src="pics/Laura.PNG" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
 	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Laura.PNG')">
 	  				  	</a>&nbsp&nbsp&nbsp&nbsp Laura &nbsp&nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Laura')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
 	  			</li>
 	  			<li name = "LB" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "LB">
 	  				<img title="LB" src="pics/LB.PNG" class="img-responsive">
@@ -1200,12 +1212,13 @@
 	  				  	</a>&nbsp&nbsp&nbsp Lauren H &nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Lauren_H')"></a></h5>
 	  			</li>
-	  			<li name = "Lauren R" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Lauren_R">
+	  			<li name = "Lauren R" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Lauren_R">
 	  				<img title="Lauren R" src="pics/Lauren_R.PNG" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
 	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Lauren_R.PNG')">
 	  				  	</a>&nbsp&nbsp&nbsp Lauren R &nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Lauren_R')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
 	  			</li>
 	  			<li name = "Leah" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Leah">
 	  				<img title="Leah" src="pics/Leah.PNG" class="img-responsive">
@@ -1214,12 +1227,13 @@
 	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Leah &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Leah')"></a></h5>
 	  			</li>
-	  			<li name = "Maegan" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Maegan">
+	  			<li name = "Maegan" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Maegan">
 	  				<img title="Maegan" src="pics/Maegan.PNG" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
 	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Maegan.PNG')">
 	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp Maegan &nbsp&nbsp&nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Maegan')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
 	  			</li>
 	  			<li name = "Mandi" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Mandi">
 	  				<img title="Mandi" src="pics/Mandi.PNG" class="img-responsive">
@@ -1256,12 +1270,13 @@
 	  				  	</a>&nbsp&nbsp&nbsp Shushanna &nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Shushanna')"></a></h5>
 	  			</li>
-	  			<li name = "Tiara" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Tiara">
+	  			<li name = "Tiara" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Tiara">
 	  				<img title="Tiara" src="pics/Tiara.PNG" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
 	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Tiara.PNG')">
 	  				  	</a>&nbsp&nbsp&nbsp Tiara &nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Tiara')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
 	  			</li>
 			</ul>
 		</div>
@@ -1286,28 +1301,28 @@
 
 					<div id="tabs-1">
 						<div class="ui-widget ui-helper-clearfix" style = "width:col-md-7;">
-							<p><strong>Choose 13 women for this week. You have picked <span id = "numberPicked1">0</span>/13</strong></p>
+							<p><strong>Choose 17 women for this week. You have picked <span id = "numberPicked1">0</span>/17</strong></p>
 							<div id="container1" class="dropContainer ui-widget-content ui-state-default">
 							</div>
 						</div>
 					</div>
 					<div id="tabs-2">
 						<div class="ui-widget ui-helper-clearfix" style = "width:col-md-7;">
-							<p><strong>Choose 11 women for this week. You have picked <span id = "numberPicked2">0</span>/11</strong></p>
+							<p><strong>Choose 14 women for this week. You have picked <span id = "numberPicked2">0</span>/14</strong></p>
 							<div id="container2" class="dropContainer ui-widget-content ui-state-default">
 							</div>
 						</div>
 					</div>
 					<div id="tabs-3">
 						<div class="ui-widget ui-helper-clearfix" style = "width:col-md-7;">
-							<p><strong>Choose 8 women for this week. You have picked <span id = "numberPicked3">0</span>/8</strong></p>
+							<p><strong>Choose 11 women for this week. You have picked <span id = "numberPicked3">0</span>/11</strong></p>
 							<div id="container3" class="dropContainer ui-widget-content ui-state-default">
 							</div>
 						</div>
 					</div>
 					<div id="tabs-4">
 						<div class="ui-widget ui-helper-clearfix" style = "width:col-md-7;">
-							<p><strong>Choose 5 women for this week. You have picked <span id = "numberPicked4">0</span>/5</strong></p>
+							<p><strong>Choose 8 women for this week. You have picked <span id = "numberPicked4">0</span>/8</strong></p>
 							<div id="container4" class="dropContainer ui-widget-content ui-state-default">
 							</div>
 						</div>
@@ -1437,35 +1452,35 @@
 		}
 
 		//Check all lengths before submission
-		if ($('#container1 li').length != 13) {
+		if ($('#container1 li').length != week3Eliminations) {
 			alertError("", "Week 3 has not been completed yet.");
 			return false;
 		}
-		else if ($('#container2 li').length != 11) {
+		else if ($('#container2 li').length != week4Eliminations) {
 			alertError("", "Week 4 has not been completed yet.");
 			return false;
 		}
-		else if ($('#container3 li').length != 8) {
+		else if ($('#container3 li').length != week5Eliminations) {
 			alertError("", "Week 5 has not been completed yet.");
 			return false;
 		}
-		else if ($('#container4 li').length != 5) {
+		else if ($('#container4 li').length != week6Eliminations) {
 			alertError("", "Week 6 has not been completed yet.");
 			return false;
 		}
-		else if ($('#container5 li').length != 4) {
+		else if ($('#container5 li').length != week7Eliminations) {
 			alertError("", "Week 7 has not been completed yet.");
 			return false;
 		}
-		else if ($('#container6 li').length != 3) {
+		else if ($('#container6 li').length != week8Eliminations) {
 			alertError("", "Week 8 has not been completed yet.");
 			return false;
 		}
-		else if ($('#container7 li').length != 2) {
+		else if ($('#container7 li').length != week9Eliminations) {
 			alertError("", "Week 9 has not been completed yet.");
 			return false;
 		}
-		else if ($('#container8 li').length != 1) {
+		else if ($('#container8 li').length != week10Eliminations) {
 			alertError("", "Week 10 has not been completed yet.");
 			return false;
 		}
