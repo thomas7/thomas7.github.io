@@ -1516,6 +1516,7 @@
 
 	function enlargeImage(picURI) {
 		$('#myModalBackground').width("570px");
+		$('#myModalBackground').css( "left","0px");
 		var picHeight = 500;
 		$('#myModalBody').html("<img src='"+picURI+"' style='position:relative; left: -5px; height:"+picHeight+"px'>");
 		$('#myModal').modal();
