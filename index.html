@@ -79,8 +79,8 @@
 	    $(function() {
 	    	$( "#tabs" ).tabs();
 
-	        var $sortable = $( "#sortable" ),
-	        $dropContainer = $( "#container1" );
+	        var $sortable = $( "#sortable" );
+	        // var $dropContainer = $( "#container1" );
 	        var $dropContainer2 = $("#container2");
 	        var $dropContainer3 = $("#container3");
 	        var $dropContainer4 = $("#container4");
@@ -117,53 +117,53 @@
 		    $('.eliminatedWomen').draggable({disabled:true });
 		 
 		    //drop women into the container
-		    $dropContainer.droppable({
-		      accept: "#sortable > li",
-			  drop: function( event, ui ) {
-			  	var duplicateWoman = $(this).find("#" + $(ui.draggable).attr('id'));
-			  	var str = $(ui.draggable).attr('id');
-			  	var id = str.replace("_", " ");
-			  	var listLength = $('#container1 li').length;
-			  	document.getElementById("numberPicked1").innerHTML = listLength == week3Eliminations ? week3Eliminations : listLength+1;
+		   //  $dropContainer.droppable({
+		   //    accept: "#sortable > li",
+			  // drop: function( event, ui ) {
+			  // 	var duplicateWoman = $(this).find("#" + $(ui.draggable).attr('id'));
+			  // 	var str = $(ui.draggable).attr('id');
+			  // 	var id = str.replace("_", " ");
+			  // 	var listLength = $('#container1 li').length;
+			  // 	document.getElementById("numberPicked1").innerHTML = listLength == week3Eliminations ? week3Eliminations : listLength+1;
 
-			  	if (listLength == week3Eliminations)
-			  		alertError("Nice try,", " but you can't add more than " + week3Eliminations + " women for this week.");
+			  // 	if (listLength == week3Eliminations)
+			  // 		alertError("Nice try,", " but you can't add more than " + week3Eliminations + " women for this week.");
 
-			  	else if (duplicateWoman.length > 0) {
-			  		document.getElementById("numberPicked1").innerHTML = $('#container1 li').length; 
-			  		alertError(id, " may be hot, but you can't add her twice. Pick someone else.");
-			  	}
+			  // 	else if (duplicateWoman.length > 0) {
+			  // 		document.getElementById("numberPicked1").innerHTML = $('#container1 li').length; 
+			  // 		alertError(id, " may be hot, but you can't add her twice. Pick someone else.");
+			  // 	}
 
-			  	else {
-			  		var copy = $(ui.draggable).clone().draggable({
-				      revert: function(valid_drop) {
-				      		if(!valid_drop) {
-				      			$(this).removeClass("inmotion");
-				      			document.getElementById("numberPicked1").innerHTML = $('#container1 li').length;
-				      			return true; 
-				      		}
-				      		else {
-				      			$(this).removeClass("inmotion");
-				      			document.getElementById("numberPicked1").innerHTML = $('#container1 li').length; 
-				      		}
-				      	}, // when not dropped, the item will revert back to its initial position
-				      containment: "document",
-				      cursor: "move",
-				      drag: function(event, ui) {
-		        	  	document.getElementById("numberPicked1").innerHTML = $('#container1 li').length-1;
-		      		  },
-				    });
-					addPic(copy, $(this)); //add a clone so that the original will stay in the list
-			    }
-			  }
-		    });
+			  // 	else {
+			  // 		var copy = $(ui.draggable).clone().draggable({
+				 //      revert: function(valid_drop) {
+				 //      		if(!valid_drop) {
+				 //      			$(this).removeClass("inmotion");
+				 //      			document.getElementById("numberPicked1").innerHTML = $('#container1 li').length;
+				 //      			return true; 
+				 //      		}
+				 //      		else {
+				 //      			$(this).removeClass("inmotion");
+				 //      			document.getElementById("numberPicked1").innerHTML = $('#container1 li').length; 
+				 //      		}
+				 //      	}, // when not dropped, the item will revert back to its initial position
+				 //      containment: "document",
+				 //      cursor: "move",
+				 //      drag: function(event, ui) {
+		   //      	  	document.getElementById("numberPicked1").innerHTML = $('#container1 li').length-1;
+		   //    		  },
+				 //    });
+					// addPic(copy, $(this)); //add a clone so that the original will stay in the list
+			  //   }
+			  // }
+		   //  });
 
 		    //drop women into the container
 		    $dropContainer2.droppable({
 		      accept: "#sortable > li",
 			  drop: function( event, ui ) {
 			  	var duplicateWoman = $(this).find("#" + $(ui.draggable).attr('id'));
-			  	var previousWeekCheck = $dropContainer.find("#" + $(ui.draggable).attr('id'));
+			  	// var previousWeekCheck = $dropContainer.find("#" + $(ui.draggable).attr('id'));
 			  	var str = $(ui.draggable).attr('id');
 			  	var id = str.replace("_", " ");
 			  	var listLength = $('#container2 li').length;
@@ -177,10 +177,10 @@
 			  		alertError(id, " may be hot, but you can't add her twice. Pick someone else.");;
 			  	}
 
-			  	else if (previousWeekCheck.length < 1) {
-			  		document.getElementById("numberPicked2").innerHTML = $('#container2 li').length;
-			  		alertError(id, " wasn't picked last week. Go change your picks, or choose a different woman.");
-			  	}
+			  	// else if (previousWeekCheck.length < 1) {
+			  	// 	document.getElementById("numberPicked2").innerHTML = $('#container2 li').length;
+			  	// 	alertError(id, " wasn't picked last week. Go change your picks, or choose a different woman.");
+			  	// }
 
 			  	else {
 			  		var copy = $(ui.draggable).clone().draggable({
@@ -514,7 +514,8 @@
 		    	activate: function(event, ui) {
 		    		var picks = [];
 		    		if (ui.newTab.index() != 0) {
-		    			$( "#container" + (ui.newTab.index()) + " li" ).each(function( index ) {
+		    			//TODO added 1 to adjust removal of first container
+		    			$( "#container" + (ui.newTab.index()+1) + " li" ).each(function( index ) {
 							picks.push($( this ).attr('id')); //append list of picks from previous weeks container
 						});
 		    		}
@@ -1133,12 +1134,13 @@
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Izzy')"></a></h5>
 	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
 	  			</li>
-	  			<li name = "Jackie" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Jackie">
+	  			<li name = "Jackie" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Jackie">
 	  				<img title="Jackie" src="pics/Jackie.PNG" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
 	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Jackie.PNG')">
 	  				  	</a>&nbsp&nbsp&nbsp&nbsp Jackie &nbsp&nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Jackie')"></a></h5>	
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
 	  			</li>
 	  			<li name = "Jami" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Jami">
 	  				<img title="Jami" src="pics/Jami.PNG" class="img-responsive">
@@ -1191,12 +1193,13 @@
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Laura')"></a></h5>
 	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
 	  			</li>
-	  			<li name = "LB" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "LB">
+	  			<li name = "LB" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "LB">
 	  				<img title="LB" src="pics/LB.PNG" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
 	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/LB.PNG')">
 	  				  	</a>&nbsp&nbsp&nbsp&nbsp LB &nbsp&nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('LB')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
 	  			</li>
 	  			<li name = "Lauren B" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Lauren_B">
 	  				<img title="Lauren B" src="pics/Lauren_B.PNG" class="img-responsive">
@@ -1235,12 +1238,13 @@
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Maegan')"></a></h5>
 	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
 	  			</li>
-	  			<li name = "Mandi" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Mandi">
+	  			<li name = "Mandi" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Mandi">
 	  				<img title="Mandi" src="pics/Mandi.PNG" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
 	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Mandi.PNG')">
 	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Mandi &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Mandi')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
 	  			</li>
 	  			<li name = "Olivia" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Olivia">
 	  				<img title="Olivia" src="pics/Olivia.PNG" class="img-responsive">
@@ -1256,12 +1260,13 @@
 	  				  	</a>&nbsp&nbsp&nbsp Rachel &nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Rachel')"></a></h5>
 	  			</li>
-	  			<li name = "Samantha" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Samantha">
+	  			<li name = "Samantha" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Samantha">
 	  				<img title="Samantha" src="pics/Samantha.PNG" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
 	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Samantha.PNG')">
 	  				  	</a>&nbsp&nbsp&nbsp Samantha &nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Samantha')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
 	  			</li>
 	  			<li name = "Shushanna" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Shushanna">
 	  				<img title="Shushanna" src="pics/Shushanna.PNG" class="img-responsive">
@@ -1289,7 +1294,7 @@
 				style = "position:relative; top: -20px; color:white;" class = "form-horizontal">
 				<div id="tabs">
 					<ul>
-						<li><a href="#tabs-1">Week 3</a></li>
+						<!-- <li><a href="#tabs-1">Week 3</a></li> -->
 						<li><a href="#tabs-2">Week 4</a></li>
 						<li><a href="#tabs-3">Week 5</a></li>
 						<li><a href="#tabs-4">Week 6</a></li>
@@ -1299,13 +1304,13 @@
 						<li><a href="#tabs-8">Week 10</a></li>
 					</ul>
 
-					<div id="tabs-1">
+<!-- 					<div id="tabs-1">
 						<div class="ui-widget ui-helper-clearfix" style = "width:col-md-7;">
 							<p><strong>Choose 17 women for this week. You have picked <span id = "numberPicked1">0</span>/17</strong></p>
 							<div id="container1" class="dropContainer ui-widget-content ui-state-default">
 							</div>
 						</div>
-					</div>
+					</div> -->
 					<div id="tabs-2">
 						<div class="ui-widget ui-helper-clearfix" style = "width:col-md-7;">
 							<p><strong>Choose 14 women for this week. You have picked <span id = "numberPicked2">0</span>/14</strong></p>
@@ -1401,7 +1406,7 @@
 	$('.selectpicker').selectpicker();
 
 	$('#formfill').click(function() {
-		var week3picks = "";
+		// var week3picks = "";
 		var week4picks = "";
 		var week5picks = "";
 		var week6picks = "";
@@ -1410,9 +1415,9 @@
 		var week9picks = "";
 		var week10picks = "";
 
-		$( "#container1 li" ).each(function( index ) {
-			week3picks += $( this ).attr('id') + ";";
-		});
+		// $( "#container1 li" ).each(function( index ) {
+		// 	week3picks += $( this ).attr('id') + ";";
+		// });
 
 		$( "#container2 li" ).each(function( index ) {
 			week4picks += $( this ).attr('id') + ";";
@@ -1442,7 +1447,10 @@
 			week10picks += $( this ).attr('id') + ";";
 		});
 
-		document.getElementById("entry_1299310825").value = "week3="+week3picks+"\n"+ "week4="+week4picks+"\n"+ "week5="+week5picks+"\n"+
+		// document.getElementById("entry_1299310825").value = "week3="+week3picks+"\n"+ "week4="+week4picks+"\n"+ "week5="+week5picks+"\n"+
+		// 													"week6="+week6picks+"\n"+ "week7="+week7picks+"\n"+ "week8="+week8picks+"\n"+
+		// 													"week9="+week9picks+"\n"+ "week10="+week10picks;
+		document.getElementById("entry_1299310825").value = "week4="+week4picks+"\n"+ "week5="+week5picks+"\n"+
 															"week6="+week6picks+"\n"+ "week7="+week7picks+"\n"+ "week8="+week8picks+"\n"+
 															"week9="+week9picks+"\n"+ "week10="+week10picks;
 	});
@@ -1455,11 +1463,11 @@
 		}
 
 		//Check all lengths before submission
-		if ($('#container1 li').length != week3Eliminations) {
-			alertError("", "Week 3 has not been completed yet.");
-			return false;
-		}
-		else if ($('#container2 li').length != week4Eliminations) {
+		// if ($('#container1 li').length != week3Eliminations) {
+		// 	alertError("", "Week 3 has not been completed yet.");
+		// 	return false;
+		// }
+		if ($('#container2 li').length != week4Eliminations) {
 			alertError("", "Week 4 has not been completed yet.");
 			return false;
 		}
@@ -1489,11 +1497,13 @@
 		}
 		var finalChecks = true;
 		var loopBreak = 0;
-		for(j = 8; j > 0; j--) {
+		//TODO j > 0 --> 1 to skip container1
+		for(j = 8; j > 1; j--) {
 			console.log(j);
 			var containerIdStart = "#container" + j + " li";
 			$( containerIdStart ).each(function( index ) {
-				for(i = 1; i<j; i++) {
+				//TODO i =1 --> 2 to skip container1
+				for(i = 2; i<j; i++) {
 					console.log("i=" + i);
 					containerId = "#container" + i
 					var prevCheck = $(containerId).find("#" + $( this ).attr('id'));
