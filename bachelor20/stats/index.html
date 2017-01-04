@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="us">
+<head>
+	<meta charset="utf-8">
+	<title>The Bachelor Stats</title>
+	<link href="../css/dark-hive/jquery-ui-1.10.3.custom.css" rel="stylesheet">
+	<link href="../css/bootstrap.min.css" rel="stylesheet">
+	<script src="../js/jquery-1.9.1.js"></script>
+	<script src="../js/jquery-ui-1.10.3.custom.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/d3.v3.min.js"></script>
+
+	<style>
+		/* tell the SVG path to be a thin blue line without any area fill */
+		path {
+			stroke: steelblue;
+			stroke-width: 1;
+			fill: none;
+		}
+
+		.axis path,
+		.axis line {
+		  fill: none;
+		  stroke: black;
+		  shape-rendering: crispEdges;
+		}
+
+		.line {
+		  fill: none;
+		  stroke: steelblue;
+		  stroke-width: 1.5px;
+		}
+
+		.grid .tick {
+		    stroke: lightgrey;
+		    opacity: 0.7;
+		}
+		.grid path {
+		      stroke-width: 0;
+		}
+	</style>
+</head>
+<body>
+	<!-- Stores text file in a hidden html textarea -->
+	<textarea id = "file" class = "hide">
+name=Matthew
+week4=Amanda;Becca;Caila;Emily;Haley;Jennifer;JoJo;Jubilee;Lauren_B;Olivia;Lauren_H;Lace;Leah;Shushanna;
+week5=Caila;Becca;JoJo;Lauren_B;Olivia;Jennifer;Amanda;Emily;Haley;Lauren_H;Leah;
+week6=Becca;Caila;JoJo;Lauren_B;Olivia;Lauren_H;Emily;Haley;
+week7=Caila;JoJo;Olivia;Lauren_B;
+week8=Caila;JoJo;Olivia;
+week9=Caila;Olivia;
+week10=Caila;
+
+name=Thomas
+week4=Amanda;Becca;Caila;Emily;Haley;Jennifer;JoJo;Jubilee;Lauren_B;Lauren_H;Leah;Olivia;Shushanna;Amber;
+week5=Amanda;Becca;Caila;JoJo;Jubilee;Olivia;Leah;Emily;Haley;Lauren_B;Lauren_H;
+week6=Amanda;Becca;Caila;Lauren_B;Jubilee;JoJo;Olivia;Leah;
+week7=Olivia;Lauren_B;Caila;JoJo;
+week8=Caila;JoJo;Lauren_B;
+week9=JoJo;Caila;
+week10=JoJo;
+
+name=Cassia
+week4=Rachel;Olivia;Leah;Lauren_B;Lace;Jubilee;JoJo;Haley;Emily;Caila;Becca;Amber;Amanda;Shushanna;
+week5=Rachel;Olivia;Jubilee;Lace;JoJo;Emily;Caila;Becca;Amanda;Shushanna;Lauren_B;
+week6=Becca;Caila;Amanda;JoJo;Lauren_B;Olivia;Rachel;Shushanna;
+week7=Becca;Amanda;Caila;Rachel;
+week8=Amanda;Caila;Rachel;
+week9=Rachel;Amanda;
+week10=Amanda;
+
+name=Hannah
+week4=Caila;JoJo;Olivia;Amanda;Becca;Emily;Haley;Jennifer;Lauren_B;Lauren_H;Leah;Shushanna;Rachel;Jubilee;
+week5=Caila;Olivia;Leah;JoJo;Lauren_B;Jennifer;Lauren_H;Shushanna;Amanda;Becca;Jubilee;
+week6=Caila;Lauren_B;JoJo;Lauren_H;Leah;Olivia;Shushanna;Amanda;
+week7=JoJo;Leah;Olivia;Caila;
+week8=JoJo;Caila;Leah;
+week9=JoJo;Leah;
+week10=JoJo;
+
+name=James
+week4=Amanda;Becca;Caila;Jennifer;Jubilee;JoJo;Lauren_B;Leah;Olivia;Lace;Rachel;Shushanna;Jami;Amber;
+week5=Amanda;Becca;Caila;Lauren_B;Olivia;Leah;Jubilee;JoJo;Jennifer;Rachel;Amber;
+week6=Amanda;Becca;Caila;Olivia;JoJo;Lauren_B;Leah;Jennifer;
+week7=Amanda;Becca;Caila;Olivia;
+week8=Becca;Caila;Olivia;
+week9=Caila;Becca;
+week10=Caila;
+
+name=Ryan/Blair
+week4=Becca;Caila;Amanda;Jennifer;Lauren_B;JoJo;Jubilee;Olivia;Lauren_H;Lace;Leah;Rachel;Emily;Haley;
+week5=Amanda;Becca;Caila;Jennifer;JoJo;Jubilee;Lauren_B;Lace;Lauren_H;Olivia;Rachel;
+week6=Amanda;Becca;Caila;Lauren_B;Olivia;Lauren_H;JoJo;Jubilee;
+week7=Becca;Lauren_B;Amanda;JoJo;
+week8=Lauren_B;Becca;Amanda;
+week9=Lauren_B;Becca;
+week10=Lauren_B;
+
+name=Dana
+week4=Becca;Jubilee;Lace;Olivia;Emily;Haley;Caila;Amber;Amanda;JoJo;Lauren_B;Lauren_H;Shushanna;Leah;
+week5=Amanda;Becca;Caila;Emily;Haley;Jubilee;JoJo;Lace;Shushanna;Olivia;Lauren_B;
+week6=Amanda;Becca;Caila;Jubilee;JoJo;Olivia;Shushanna;Lauren_B;
+week7=Becca;Caila;JoJo;Shushanna;
+week8=Caila;JoJo;Shushanna;
+week9=JoJo;Shushanna;
+week10=JoJo;
+
+name=Austyn
+week4=Becca;Caila;Olivia;Haley;Emily;Jennifer;JoJo;Lauren_B;Leah;Rachel;Shushanna;Lauren_H;Jubilee;Amanda;
+week5=Becca;Caila;Emily;Haley;Jennifer;JoJo;Lauren_B;Olivia;Leah;Rachel;Shushanna;
+week6=Becca;Caila;Olivia;JoJo;Rachel;Shushanna;Lauren_B;Jennifer;
+week7=Becca;Olivia;Caila;JoJo;
+week8=Becca;Olivia;JoJo;
+week9=Becca;JoJo;
+week10=Becca;
+
+name=Carissa
+week4=Amanda;Becca;Caila;JoJo;Jubilee;Lauren_B;Olivia;Jennifer;Lauren_H;Leah;Shushanna;Rachel;Amber;Emily;
+week5=Amanda;Caila;Becca;Jennifer;JoJo;Jubilee;Lauren_B;Olivia;Shushanna;Lauren_H;Rachel;
+week6=Becca;Caila;Jennifer;JoJo;Lauren_B;Lauren_H;Olivia;Rachel;
+week7=Caila;JoJo;Lauren_B;Olivia;
+week8=Caila;Lauren_B;Olivia;
+week9=Caila;Lauren_B;
+week10=Caila;
+
+name=Brad
+week4=Amanda;Caila;Jami;JoJo;Olivia;Shushanna;Rachel;Amber;Becca;Emily;Jennifer;Jubilee;Lauren_B;Leah;
+week5=Amanda;Becca;Caila;Emily;Jami;JoJo;Jubilee;Olivia;Rachel;Lauren_B;Shushanna;
+week6=Amanda;Caila;Emily;JoJo;Olivia;Lauren_B;Shushanna;Jubilee;
+week7=Caila;Olivia;Lauren_B;Amanda;
+week8=Olivia;Caila;Lauren_B;
+week9=Olivia;Caila;
+week10=Caila;
+	</textarea>
+	<div class = "row">
+		<div class = "col-md-9" id = "graph">
+		</div>
+		<div class = "col-md-3" style = "position:relative; top: 20px">
+			<strong style = "position:relative; right: 25px"><u><font size = "45px">Standings</font></u></strong>
+			<div id = "legend"></div>
+		</div>
+	</div>
+
+<script>
+	var textFile = document.getElementById("file").value;
+	//break up the email entries
+	var entries = textFile.split("\n\n");
+	//fix the new line characters that google app scripts add to the scrape for whatever reason
+	for(var i=0; i<entries.length; i++) {
+		for(var j=0; j<entries[i].length; j++) {
+			//j> 20 bad way to avoid the first line, but works
+			if (entries[i][j] == "\n" && entries[i][j-2] != ";" && j>20) {
+				entries[i] = entries[i].slice(0,j) + entries[i].slice(j+1, entries[i].length);
+			}
+		}
+	}
+
+	var entryObjs = [];
+	for(var i=0; i<entries.length; i++) {
+		var obj = {};
+		obj.name = entries[i].substring(5, entries[i].indexOf("\n")) //assume name is first line, start at 5 after chars "name="
+		var entryNoName = entries[i].substring(entries[i].indexOf("\n")+1, entries[i].length);
+		var weeks = entryNoName.split("=");
+		console.log(weeks)
+		obj.week = [];
+		obj.week[0] = weeks[1].substring(0, weeks[1].lastIndexOf(";")+1);
+		obj.week[1] = weeks[2].substring(0, weeks[2].lastIndexOf(";")+1);
+		obj.week[2] = weeks[3].substring(0, weeks[3].lastIndexOf(";")+1);
+		obj.week[3] = weeks[4].substring(0, weeks[4].lastIndexOf(";")+1);
+		obj.week[4] = weeks[5].substring(0, weeks[5].lastIndexOf(";")+1);
+		obj.week[5] = weeks[6].substring(0, weeks[6].lastIndexOf(";")+1);
+		obj.week[6] = weeks[7].substring(0, weeks[7].lastIndexOf(";")+1);
+		// obj.week[7] = weeks[8].substring(0, weeks[8].lastIndexOf(";")+1);
+		entryObjs[i] = obj;
+		console.log(obj);
+	}
+	console.log(entryObjs);
+	var winners = [["Amanda", "Amber", "Becca", "Caila", "Emily", "Haley", "Jennifer", "JoJo", "Jubilee", "Lauren_B", "Lauren_H", "Leah", "Olivia", "Rachel"], 
+				   ["Amanda", "Becca", "Caila", "Emily", "Jennifer", "JoJo", "Jubilee", "Lauren_B", "Lauren_H", "Leah", "Olivia"], 
+				   ["Amanda", "Becca", "Caila", "Emily", "JoJo", "Lauren_B", "Lauren_H", "Leah", "Olivia"], 
+				   ["Amanda", "Caila", "JoJo", "Lauren_B"], 
+				   ["Caila", "JoJo", "Lauren_B"], 
+				   ["JoJo", "Lauren_B"], 
+				   ["Lauren_B"], 
+				   []];
+
+	var weekValues = [1,2,3,5,8,13,21,34];
+	var numOfWeeks = obj.week.length;
+
+	var scores = []; //an array of arrays of everyone's score
+	//loop through everyone's entry
+	for (var i=0; i<entryObjs.length; i++) {
+		var score = [0];
+		//loop through each week
+		for (var j=0; j<numOfWeeks; j++) {
+			score[j+1] = score[j]; //initialize score to score in previous week, j+1 because first value needs to stay 0
+			//loop through array of winners for corresponding week
+			for (var k=0; k< winners[j].length; k++) {
+				if (entryObjs[i].week[j].indexOf(winners[j][k]) != -1) {
+					score[j+1] = score[j+1] + weekValues[j];
+				}
+			}
+		}
+		scores[i] = score;
+		console.log(entryObjs[i].name, score);
+	}
+
+	var score = [0,1,2,3,4,5,6,7,8];
+	var xKeys = ["Start", "Week 3", "Week 4", "Week 5", "Week 6", "Week 7", "Week 8", "Week 9", "Week 10"];
+	var data = [];
+	for (var i=0; i<scores.length; i++) {
+		var tempData = [];
+		for (var j=0; j<scores[i].length; j++) {
+			var tempObj = {};
+	        tempObj.xValue = xKeys[j];
+	        tempObj.yValue = scores[i][j];
+	        tempData[j] = tempObj;
+	    }
+	    data[i] = tempData;
+	}
+
+    // define dimensions of graph
+	var margin = {top: 20, right: 20, bottom: 30, left: 50},
+    w = 960 - margin.left - margin.right,
+    h = 500 - margin.top - margin.bottom;
+    var allData = d3.merge(data);
+
+	var x = d3.scale.ordinal().domain(data[0].map(function(d) {return d.xValue;})).rangeRoundBands([0,w],1);
+	var y = d3.scale.linear().domain([0, d3.max(allData, function(d) {return d.yValue; })]).range([h, 0]);
+
+	var xAxis = d3.svg.axis()
+	    .scale(x)
+	    .orient("bottom")
+	    .ticks(10);
+
+	var yAxis = d3.svg.axis()
+	    .scale(y)
+	    .orient("left")
+	    .ticks(10);
+
+	var line = d3.svg.line()
+		.x(function(d) { return x(d.xValue); })
+		// .x(function(d) { if (d == 0) {return 0;} else {return xKeys[d];} })
+    	.y(function(d) { return y(d.yValue); });
+
+	var graph = d3.select("#graph").append("svg")
+	      .attr("width", w + margin.left + margin.right)
+	      .attr("height", h + margin.top + margin.bottom)
+	    .append("svg:g")
+	      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+	graph.append("svg:g")
+		  .attr("class", "x axis")
+	      .attr("transform", "translate(0," + h + ")")
+	      .call(xAxis);
+
+	graph.append("svg:g")
+		  .attr("class", "grid")
+	      .attr("transform", "translate(0," + h + ")")
+	      .call(xAxis
+            .tickSize(-h, 0, 0)
+            .tickFormat("")
+          );
+
+	// Y-Axis
+    graph.append("g")
+		  .attr("class", "y axis")
+	      .call(yAxis);
+
+	// Y-Axis Grid
+	graph.append("g")
+		  .attr("class", "grid")
+	      .call(yAxis
+	      	.tickSize(-w, 0, 0)
+          	.tickFormat("")
+          );
+
+	var colors = ["blue", "green", "orange", "red", "purple", "maroon", "LightSeaGreen", "DeepPink", "LawnGreen", "Fuchsia"];
+	var colorCount = 10;
+	for (var i=0; i < data.length; i++) {
+		graph.append("path")
+		      .attr("class", "line")
+		      .style("stroke", colors[i%colorCount])
+		      .attr("d", line(data[i]));
+	}
+
+	var standings = []
+	for (var i=0; i<entryObjs.length; i++) {
+		var obj = {}
+		obj.name = entryObjs[i].name;
+		obj.score = scores[i][numOfWeeks]; //the last score which is the current score no matter what week it is
+		obj.color = colors[i%colorCount];
+		standings[i] = obj;
+	}
+
+	standings.sort(function(a,b) {
+		if (a.score > b.score) {
+			return -1
+		}
+		else if (a.score < b.score) {
+			return 1;
+		}
+		else
+			return 0;
+	});
+
+	var legend = document.getElementById("legend");
+	var legendHtml = ""
+	for (var i=0; i<standings.length; i++) {
+		legendHtml += "<div><font color='" + standings[i].color + "'>" + (i+1) + ". " + standings[i].name + " with a score of " + standings[i].score + "</font></div>";
+	}
+	$('#legend').html(legendHtml);
+</script>
+</body>
+</html>
