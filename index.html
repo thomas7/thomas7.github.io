@@ -52,14 +52,14 @@
 			position:relative;
 			text-shadow: 0px -1px 4px red, 0px -2px 10px yellow, 0px -10px 20px #ff8000, 0px -18px 40px orange;
 			opacity: 1;
-			bottom:130px;
+			bottom:140px;
 			right: -5px;
 			color: red;
         	font: 25px 'LeagueGothicRegular';
-			transform:rotate(325deg);
-			-ms-transform:rotate(335deg);
-			-moz-transform: rotate(335deg);
-			-webkit-transform:rotate(325deg); /* Safari and Chrome */
+			transform:rotate(315deg);
+			-ms-transform:rotate(315deg);
+			-moz-transform: rotate(315deg);
+			-webkit-transform:rotate(315deg); /* Safari and Chrome */
 		}
 
 	</style>
@@ -218,7 +218,7 @@
 			  	document.getElementById("numberPicked3").innerHTML = listLength == week5Eliminations ? week5Eliminations : listLength+1;
 
 			  	if ($('#container3 li').length == week5Eliminations)
-			  		alertError("Nice try,", " but you can't add more than" + week5Eliminations + " women for this week.");
+			  		alertError("Nice try,", " but you can't add more than " + week5Eliminations + " women for this week.");
 
 			  	else if (duplicateWoman.length > 0) {
 			  		document.getElementById("numberPicked3").innerHTML = $('#container3 li').length; 
@@ -566,504 +566,335 @@
       <div class="modal-body">
       	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
       	<div id="myModalBody"></div>
-      	<div id="bio_Amanda" class = "hide allBios">
+      	<div id="bio_Alexis" class = "hide allBios">
       		<div class="m-text-copy">
-                <h2 class="module-title light text1 m-person-title">Amanda</h2>
+                <h2 class="module-title light text1 m-person-title">Alexis</h2>
                 <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
                 <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>
-                <div class="m-person-bio expandable-text">
-                    <div class="expandable-section open" style="word-wrap: break-word;">
-                        <p><strong>Age:</strong> 25</p> <p><strong>Occupation:</strong> Esthetician</p> <p><strong>Hometown:</strong> Rancho Santa Margarita, CA</p> <p><strong>Height</strong>:5’3”</p> <p><strong>Tattoos: </strong>None</p> <p><strong>Favorite Music</strong>: I love all kinds of music. Pop and country are probably what I listen to most often.</p> <p><strong>All-Time Favorite Movies</strong>:Grease, Bridesmaids, and The Notebook, of course</p> <p><strong>Cold or Hot Weather?</strong>: Hot weather because I live at the beach.</p> <p><strong>What is the most outrageous thing you have ever done? </strong>I hiked 12 miles to a waterfall in Kauai during a thunderstorm.</p> <p><strong>What is your greatest achievement to date? </strong>My two daughters. They’re the most amazing little humans. I am amazed by them every day.</p> <p><strong>If you won the lottery, what would you do with your winnings? </strong>I would buy a big house by the beach and adopt babies and dogs</p> <p><strong>Do you have fear of aging, and are you doing anything to prevent it? </strong>Yes, I use an anti-aging skincare line, always wear sunscreen and get botox.</p> <p><strong>What’s your guiltiest pleasure of any kind? </strong>Nutella &amp; Peanut Butter</p> <p><strong>What is your favorite all-time book and why? </strong><em>Pride and Prejudice</em> by Jane Austen because it is such a good love story, but also funny, beautifully written, and timeless.</p>                                    </div>
-                </div>                                  
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 23</p> <p>  <strong>Occupation:</strong> Aspiring Dolphin Trainer</p> <p>  <strong>Hometown:</strong> Secaucus, NJ</p> <p>  <strong>Height:</strong> 5'6"</p> <p>  <strong>Tattoos:</strong> Yes. I have an Aries symbol on my wrist and "smile with the rising sun" on my left hip.</p> <p>  <strong>All-time favorite movies: </strong>Good Will Hunting, Titanic, Tristan and Isolde</p> <p>  <strong>If you could be any animal, which one and why?</strong> Dolphin or dog. I love the ocean and dogs are very active!</p> <p>  <strong>How would you describe yourself as a lover?</strong> Caring, romantic, honest</p> <p>  <strong>What is the most outrageous thing you have ever done? </strong>Move to Miami alone!</p> <p>  <strong>What are five things you can't live without?</strong> My family, my dog, my best friend, my fake eyelashes and whitening strips</p> <p>  <strong>What is your most embarrassing moment?</strong> My ex-boyfriend telling me I had a mustache at a Giants game.</p> <p>  <strong>If you could be a fictional character, who would you be and why?</strong> The Little Mermaid. Who doesn't want to be a mermaid?</p> <p>  <strong>What are you most afraid of?</strong> E.T. the alien</p>                                    </div>
+                </div>                                
             </div>
       	</div>
-      	<div id="bio_Amber" class = "hide allBios">
+      	<div id="bio_Angela" class = "hide allBios">
       		<div class="m-text-copy">
-
-                                                    <h2 class="module-title light text1 m-person-title">Amber</h2>
-                        
-                                                    <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
-                        
-                        
-                                                                                    <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>
-                            
-                                                            <div class="m-person-bio expandable-text">
-                                    <div class="expandable-section open" style="word-wrap: break-word;">
-                                        <p><strong>Age:</strong>&nbsp;30</p> <p><strong>Occupation:</strong>&nbsp;Bartender</p> <p><strong>Hometown:</strong>&nbsp;Chicago, IL</p> <p><strong>Height:</strong>&nbsp;5'3"</p> <p><strong>Tattoos:</strong>&nbsp;None</p> <p><strong>Can't live without:</strong>&nbsp;Teddy bear, Mom, best friends, brother</p> <p><strong>Biggest date fear:</strong>&nbsp;Loving someone and them not feeling the same way</p> <p>If I never had to<strong>&nbsp;pay bills</strong>, I would be very happy.</p> <p>If I never got to&nbsp;<strong>see my friends/family</strong>, I would be very sad.</p> <p><strong>If you could be someone else for just one day, who would it be?&nbsp;</strong>A zookeeper. I would love to be around the different animals and watch how they live.</p> <p><strong>If you won the lottery, what would you do with your winnings?&nbsp;</strong>Travel -- there is so much to see in this world. Also so many families in different countries that can use help.</p> <p><strong>Top 3 all-time favorite movies?&nbsp;</strong><em>The Lion King, Reservoir Dogs,&nbsp;</em>and<em>&nbsp;A Bronx Tale.</em></p> <p><strong>What does being married mean to you?&nbsp;</strong>Committing to be with each other no matter how tough it can be. Having a life-long friendship and being there for one another.</p>                                    </div>
-                                </div>
-                                                    
-                        
-                    </div>
+                <h2 class="module-title light text1 m-person-title">Angela</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 26</p> <p>  <strong>Occupation:</strong> Model</p> <p>  <strong>Hometown:</strong> Greenville, SC</p> <p>  <strong>Height:</strong> 5'7"</p> <p>  <strong>Tattoos:</strong> No</p> <p>  <strong>All-time favorite movies:&nbsp;</strong><em>Ace Ventura</em>, <em>Despicable Me</em>, <em>The Notebook</em></p> <p>  <strong>If you could be any animal, which one and why? </strong>Dolphin. They are playful and sociable and live in family groups.</p> <p>  <strong>What is the most outrageous thing you have ever done? </strong>Move 500+ miles away from home with no family.</p> <p>  <strong>What are five things you can't live without? </strong>Lip balm, water, hair tie, iPhone and most importantly – my mom. &nbsp;:)</p> <p>  <strong>Where do you see yourself in 5 years? </strong>Definitely married, have one kid so far. Be a stay at home mom. Still model some if possible. Enjoying life with my family.&nbsp;</p> <p>  <strong>If I never had to ______, I would be very happy.</strong> Drive myself anywhere</p> <p>  <strong>What's your worst date memory?</strong> A guy putting down the name as "Batman" while we waited for a table. So immature.</p> <p>  <strong>What's your guiltiest pleasure of any kind?</strong> Desserts! Oh, and I lick the popcorn bag too. I'm a weirdo. My brother and I used to do it all the time when we were little. So unhealthy. LOL.</p>                                    </div>
+                </div>
+            </div>
       	</div>
-      	<div id="bio_Becca" class = "hide allBios">
+      	<div id="bio_Astrid" class = "hide allBios">
       		<div class="m-text-copy">
-
-                                                    <h2 class="module-title light text1 m-person-title">Becca</h2>
-                        
-                                                    <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
-                        
-                        
-                                                                                    <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>
-                            
-                                                            <div class="m-person-bio expandable-text">
-                                    <div class="expandable-section open" style="word-wrap: break-word;">
-                                        <p><strong>Age:</strong>&nbsp;26</p> <p><strong>Occupation:</strong>&nbsp;Chiropractic Assistant</p> <p><strong>Hometown:</strong>&nbsp;San Diego, CA</p> <p><strong>Height:</strong>&nbsp;5'5"</p> <p><strong>Tattoos:</strong>&nbsp;Two</p> <p><strong>Can't live without:</strong>&nbsp;Food, family, friends, Wi-Fi, Netflix</p> <p><strong>Biggest date fear:</strong>&nbsp;Having stomach issues and clogging up a toilet, a la&nbsp;<em>Dumb and Dumber</em></p> <p>If I never had to&nbsp;<strong>go back to school</strong>, I would be very happy.</p> <p>If I never got to&nbsp;<strong>see my family</strong>, I would be very sad.</p> <p><strong>If you could be any animal, what would you be?&nbsp;</strong>A dolphin. They're beautiful and supposedly use 20% of their brains -- brilliant!</p> <p><strong>If you won the lottery, what would you do with your winnings?&nbsp;</strong>I would give a large portion to my family, and then travel!</p> <p><strong>What's your most embarrassing moment?&nbsp;</strong>I have several -- once I was getting gas and the guy asked, "What kind of gas do you like?" and I thought he asked "What kind of guys do you like?" I responded, "Tall, dark, and handsome." He just stared at me and repeated the question.</p> <p><strong>What is your greatest achievement to date?&nbsp;</strong>Staying and living alone in California when my sister and brother-in-law went back home to Louisiana.</p>                                    </div>
-                                </div>
-                                                    
-                        
-                    </div>
+				<h2 class="module-title light text1 m-person-title">Astrid</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 26</p> <p>  <strong>Occupation:</strong> Plastic Surgery Office Manager</p> <p>  <strong>Hometown:</strong> Tampa, FL</p> <p>  <strong>Height: </strong>5'7 ½"</p> <p>  <strong>Tattoos:</strong> Feather with quote on left underarm &amp; half heart/infinity symbol on right wrist</p> <p>  <strong>All-time favorite movies:&nbsp;</strong><em>Titanic</em>, <em>The Other Woman</em>, <em>Beauty and the Beast</em>, Bourne movies</p> <p>  <strong>If you could be any animal, which one and why? </strong>Dolphin, so I could rescue lost sailors and swim in the ocean doing tricks.</p> <p>  <strong>What are five things you can't live without? </strong>My mom, my phone, lashes, yoga, red wine</p> <p>  <strong>If you could be a fictional character, who would you be and why? </strong>The Little Mermaid before legs. I would love to explore the ocean.</p> <p>  <strong>Do you have a serious fear of any kind of animal?</strong> Horses freak me out. I've had some bad experiences.</p> <p>  <strong>If I never had to ______, I would be very happy. </strong>Work</p> <p>  <strong>What's your favorite television show and why?</strong> <em>Scandal</em>. Love Rachel Pope!</p> <p>  <strong>What's your guilty pleasure television show?</strong> Real Housewives of all cities.</p> <p><strong>What are you most afraid of?</strong> Dying alone and just getting old and wrinkly.</p>                                    </div>
+                </div>        
+            </div>
       	</div>
-      	<div id="bio_Breanne" class = "hide allBios">
+      	<div id="bio_Briana" class = "hide allBios">
       		<div class="m-text-copy">
-
-                                                    <h2 class="module-title light text1 m-person-title">Breanne</h2>
-                        
-                                                    <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
-                        
-                        
-                                                                                    <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>
-                            
-                                                            <div class="m-person-bio expandable-text">
-                                    <div class="expandable-section open" style="word-wrap: break-word;">
-                                        <p><strong>Age:</strong>&nbsp;30</p> <p><strong>Occupation:</strong> Nutritional Therapist</p> <p><strong>Hometown:</strong> Seattle, WA</p> <p><strong>Height</strong>:5’7”</p> <p><strong>Tattoos</strong>:None</p> <p><strong>Favorite Music</strong>: Lana Del Rey, Lady Gaga, Beyonce – they are incredible women who love themselves and are confident to share their gifts with the world!</p> <p><strong>All-Time Favorite Movies</strong>:That Thing You Do!, Anchorman, Notting Hill</p> <p><strong>Cold or Hot Weather:? </strong>Hot for sure! I love sunshine (makes you happy!) plus you can show off the body you have worked for all winter.</p> <p><strong>What is the best trip you have ever been on and why? </strong>New York for my 30<sup>th</sup> birthday. I went all by myself, went to Fashion Week, and went to some amazing events. I made the best connections of my life there and still keep in contact.</p> <p><strong>What is your favorite all-time book and why? </strong><em>Why Men Love Bitches. </em>I know the title is hilarious, but it’s all about valuing yourself and letting the man pursue you.</p> <p><strong>If you could be any fruit or vegetable, which one would you be? </strong>Carrot! Sweet and sassy – and bright, because I am outgoing</p> <p><strong>If you wanted to approach a man you had never met before, how would you go about it? </strong>“Smize” – smile with my eyes. Get him to approach me and have open body language.</p> <p><strong>What do you hope to get out of participating in “The Bachelor”? </strong>I want to find the love my life and be role models together for what true love is. I want to show America that anything is possible and God will give you the desires of your heart. #powercouple – Yes, I hashtagged that. ;)&nbsp;</p>                                    </div>
-                                </div>
-                                                    
-                        
-                    </div>
+      			<h2 class="module-title light text1 m-person-title">Briana</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 28</p> <p>  <strong>Occupation:</strong> Surgical Unit Nurse</p> <p>  <strong>Hometown:</strong> Salt Lake City, UT</p> <p>  <strong>Height:</strong> 5'4"</p> <p>  <strong>Tattoos:</strong> Celtic knot that means eternity on my right foot</p> <p>  <strong>All-time favorite movies:&nbsp;</strong><em>Zoolander</em>, <em>How to Lose a Guy in 10 Days</em>, <em>Shawshank Redemption</em></p> <p>  <strong>If you could be any animal, which one and why? </strong>Dolphin so I could breathe underwater, do flips and be cute.</p> <p>  <strong>What is the most outrageous thing you have ever done? </strong>Moved to Utah</p> <p>  <strong>What are five things you can't live without? </strong>Coffee, my water bottle, family/friends, socks, chapstick</p> <p>  <strong>If you could be a fictional character, who would you be and why? </strong>Ariel from <em>The Little Mermaid</em>. She's a mermaid with great hair, cool animal friends and she marries a cutie.</p> <p>  <strong>If you could be any fruit or vegetable, which one would you be? </strong>Pineapple: Hawaiian, delicious, tropical, and pretty.</p> <p>  <strong>What is your favorite television show &amp; why?</strong> <em>Friends</em>. I watch a million reruns and it never gets old.</p> <p>  <strong>What's your guiltiest pleasure of any kind? </strong>Big Mac Meal from McDonalds</p>                                    </div>
+                </div>      
+            </div>
       	</div>
-      	<div id="bio_Caila" class = "hide allBios">
+      	<div id="bio_Brittany" class = "hide allBios">
       		<div class="m-text-copy">
-
-                                                    <h2 class="module-title light text1 m-person-title">Caila</h2>
-                        
-                                                    <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
-                        
-                        
-                                                                                    <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>
-                            
-                                                            <div class="m-person-bio expandable-text">
-                                    <div class="expandable-section open" style="word-wrap: break-word;">
-                                        <p><strong>Age:</strong> 24</p> <p><strong>Occupation:</strong> Software Sales Rep.</p> <p><strong>Hometown:</strong> Hudson, OH</p> <p><strong>Height</strong>:5’4”</p> <p><strong>Tattoos</strong>:Yes, just one on my right hip. It is a half-inch tattoo of the Hawaiian islands.</p> <p><strong>Favorite Music</strong>: Coffee House music like Brett Dennen, Colbie Caillat, Ingrid Michaelson, U2 (reminds me of my Dad), Peter Fox (German singer with amazing fusion music)</p> <p><strong>All-Time Favorite Movies</strong>:My Fair Lady, Count of Monte Cristo, Chitty Chitty Bang Bang</p> <p><strong>Cold or Hot Weather?: &nbsp;</strong>I prefer fall weather, so I guess cold because you get to cuddle up close.</p> <p><strong>Where do you meet guys? </strong>I meet guys in the city… at Starbucks…on airplanes. I’m one of those rare people that believes in fate... and always tries to be present. You never know. :)</p> <p><strong>What is your greatest achievement to date? </strong>Working as a waitress for three years part-time to pay for my study abroad in Germany. It was a dream of mine to go, and I’m proud that I made it happen.</p> <p><strong>What is your cultural background, and how important is it to you? </strong>I am half Filipino and half German/Irish/Swiss. It is important to me to be open to trying new things and I would hope to share some traditions.</p> <p><strong>What is your favorite television show and why? </strong>Game of Thrones! Because I’m a closet nerd that loves the deep plot and sexy tension.</p> <p><strong>I hate it when my date… </strong>Curses… picks their nose/overly wipes their nose… breathes heavily… is too protective too soon….gets so cheesy that it seems fake, like, “Here is a leaf on a bush we passed on our first date because I’m a romantic guy.”</p> <p><strong>If you could be any fruit or vegetable, which would you be? </strong>Pomegranate … it’s the forbidden fruit that is complicated to open, but very rewarding, tasty and good for you. Plus it tastes so good!!! &nbsp;</p> <p><strong>Do you plan on having kids someday? If yes, how many and why? </strong>Yes!!! I would love to have 3 kids, because that’s the perfect amount to fit in a 5-seater car for traveling.</p> <p><strong>&nbsp;</strong></p>                                    </div>
-                                </div>
-                                                    
-                        
-                    </div>
+				<h2 class="module-title light text1 m-person-title">Brittany</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+				<div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 26</p> <p>  <strong>Occupation:</strong> Travel Nurse</p> <p>  <strong>Hometown:</strong> Santa Monica, CA</p> <p>  <strong>Height:</strong> 5'2"</p> <p>  <strong>Tattoos:</strong> No</p> <p>  <strong>What are five things you can't live without? </strong>My mom, tennis shoes, the sun, chocolate, and music.</p> <p>  <strong>Where do you see yourself in 5 years?</strong> Hopefully married with a child and with a successful career in a hospital.</p> <p>  <strong>Do you have any phobias?</strong> Snakes</p> <p>  <strong>I hate it when my date...</strong>&nbsp;Is rude to servers or is on his phone.</p> <p>  <strong>How much do you like camping?</strong> A lot! As long as it's not cold outside.</p> <p>  <strong>Who do you admire most in the world?</strong> Beyoncé: She is a strong, sexy, independent woman who can sing and dance like no other. Plus, she is a Virgo like me!</p> <p>  <strong>Do you prefer team sports or solo sports and why?</strong> Team: I love some competition and it makes it more exciting and a good time.</p> <p>  <strong>If you really wanted to impress a man what would you do?</strong> Cook him dinner. Because food is the way to a man's heart.</p>                                    </div>
+                </div>                       
+            </div>
       	</div>
-      	<div id="bio_Emily" class = "hide allBios">
+      	<div id="bio_Christen" class = "hide allBios">
       		<div class="m-text-copy">
-
-                                                    <h2 class="module-title light text1 m-person-title">Emily</h2>
-                        
-                                                    <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
-                        
-                        
-                                                                                    <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>
-                            
-                                                            <div class="m-person-bio expandable-text">
-                                    <div class="expandable-section open" style="word-wrap: break-word;">
-                                        <p><strong>Age:</strong> 22</p> <p><strong>Occupation:</strong> Twin</p> <p><strong>Hometown:</strong> Las Vegas, NV</p> <p><strong>Height</strong>:5’4</p> <p><strong>Tattoos</strong>:None</p> <p><strong>Favorite Music</strong>: Country Music</p> <p><strong>All-Time Favorite Movies</strong>:Horrible Bosses, Bridesmaids, The Notebook</p> <p><strong>Cold or Hot Weather?</strong>: Hot weather -- I would rather sweat than be cold.</p> <p><strong>If you wanted to really impress a man, what would you do and why? </strong>Be mysterious and also just really dress to impress! It’s more important to dress well and look classy and act classy.</p> <p><strong>What are the top 3 things on your bucket list? </strong>To be in New York on New Year’s Eve to watch the ball drop and see all the people!</p> <p>Travel to unique places out of the country and do crazy things like bungee jump, zip line, and adventure around and make unforgettable memories.</p> <p>Go to Six Flags and ride every single ride!</p> <p><strong>What’s your most embarrassing moment? </strong>Peeing my pants in front of my whole high school cheer team from laughing so hard!</p> <p><strong>Describe your idea of the ultimate date. </strong>The ultimate date for me would be something simple. Like laying somewhere looking at the stars and having great conversations and laughing.</p> <p><strong>What does being married mean to you? </strong>It means you are committed and ready to start a stable family and set a good example for your children.</p> <p><strong>If you could be someone else for just one day, who would it be and why?</strong> My sister! Just to see if she thinks exactly like me or to see how different we really are.</p>                                    </div>
-                                </div>
-                                                    
-                        
-                    </div>
+				<h2 class="module-title light text1 m-person-title">Christen</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 25</p> <p>  <strong>Occupation:</strong> Wedding Videographer</p> <p>  <strong>Hometown:</strong> Tulsa, OK</p> <p>  <strong>Height: </strong>5'5"</p> <p>  <strong>Tattoos:</strong> Yes, one on my wrist. The life of Jesus in symbols.</p> <p>  <strong>All-time favorite movies: </strong><em>A Time to Kill</em>, <em>Remember the Titans</em>, <em>Zoolander</em></p> <p>  <strong>If you could break any law, with no repercussions, which law, and why?</strong> I would break into the White House and spend months sleeping in a storage closet and observing what actually goes on behind closed doors.</p> <p>  <strong>If you could be any fruit or vegetable, which one would you be? </strong>A grapefruit! They're sweet and sour. Ha! They're colorful. They smell great. And they're so full of life and energy. That's me. :) And you have to peel them back to get to the good stuff.</p> <p>  <strong>If you could be any animal, which one and why? </strong>Wild Mustang. They are wild, free and uninhibited. They run with the wind.</p> <p>  <strong>What's your guilty pleasure television show? </strong>I used to watch <em>DWTS</em> and then pause the TV and practice all of the dance moves like they were goin' out of style.</p> <p>  <strong>If you could be someone else for just one day, who would it be and why?</strong> The President. So curious what actually goes on back there (a.k.a. the show, <em>Scandal</em>).</p> <p>  <strong>What are you most afraid of?</strong> Failure</p> <p><strong>If you could be a fictional character, who would you be and why? </strong>Katniss Everdeen. She's tough and hot and she marches to the beat of her own drum! Dig it!</p>                                    </div>
+                </div>       
+            </div>
       	</div>
-      	<div id="bio_Haley" class = "hide allBios">
+      	<div id="bio_Corinne" class = "hide allBios">
       		<div class="m-text-copy">
-
-                                                    <h2 class="module-title light text1 m-person-title">Haley</h2>
-                        
-                                                    <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
-                        
-                        
-                                                                                    <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>
-                            
-                                                            <div class="m-person-bio expandable-text">
-                                    <div class="expandable-section open" style="word-wrap: break-word;">
-                                        <p><strong>Age:</strong> 22</p> <p><strong>Occupation:</strong> Twin</p> <p><strong>Hometown:</strong> Las Vegas, NV</p> <p><strong>Tattoos</strong>:None</p> <p><strong>Favorite Music</strong>: Country and Alternative</p> <p><strong>All-Time Favorite Movies</strong>:Just Go With It, We Bought a Zoo, Dear John</p> <p><strong>Cold or Hot Weather?</strong>: Hot weather. I grew up in Vegas. I hate the cold!</p> <p><strong>What’s the most outrageous thing you have ever done?</strong> Working in a nightclub! Only because I don’t drink or party.</p> <p><strong>What does being married mean to you?</strong> Being married is a big deal to me. It’s protecting someone else’s heart the same way you would protect yours. It means being loyal and faithful.</p> <p><strong>What’s your guiltiest pleasure of any kind?</strong> Candy! I love my sweets!</p> <p><strong>What are five things you can’t live without?</strong> Cell phone, spray tan, chap stick, my dogs, my family.</p> <p><strong>What is your greatest achievement to date?</strong> Making it to the semi-finals on Dallas Cowboys cheerleaders!</p> <p><strong>If you could be someone else for just one day, who would it be and why</strong>? Taylor Swift, because she’s a classy gal! I love everything about her and all that she does.</p>                                    </div>
-                                </div>
-                                                    
-                        
-                    </div>
+				<h2 class="module-title light text1 m-person-title">Corinne</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 24</p> <p>  <strong>Occupation:</strong> Business Owner</p> <p>  <strong>Height:</strong> 5'1"</p> <p>  <strong>Hometown:</strong> Miami, FL</p> <p>  <strong>Tattoos:</strong> Yes, but hidden and are being lasered off, so they are already faded.</p> <p>  <strong>If you could be any animal, which would you be and why?</strong> I would be a cheetah. They're strong and fierce.</p> <p>  <strong>What's your most embarrassing moment?</strong> Too many to count!</p> <p>  <strong>What do you do for a living?</strong> I own an online business. It's very important to me, but the cool thing is it's online, so I can run it from anywhere.</p> <p>  <strong>I hate it when my date...</strong>&nbsp;Is in love with themselves.</p> <p>  <strong>What's your guilty pleasure TV show?</strong> <em>Frasier</em></p> <p>  <strong>Describe your idea of the ultimate date:</strong> Just us, the ultimate dining experience in an amazing place.</p> <p>  <strong>What U.S. city is the most romantic to you and why?</strong> Chicago. It has a lot of fun activities you would want to share with someone special.</p> <p><strong>If you could be a fictional character, who would you be and why?</strong> Snow White – I want to find my Prince Charming.</p>                                    </div>
+                </div>       
+            </div>
       	</div>
-      	<div id="bio_Izzy" class = "hide allBios">
+      	<div id="bio_Danielle_L" class = "hide allBios">
       		<div class="m-text-copy">
-
-                                                    <h2 class="module-title light text1 m-person-title">Isabel "Izzy"</h2>
-                        
-                                                    <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
-                        
-                        
-                                                                                    <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>
-                            
-                                                            <div class="m-person-bio expandable-text">
-                                    <div class="expandable-section open" style="word-wrap: break-word;">
-                                        <p><strong>Age:</strong> 24</p> <p><strong>Occupation:</strong> Graphic Designer</p> <p><strong>Hometown:</strong> Branford, CT</p> <p><strong>Height</strong>:5’6”</p> <p><strong>Tattoos</strong>: None.</p> <p><strong>Favorite Music</strong>: Mumford and Sons, Taylor Swift, Beyonce</p> <p><strong>All-Time Favorite Movies</strong>:Super Troopers, The Notebook, The Parent Trap</p> <p><strong>Cold or Hot Weather:? </strong>I love hot/warm weather because it just feels so good. But I definitely do not mind a ski/snowboarding weekend trip here or there.</p> <p><strong>What is your favorite childhood memory? </strong>Family vacations. We always took a special trip once a year. One time we chartered a sailboat with a captain around the British Virgin Island for 10 days. We lived on the boat, ate, slept, showered, etc. It was an amazing experience. The Top 20 Beatles album will forever remind me of that trip.</p> <p><strong>What is your all-time favorite book and why? </strong>Honestly, I don’t love to read, but I did enjoy reading the first 150 pages or <em>50 Shades of Grey.</em> Then I just saw the movie.</p> <p><strong>If you could be any fruit or vegetable, which one would it be? </strong>I would say a banana. I have a protective outer skin, but quickly I become very easy to talk to and get to know. I’m very sweet and mix well with many things/types of people. And at times I can be “mushy” when I really love someone.</p> <p><strong>If you wanted to approach a man you had never met before, how would you go about it? </strong>I would probably go right up to him and just be myself. Maybe crack a corny joke, laugh at myself and ask him his name.</p> <p><strong>What is the most romantic present you have ever received and why? </strong>A journal with handwritten entries from every day of our vacation Europe together. It was cool to look back and read on the memories and how he was feeling each day.</p> <p><strong>Where do you see yourself in 5 years? </strong>In five years, I see myself living in a city I have never lived, hopefully with a man I love dearly, with a job I enjoy – preferably my own graphic design studio designing wedding/event invitations.&nbsp;</p> <p><strong>&nbsp;</strong></p>                                    </div>
-                                </div>
-                                                    
-                        
-                    </div>
+				<h2 class="module-title light text1 m-person-title">Danielle L.</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 27</p> <p>  <strong>Occupation:</strong> Small Business Owner</p> <p>  <strong>Hometown:</strong> Los Angeles, CA</p> <p>  <strong>Height: </strong>5'5"</p> <p>  <strong>Tattoos:</strong> A lotus on the back of my neck, and two butterfly tattoos – one on the back of each ankle.</p> <p>  <strong>All-time favorite movies: </strong><em>A Walk to Remember</em>, <em>Love Actually</em>, <em>The Notebook</em></p> <p>  <strong>If you could be any animal, which one and why? </strong>I would be a fox! They are responsive, sometimes cunning and adaptive.</p> <p>  <strong>Who do you admire most in the world and why?</strong> I admire Chrissy Teigen. She's gorgeous, strong willed, and unapologetically herself. She and John Legend are couple goals!</p> <p>  <strong>What is the most outrageous thing you have ever done? </strong>I climbed up on a cliff and swung from a rope on top of a waterfall jumping into the water. The sign said "Locals Only," but we did it anyways.</p> <p>  <strong>What's the most embarrassing thing you listen to?</strong> <em>Glee</em> Soundtracks!</p> <p>  <strong>If you could be a fictional character, who would you be and why? </strong>Rachel Pope! Beautiful, powerful, strong and intelligent. Gladiators in suits.</p> <p>  <strong>What is your favorite all-time book and why?</strong> <em>The 5 Languages of Love</em>! Discover yourself, your relationship needs. It's beneficial in all relationships (friends, lovers, co-workers).</p> <p><strong>What is your greatest achievement to date?</strong> Opening my own business at the age of 23!</p>                                    </div>
+                </div>       
+            </div>
       	</div>
-      	<div id="bio_Jackie" class = "hide allBios">
+      	<div id="bio_Danielle_M" class = "hide allBios">
       		<div class="m-text-copy">
-
-                                                    <h2 class="module-title light text1 m-person-title">Jackie</h2>
-                        
-                                                    <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
-                        
-                        
-                                                                                    <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>
-                            
-                                                            <div class="m-person-bio expandable-text">
-                                    <div class="expandable-section open" style="word-wrap: break-word;">
-                                        <p><strong>Age</strong>:23</p> <p><strong>Occupation</strong>:Gerontologist</p> <p><strong>Hometown</strong>: San Francisco, CA</p> <p><strong>Height</strong>:5’9</p> <p><strong>Tattoos</strong>: None</p> <p><strong>Favorite Music</strong>: Country and Rap</p> <p><strong>All-Time Favorite Movies</strong>:&nbsp;Seven Pounds, Elf, March of the Penguins</p> <p><strong>Cold or Hot Weather?</strong>: Hot weather – I grew up in SoCal and love being warm, always.</p> <p><strong>What’s the most outrageous thing you have ever done? </strong>I went paragliding with my dad in the Alps. We had to jump off a cliff hoping our parachutes would work… luckily, we lived to tell the tale.</p> <p><strong>Describe your idea of the ultimate date. </strong>A fun, exciting new adventure followed by a romantic picnic and good conversation. Then maybe some ice cream.</p> <p><strong>If you wanted to really impress a man, what would you do and why? </strong>I would do something really thoughtful for him like create a piece of art or some sort of craft. I think spending time and effort on someone else goes a long way.</p> <p><strong>What does marriage mean to you? </strong>Marriage means committing fully to your best friend and promising to love that person for all eternity and to make all sacrifices necessary to cherish and respect that love.</p> <p><strong>What is your biggest regret to date? </strong>I never regret anything.</p> <p><strong>What are five things you can't live without?</strong> My Bible, my stuffed giraffe "Fergus," floss, chocolate and my running shoes.</p> <p>&nbsp;</p> <p><strong>&nbsp;</strong></p>                                    </div>
-                                </div>
-                                                    
-                        
-                    </div>
+				<h2 class="module-title light text1 m-person-title">Danielle M.</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 31</p> <p>  <strong>Occupation:</strong> Neonatal Nurse</p> <p>  <strong>Hometown:</strong> Nashville, TN</p> <p>  <strong>Height: </strong>5'10"</p> <p>  <strong>Tattoos:</strong> Yes, on my ribs – getting removed. On my low back – almost removed. And one on my left ringer finger that says "strength."</p> <p>  <strong>All-time favorite movies: </strong><em>The Sandlot</em>, <em>Ferris Bueller</em>, <em>The Notebook</em></p> <p>  <strong>If you could be any animal, which one and why? </strong>A Pegasus – haha! So I can run and fly and have a beautiful mane.</p> <p>  <strong>What is the most outrageous thing you have ever done? </strong>Moved to Nashville and put myself back together.</p> <p>  <strong>What are five things you can't live without? </strong>Family, friends, water, chocolate, green smoothies</p> <p>  <strong>If you could break any law, with no repercussions, which law, and why? </strong>Pretty sure there's a law in Louisiana or Tennessee that states you can't eat ice cream on the sidewalk or something weird like that. I'll break that one.</p> <p>  <strong>When and why did you leave your hometown?</strong> I lost my fiancé and I needed to start fresh somewhere.</p> <p>  <strong>What's the closest you have ever come to being married, and why didn't it work out</strong>? Engaged – my fiancé passed away.</p> <p>  <strong>If you could be a fictional character, who would you be and why? </strong>Hermione Granger. She's a smart, clever, beautiful witch.</p>                                    </div>
+                </div>       
+            </div>
       	</div>
-      	<div id="bio_Jami" class = "hide allBios">
+      	<div id="bio_Dominique" class = "hide allBios">
       		<div class="m-text-copy">
-
-                                                    <h2 class="module-title light text1 m-person-title">Jami</h2>
-                        
-                                                    <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
-                        
-                        
-                                                                                    <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>
-                            
-                                                            <div class="m-person-bio expandable-text">
-                                    <div class="expandable-section open" style="word-wrap: break-word;">
-                                        <p><strong>Age:</strong> 23</p> <p><strong>Occupation:</strong> Bartender</p> <p><strong>Hometown:</strong> St. Albert, Alberta, Canada</p> <p><strong>Height:</strong> 5'5"</p> <p><strong>Tattoos:</strong> 3</p> <p><strong>Favorite Music</strong>: Drake (Canadian and a sweetheart), Lil Wayne (he seems very smart with his raps), Beyonce (because she is a goddess)</p> <p><strong>All-Time Favorite Movies</strong>:Stepbrothers, The Hangover, Clueless</p> <p><strong>Cold or Hot Weather:? </strong>Hot. I love to relax in the sun and more activities.</p> <p><strong>How would you describe yourself as a lover? </strong>Inexperienced</p> <p><strong>What is your all-time favorite book and why? </strong>Arthur Miller’s The Crucible. It’s a play, but it taught me a lot about how much one action can affect so many people.</p> <p><strong>If you won the lottery, what would you do with your winnings? </strong>Stop everything and take my family and extended family and friends on a cruise. Then buy a house for me and my friends to live like “Entourage” with tons of animals.</p> <p><strong>If you could be a fictional character, who would you be, and why? </strong>Natasha Romanoff/Black Widow. She’s so badass and can hold her own in a crew of men.</p> <p><strong>Do you have a fear of aging, and are you doing anything to prevent it? </strong>Nope. I think wrinkles just show how much you’ve lived.</p> <p><strong>What does being married mean to you? </strong>Spending every day with your best friend and having daily adventures.&nbsp;</p>                                    </div>
-                                </div>
-                                                    
-                        
-                    </div>
+				<h2 class="module-title light text1 m-person-title">Dominique</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 25</p> <p>  <strong>Occupation:</strong> Restaurant Server</p> <p>  <strong>Hometown:</strong> Los Angeles, CA</p> <p>  <strong>Height: </strong>5'4"</p> <p>  <strong>Tattoos:</strong> No</p> <p>  <strong>All-time favorite movies: </strong><em>Titanic</em>. It has everything! Romance, action, drama! <em>Dirty Dancing</em>, because it is a classic. And <em>2012</em>. I have an obsession with end of the world movies.</p> <p>  <strong>Where do you meet guys?</strong> In the last few years I've met most guys at work or online via dating apps like Tinder and Bumble.</p> <p>  <strong>If you could be any animal, which one and why? </strong>I would be any kind of flying bird. I love to travel and see the world and could do that easily as a bird.</p> <p>  <strong>Lunch with three people alive or dead, and what would you order?</strong> My grandfather, Leonardo DiCaprio and Jesus – and we'd be eating burritos from Chipotle.</p> <p>  <strong>What are your favorite activities to do with a group?</strong> Have brunch and gossip about current events, hiking and attending a concert.</p> <p>  <strong>What are five things you can't live without? </strong>My dog, my family, Chipotle burritos, music and sunshine</p> <p>  <strong>If you could be a fictional character, who would you be and why? </strong>I would be Rachel Pope from <em>Scandal</em>. She's a strong female boss who makes her own rules and happens to be in a hot love triangle with two gorgeous men.</p> <p>  <strong>If you could be any fruit or vegetable, which one would you be? </strong>I'd be a pineapple. Hard on the outside and sweet on the inside.</p>                                    </div>
+                </div>       
+            </div>
       	</div>
-      	<div id="bio_Jennifer" class = "hide allBios">
+      	<div id="bio_Liz" class = "hide allBios">
       		<div class="m-text-copy">
-
-                                                    <h2 class="module-title light text1 m-person-title">Jennifer</h2>
-                        
-                                                    <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
-                        
-                        
-                                                                                    <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>
-                            
-                                                            <div class="m-person-bio expandable-text">
-                                    <div class="expandable-section open" style="word-wrap: break-word;">
-                                        <p><strong>Age:</strong> 25</p> <p><strong>Occupation:</strong>&nbsp;Small Business Owner</p> <p><strong>Hometown:</strong>&nbsp;Fort Lauderdale, FL</p> <p><strong>Height</strong>:5’7”</p> <p><strong>Tattoos</strong>: None.</p> <p><strong>Favorite Music</strong>: Country: Sam Hunt, Zac Brown, Chase Rice</p> <p><strong>All-Time Favorite Movies</strong>:Something Borrowed, The Holiday, Divergent</p> <p><strong>Cold or Hot Weather:? </strong>Hot. Lived in South Florida forever, it’s what I’m used to!</p> <p><strong>If you could be any animal, which one and why? </strong>Dolphin! They are beautiful, intelligent and are the only mammals to have sex for pleasure!</p> <p><strong>Lunch with three people, alive or dead, and what would you order? </strong>Amy Schumer, Eckhart Tolle and Eric Decker :) I’d probably be too nervous to eat… I’ll have what they’re having!!!</p> <p><strong>If you could break any law, with no repercussions, which law and why? </strong>Tan nude at the beach!</p> <p><strong>What is your most embarrassing moment? </strong>Face planting in front of an ex-fling and his new girlfriend.</p> <p><strong>Where do you see yourself in 5 years? </strong>Hopefully married! Although if you asked me that 5 years ago, I was supposed to be married by now. I guess I am behind schedule. :)</p> <p><strong>What does your ideal mate look like? </strong>Ben Higgins!!!! Tall, brunette, cute smile.</p>                                    </div>
-                                </div>
-                                                    
-                        
-                    </div>
+				<h2 class="module-title light text1 m-person-title">Liz</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 29</p> <p>  <strong>Occupation:</strong> Doula</p> <p>  <strong>Hometown:</strong> Las Vegas, NV</p> <p>  <strong>Height: </strong>5'4"</p> <p>  <strong>Tattoos:</strong> Yes – a fish, flower, arrow, tree, another tree, a saying, a star, another saying. They are on my sides, left foot, left wrist, right finger and back.</p> <p>  <strong>All-time favorite movies:&nbsp;</strong><em>Man on Fire</em>, <em>Bridesmaids</em>, <em>Brokedown Palace</em></p> <p>  <strong>What are five things you can't live without? </strong>Coconut oil, floss, music, fresh air and my Bible</p> <p>  <strong>What is your greatest achievement to date? </strong>Helping my sister birth my niece, Grace. I got to be her doula and cut her umbilical cord.</p> <p>  <strong>If I never had to ______, I would be very happy. </strong>Kill someone</p> <p>  <strong>What's the most embarrassing thing you listen to? </strong>I am not embarrassed of anything I listen to and I openly am a Belieber.</p> <p>  <strong>What's your guiltiest pleasure of any kind?</strong> Picking my nose while driving. I can't help it and for some reason it's always in my car.</p> <p>  <strong>What is your least favorite sport, why?</strong> Golf – it's boring and angers me.</p> <p><strong>If you could be any fruit or vegetable, which one would you be? </strong>A grape so I would get better with age.</p>                                    </div>
+                </div>       
+            </div>
       	</div>
-      	<div id="bio_Jessica" class = "hide allBios">
+      	<div id="bio_Elizabeth" class = "hide allBios">
       		<div class="m-text-copy">
-
-                                                    <h2 class="module-title light text1 m-person-title">Jessica</h2>
-                        
-                                                    <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
-                        
-                        
-                                                                                    <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>
-                            
-                                                            <div class="m-person-bio expandable-text">
-                                    <div class="expandable-section open" style="word-wrap: break-word;">
-                                        <p><strong>Age:</strong> 23</p> <p><strong>Occupation:</strong> Accountant</p> <p><strong>Hometown:</strong> Boca Raton, FL</p> <p><strong>Height</strong>:5’4”</p> <p><strong>Tattoos</strong>: One</p> <p><strong>Favorite Music</strong>: Luke Bryan – great country singer, Kygo – more relaxing music, Lil’ Wayne – best rapper alive</p> <p><strong>All-Time Favorite Movies</strong>:Dodgeball, Transformers, Sleepless in Seattle</p> <p><strong>Cold or Hot Weather:? </strong>Both. Hot weather for outside activities and cold weather for cuddling.</p> <p><strong>What is your greatest achievement to date? </strong>Passing all four parts of the CPA exam in six months</p> <p><strong>Do you prefer a man who wants to be pursued or a man who pursues you and why? </strong>A man that pursues me. I want a man that knows what he wants and knows how to get it.</p> <p><strong>Do you prefer “hot spot” type clubs or low-key bars and why? </strong>Low-key bars. I would rather sit at the bar with a friend and have a drink than have some sweaty dude rubbing up against me at a night club.</p> <p><strong>I hate it when my date: </strong>Talks about an ex-girlfriend! Immediate turn off!</p> <p><strong>If you could be a fictional character, who would you be, and why? </strong>Robin Hood. He’s a badass, but has good intentions and a good heart and he is romantic.</p> <p><strong>What does being married mean to you? </strong>Waking up next to your best friend every morning and know you never have to go through life alone.</p> <p><strong>&nbsp;</strong></p>                                    </div>
-                                </div>
-                                                    
-                        
-                    </div>
+				<h2 class="module-title light text1 m-person-title">Elizabeth</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 24</p> <p>  <strong>Occupation:</strong> Marketing Manager</p> <p>  <strong>Hometown:</strong> Dallas, TX</p> <p>  <strong>Height: </strong>5'7"</p> <p>  <strong>Tattoos:</strong> No</p> <p>  <strong>All-time favorite movies:&nbsp;</strong><em>The Notebook</em>, <em>Sleeping with Other People</em>, <em>Finding Nemo</em></p> <p>  <strong>Where do you meet guys?</strong> I've been into dating apps like Bumble and Hinge lately. I'd prefer to meet through mutual friends or in front of millions of weekly viewers. :)</p> <p>  <strong>If you could be someone else for just one day, who would it be and why?</strong> Kate Middleton or Britney Spears. Kate, because she's a princess, duh! Britney, because she's the queen, duh!</p> <p>  <strong>Do you consider yourself neat or messy?</strong> I like to be organized messy.</p> <p>  <strong>What is your greatest achievement to date? </strong>Not just one thing. My life has been a journey of achievements that only I would appreciate.</p> <p>  <strong>Do you have any phobias that would prohibit participation in certain activities? (heights, claustrophobia, crowds, darkness, OCD, etc.)</strong> Claustrophobia and Misophonia – it's a real thing. Look it up on Google!</p> <p>  <strong>What is your favorite television show and why?</strong> <em>Game of Thrones</em>, if I don't want people to judge me. <em>Ja'mie: Private School Girl</em>, if I don't care!</p> <p>  <strong>Do you have any family holiday or special event traditions that you plan to uphold? </strong>I love Christmas – food/dinner, Christmas Village. I would love it if my kids could go to my high school.</p>                                    </div>
+                </div>       
+            </div>
       	</div>
-      	<div id="bio_JoJo" class = "hide allBios">
+      	<div id="bio_Hailey" class = "hide allBios">
       		<div class="m-text-copy">
-
-                                                    <h2 class="module-title light text1 m-person-title">Joelle "JoJo"</h2>
-                        
-                                                    <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
-                        
-                        
-                                                                                    <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>
-                            
-                                                            <div class="m-person-bio expandable-text">
-                                    <div class="expandable-section open" style="word-wrap: break-word;">
-                                        <p><strong>Age:</strong> 24</p> <p><strong>Occupation:</strong>&nbsp;Real Estate Developer</p> <p><strong>Hometown:</strong> Dallas, TX</p> <p><strong>Height</strong>:5’4”</p> <p><strong>Tattoos</strong>:None</p> <p><strong>Favorite Music</strong>: I love country / Ed Sheeran type music and some popish Indie, like LANY.</p> <p><strong>All-Time Favorite Movies</strong>:Wedding Crashers, Clueless, Patch Adams</p> <p><strong>Cold or Hot Weather?</strong>: Hot over cold. Being too cold can hurt. Lol.</p> <p><strong>Lunch with three people, alive or dead, and what would you order? </strong>My grandfather who has passed, Ellen DeGeneres, and Jesus. PIZZA! And wine.</p> <p><strong><strong>What is your favorite all-time book and why? </strong></strong>To be honest I don’t read a ton of books. I more read articles. But the types of books I do like are self-help &amp; empowering ones.</p> <p><strong>How good of a cook are you? </strong>Average – I can kill a quesadilla though.</p> <p><strong>If you could be any kind of fruit or vegetable, which one would you be? </strong>Tomato so that way I can be considered both.</p> <p><strong>What is your cultural background, and how important is it to you? </strong>My mom is Persian, and my Dad was born and raised in Tennessee. I’m proud of my mother’s background despite what social opinions are. It’s important for me to stand up to people stereotyping Iranians.</p> <p><strong>Special talent: </strong>I can make a 3-leaf clover with my tongue. Just throwing that out there.</p> <p><strong>If you could be someone else for just one day, who would it be and why? </strong>Taylor Swift because she’s awesome and I’ve already thought singing country music professionally would be so much fun. Plus, she has cool friends.</p> <p><strong>&nbsp;</strong></p>                                    </div>
-                                </div>
-                                                    
-                        
-                    </div>
+				<h2 class="module-title light text1 m-person-title">Hailey</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  Age: 23</p> <p>  <strong>Occupation:</strong> Photographer</p> <p>  <strong>Hometown:</strong> Vancouver, British Columbia, Canada</p> <p>  <strong>Height:</strong> 5'7"</p> <p>  <strong>Tattoos:</strong> 7. Fingers – dots, collar bone – heart, forearm – "Hank," behind ear – flowers, ankle – poppy, elbow – "M," wrist – bobby pin.</p> <p>  <strong>Do you consider yourself a romantic?</strong> Nope. I'm very passionate and can be intense but I'm not into making out all the time and being sang to.</p> <p>  <strong>What's your greatest achievement to date?</strong> Traveling to China to build schools and teach in orphanages.</p> <p>  <strong>Do you have any phobias?</strong> I'm not into butterflies at all. Jumping bugs suck. Butterflies are a solid no for me though.</p> <p>  <strong>What kind of music do you listen to most often?</strong> Sheryl Crow is my girl. 90s rock, alternative, hip-hop. But usually 90s.</p> <p>  <strong>Who is your favorite author?</strong> Dr. Seuss – he was such an inventor. He said that when he couldn't think of a word to describe something, he'd just simply make it up.</p> <p>  <strong>What's your ideal mate's personality like?</strong> Independent, confident, caring, funny, supportive, adventurous, clever.</p> <p>  <strong>Do you plan on having kids some day?</strong> Yes. Two would be great. A lot of things are made for families of four. Only children are strange.</p> <p><strong>What are you most afraid of?</strong> Letting myself down. Accomplishing nothing.</p>                                    </div>
+                </div>      
+            </div>
       	</div>
-      	<div id="bio_Jubilee" class = "hide allBios">
+      	<div id="bio_Ida_Marie" class = "hide allBios">
       		<div class="m-text-copy">
-
-                                                    <h2 class="module-title light text1 m-person-title">Jubilee</h2>
-                        
-                                                    <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
-                        
-                        
-                                                                                    <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>
-                            
-                                                            <div class="m-person-bio expandable-text">
-                                    <div class="expandable-section open" style="word-wrap: break-word;">
-                                        <p><strong>Age:</strong> 24</p> <p><strong>Occupation:</strong> War Veteran</p> <p><strong>Hometown:</strong> Fort Lauderdale, FL</p> <p><strong>Height</strong>:5’4”</p> <p><strong>Favorite Music</strong>: Country (Don’t judge me, LOL!) and R&amp;B</p> <p><strong>All-Time Favorite Movies</strong>:Lord of the Rings, The Notebook, Newsies</p> <p><strong>Cold or Hot Weather:? </strong>Definitely hot weather. I’m anemic and always cold, so the hot weather is nice.</p> <p><strong>What is a typical Saturday night like for you? </strong>Ménage a trois with my bed, blanket and pillow. Plus Netflix, food and cellphone.</p> <p><strong>What is your greatest achievement? </strong>Joining the military at the age of 18 and making it through 4.5 years of active duty.</p> <p><strong>What is your ideal mate’s personality like? </strong>Reserved, intellectual, funny, laid back, easy going. Able to adapt easily.</p> <p><strong>Are you a little bit country or more of a city person? </strong>Aaannnd there it is… lol. I am both! I lived in Montana for 5 years and loved it, but I also love the smells, places and people that belong to a city.</p> <p><strong>What is your favorite flower, why? </strong>Sunflowers. They are so simple (just two colors) yet so beautiful. I think they are a great metaphor for life.</p> <p><strong>Will you go on roller coasters or other rides? </strong>If Ben kisses me first, I will consider risking my life :)</p> <p><strong>&nbsp;</strong></p>                                    </div>
-                                </div>
-                                                    
-                        
-                    </div>
+				<h2 class="module-title light text1 m-person-title">Ida Marie</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 23</p> <p>  <strong>Occupation:</strong> Sales Manager</p> <p>  <strong>Hometown:</strong> Harlingen, TX</p> <p>  <strong>Height:</strong> 5'8"</p> <p>  <strong>Tattoos?&nbsp;</strong>Yes, on my ribs and my dad's date of birth in roman numerals.</p> <p>  <strong>If you could be any animal, which one and why?</strong>&nbsp;A giraffe, duh! They are beautiful.</p> <p>  <strong>If you could be someone else for just one day, who would it be and why?</strong>&nbsp;Selena Gomez. I can't sing to save my life, so to belt out a tune for a crowd would be awesome.</p> <p>  <strong>What kind of snacks do you like?</strong>&nbsp;Cheetos with a pickle.</p> <p>  <strong>All-time favorite movies?</strong>&nbsp;<em>Step Brothers</em>, <em>Clueless</em>, <em>Wedding Ringer</em></p> <p>  <strong>What is your favorite all-time book and why?:</strong> I need to read more books.</p> <p>  <strong>Who is your favorite author?:</strong> Again, I need to read more books.</p> <p>  <strong>What's your biggest date fear?:</strong> Falling or getting food stuck in my teeth.</p> <p>  <strong>I love it when my date:</strong> Makes me laugh, knows how to have a good time, and kisses me when I least expect it.</p> <p>  <strong>If you could be any fruit or vegetable, what would you be?:</strong> Strawberry – they are sexual and taste great with wine.</p>                                    </div>
+                </div>       
+            </div>
       	</div>
-      	<div id="bio_Lace" class = "hide allBios">
+      	<div id="bio_Jaimi" class = "hide allBios">
       		<div class="m-text-copy">
-
-                                                    <h2 class="module-title light text1 m-person-title">Lace</h2>
-                        
-                                                    <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
-                        
-                        
-                                                                                    <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>
-                            
-                                                            <div class="m-person-bio expandable-text">
-                                    <div class="expandable-section open" style="word-wrap: break-word;">
-                                        <p><strong>Age:</strong> 25</p> <p><strong>Occupation:</strong> Real Estate Agent</p> <p><strong>Hometown:</strong> Denver, CO</p> <p><strong>Height:</strong> 5'10"</p> <p><strong>Tattoos:</strong> 2</p> <p><strong>Favorite Music:</strong> Rap, R&amp;B and Country</p> <p><strong>All-Time Favorite Movies:</strong> Dumb &amp; Dumber, The Best Man Holiday, How to Lose a Guy in 10 Days</p> <p><strong>Cold or Hot Weather?: </strong>Hot. I hate being cold. You can cool down in a pool!</p> <p><strong>What does your ideal mate look like?</strong> Tall, dark, handsome, pretty eyes, masculine features, a little beard, fit...</p> <p><strong>What is your most embarrassing moment? </strong>When I had a guy I liked over for drinks and I forgot I pooped before he came over and he used my bathroom and saw it. We couldn't even talk we were laughing so hard!<strong><span class="br"></span></strong></p> <p><strong>If you could be someone else for just one day, who would it be and why?</strong> Honestly? No one. I'd just be me -- but richer! :)</p> <p><strong>What's your worst date memory?</strong> Leaving on the spot because he was too into himself.</p> <p><strong>Do you prefer a man who wants to be pursued or a man who pursues you and why?</strong> I'd rather be pursued so I know he's for sure interested. Ha!</p> <p><strong>What's your idea of the ultimate date?</strong> Going to a sporting event or something he's always wanted to do -- to make him smile.</p>                                    </div>
-                                </div>
-                                                    
-                        
-                    </div>
+				<h2 class="module-title light text1 m-person-title">Jaimi</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 28</p> <p>  <strong>Occupation:</strong> Chef</p> <p>  <strong>Hometown:</strong> New Orleans, LA</p> <p>  <strong>Height:</strong> 5'2"</p> <p>  <strong>Tattoos?</strong> Wrists – "Forever Smiles," side – "To Die For," Left lower back – heart shaped grenade, right lower abdomen – symbol of my initials, a heart and the #5</p> <p>  <strong>If you could be any animal, which one and why?</strong> A tiger. In Bali. I like warmer climates, I like to be social, and they're strong and beautiful.</p> <p>  <strong>What is the most outrageous thing you have ever done?</strong> I've crowd surfed, which was amazing.</p> <p>  <strong>What is your greatest achievement to date?</strong>&nbsp;Catering the Oscars.</p> <p>  <strong>What are you most afraid of?</strong>&nbsp;Probably not knowing truly if someone loves me as much as I love them.</p> <p>  <strong>If you wanted to really impress a man, what would you do and why?</strong>&nbsp;Depending on how much bigger he is than me, I could bench press him with my legs. It's pretty exciting and surprising.</p> <p>  <strong>What's your worst date memory?:</strong> I went on a blind date and he got up in the restaurant and sang to me. First and last date.</p> <p><strong>Do you follow a specific diet (i.e. vegetarian, macrobiotic, etc.)?:</strong> Pesco-pollo-lacto-ovo-paro-tarian. Just fish + bird, plus byproducts.</p>                                    </div>
+                </div>      
+            </div>
       	</div>
-      	<div id="bio_Laura" class = "hide allBios">
+      	<div id="bio_Jasmine_B" class = "hide allBios">
       		<div class="m-text-copy">
-
-                                                    <h2 class="module-title light text1 m-person-title">Laura</h2>
-                        
-                                                    <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
-                        
-                        
-                                                                                    <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>
-                            
-                                                            <div class="m-person-bio expandable-text">
-                                    <div class="expandable-section open" style="word-wrap: break-word;">
-                                        <p><strong>Age:</strong> 24</p> <p><strong>Occupation:</strong> Account Executive</p> <p><strong>Hometown:</strong>&nbsp;Louisville, KY</p> <p><strong>Height: </strong>5’4</p> <p><strong>Tattoos: </strong>None</p> <p><strong>Favorite Music: </strong>R&amp;B, Pop and Rap</p> <p><strong>All-Time Favorite Movies: </strong>Remember the Titans, Under the Tuscan Sun, Bridesmaids</p> <p><strong>Cold or Hot Weather? : </strong>Cold weather. The clothing options are so much cuter in the fall and winter. Think of all the boots!</p> <p><strong>What does being married mean to you? </strong>Being married is a partnership for life. It’s sacred and should be treated with respect, especially with age. I’ve seen the ups and downs of a marriage so I feel I’m prepared for all sides. Bring it on!</p> <p><strong>What are five things you can’t live without? </strong>Family, friends, key lime pie, sunscreen and Pinot Noir</p> <p><strong>What does your ideal mate look like?</strong> Someone with a kind face and sweet eyes. Probably taller than me, but I love a good smile and him looking approachable enough for me to talk to him.</p> <p><strong>If you could break any law, with no repercussions, which law and why? </strong>Maybe rob a casino? Just so I could have something to talk about with George Clooney and Brad Pitt.</p> <p><strong>What’s your guiltiest pleasure of any kind? </strong>White chocolate raspberry cheesecake. Whole. ;)</p> <p><strong>What is your best date memory? </strong>Someone went through the time and trouble to make me homemade quinoa sushi since I’m allergic to rice and you could tell that he was so excited to see how I would react. Hands down sweetest date.</p> <p><strong>&nbsp;</strong></p>                                    </div>
-                                </div>
-                                                    
-                        
-                    </div>
+				<h2 class="module-title light text1 m-person-title">Jasmine B.</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 25</p> <p>  <strong>Occupation:</strong> Flight Attendant</p> <p>  <strong>Hometown:</strong> Tacoma, WA</p> <p>  <strong>Height:</strong> 5'2.5"</p> <p>  <strong>Tattoos?</strong>&nbsp;Yes. "Always and Forever" on my left foot along the side</p> <p>  <strong>What would an ex say are your 3 worst attributes?</strong>&nbsp;I'm too nice, I care too much what others think, and I get stressed easily.</p> <p>  <strong>If you could be any animal, which one would you be and why?</strong>&nbsp;An owl, so I could fly. Plus, they are so unique. They are the quietest and have superior eyes, wings and ears. I want to see and hear everything, even in the dark.</p> <p>  <strong>Who is your favorite author and why?</strong> Steve Harvey. He dished out great advice on success and relationships.</p> <p>  <strong>What's your guiltiest pleasure of any kind?</strong>&nbsp;Cracking my neck</p> <p>  <strong>What's the closest you have ever come to being married and why didn't it work out?</strong>&nbsp;Engaged. Because I was too young and he ended up proving he doesn't deserve my greatness</p> <p>  <strong>Do you prefer a man who wants to be pursued or a man who pursues you and why?</strong>&nbsp;A man who pursues me. I don't usually chase men. I know I'm attractive and have a lot of great qualities. A man who pursues me gives me assurance that I'm what he wants.</p>                                    </div>
+                </div>       
+            </div>
       	</div>
-      	<div id="bio_LB" class = "hide allBios">
+      	<div id="bio_Jasmine_G" class = "hide allBios">
 			<div class="m-text-copy">
-
-                                                    <h2 class="module-title light text1 m-person-title">Lauren "LB"</h2>
-                        
-                                                    <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
-                        
-                        
-                                                                                    <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>
-                            
-                                                            <div class="m-person-bio expandable-text">
-                                    <div class="expandable-section open" style="word-wrap: break-word;">
-                                        <p><strong>Age:</strong> 23</p> <p><strong>Occupation:</strong>&nbsp;Fashion Buyer</p> <p><strong>Hometown:</strong> Stillwater, OK</p> <p><strong>Height</strong>:5’5</p> <p><strong>Tattoos</strong>:One</p> <p><strong>Favorite Music</strong>: Rap</p> <p><strong>All-Time Favorite Movies</strong>:Love &amp; Basketball, Pretty Woman, Parent Trap</p> <p><strong>Cold or Hot Weather?</strong>: Hot! I’m always cold.</p> <p><strong>What does being married mean to you?&nbsp;</strong>They are your best friend and you always put them before yourself.</p> <p><strong>If you could break any law, with no repercussions, which law and why?&nbsp;</strong>Speeding; I’m always late.</p> <p><strong>What is your most embarrassing moment?</strong> Seeing a doctor for constipation in Germany. My ex had to translate every detail!</p> <p><strong>What’s the most outrageous thing you have ever done?&nbsp;</strong>Join a sorority - so not me!</p> <p><strong>What’s your best date memory?&nbsp;</strong>Visiting the jungle in Nepal. It didn’t matter what we looked like and we enjoyed one another.</p> <p><strong>If you could be any animal, which one and why?</strong> Dolphin; I love to swim and make people happy!</p> <p><strong>I hate when my date:</strong>&nbsp;Doesn't pick up the bill, is on his phone, looks at other people.</p> <p>&nbsp;</p>                                    </div>
-                                </div>
-                                                    
-                        
-                    </div>
+				<h2 class="module-title light text1 m-person-title">Jasmine G.</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 29</p> <p>  <strong>Occupation:</strong> Pro Basketball Dancer</p> <p>  <strong>Hometown:</strong> San Francisco, CA</p> <p>  <strong>Height:</strong> 5'7"</p> <p>  <strong>Tattoos?</strong>&nbsp;Yes. Inside lip and wrist. Star and my sorority.</p> <p>  <strong>Lunch with three people, alive or dead and what would you order?</strong>&nbsp;RuPaul, Dave Chappelle, Prince. I would order pizza.</p> <p>  <strong>Who do you admire most in the world and why?</strong>&nbsp;My mother. Everything she has given up for me to be where I am is just unreal. I never met someone who works that hard.</p> <p>  <strong>If you could be someone else for just one day, who would it be and why?</strong>&nbsp;Guy Fieri. He can cook. He gets to travel and eat food from all over the country and he is hilarious! I'm the girl version.</p> <p>  <strong>All-time favorite movies?</strong>&nbsp;<em>A League of Their Own</em>, <em>Don't Tell Mom the Babysitter's Dead</em>, <em>The Sandlot</em></p> <p>  <strong>What are you most afraid of?</strong>&nbsp;Being left in open water alone!</p> <p>  <strong>If you could be a fictional character, who would you be and why?</strong>&nbsp;I would be Rachel Pope from <em>Scandal</em>. She's such a power woman. Great job. Boss lady. However her love life sucks. Too familiar.</p> <p>  <strong>If you won the lottery, what would you do with your winnings?:</strong> First I would buy socks because I can never find them! Then buy out a sports team.</p>                                    </div>
+                </div>       
+            </div>
       	</div>
-      	<div id="bio_Lauren_B" class = "hide allBios">
+      	<div id="bio_Josephine" class = "hide allBios">
       		<div class="m-text-copy">
-
-                                                    <h2 class="module-title light text1 m-person-title">Lauren B.</h2>
-                        
-                                                    <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
-                        
-                        
-                                                                                    <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>
-                            
-                                                            <div class="m-person-bio expandable-text">
-                                    <div class="expandable-section open" style="word-wrap: break-word;">
-                                        <p><strong>Age:</strong> 25</p> <p><strong>Occupation:</strong> Flight Attendant</p> <p><strong>Hometown:</strong> Marina Del Rey, CA</p> <p><strong>Height</strong>:5’7</p> <p><strong>Tattoos</strong>:1</p> <p><strong>Favorite Music</strong>: Hip hop/Dance/R&amp;B/Country</p> <p><strong>All-Time Favorite Movies</strong>:Home Alone, The Departed, Titanic</p> <p><strong>Cold or Hot Weather?</strong>: Warm! I love the sunshine. I especially love dusk (favorite time of day) and hot nights are so amazing.</p> <p><strong>What is the most outrageous thing you’ve ever done?</strong> Probably this.</p> <p><strong>What’s your guiltiest pleasure of any kind? </strong>Brunch with mimosas</p> <p><strong>If you could be someone else for just one day, who would it be and why? </strong>The First Lady. I would love to see the life of the president, but not actually be the president. Way too stressful!</p> <p><strong>What does being married mean to you? </strong>It means a lot. My parents have been married for 26 years and I’m so close to my family. Family is everything and marriage means starting my own family.</p> <p><strong>If you wanted to really impress a man, what would you do and why? </strong>Cook a home cooked dinner because who doesn’t love a home cooked meal?</p> <p><strong>How would you describe yourself as a lover? </strong>I love love. I wear my heart on my sleeve. I communicate through verbal and physical cues. When I love someone, there is never a question about how much because I will constantly show you and tell.</p> <p><strong>&nbsp;</strong></p>                                    </div>
-                                </div>
-                                                    
-                        
-                    </div>
+				<h2 class="module-title light text1 m-person-title">Josephine</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 24</p> <p>  <strong>Occupation:</strong> Registered Nurse</p> <p>  <strong>Hometown:</strong> Santa Cruz, CA</p> <p>  <strong>Height:</strong> 5'7 ¾"</p> <p>  <strong>Tattoos?:</strong> None</p> <p>  <strong>If you could be any animal, which one and why?</strong>&nbsp;Hmmm... Good question. A tiger or lion. They're clever, loving and get things done! Also they run in packs so they always have support. :)</p> <p>  <strong>Who do you admire most in the world and why?</strong>&nbsp;My brother. Hands down. He has been my greatest inspiration, best friend and biggest motivator in life.</p> <p>  <strong>If you could be someone else for just one day, who would it be and why?</strong>&nbsp;Steven Hawking just to know what it's like to have a brain like that!</p> <p>  <strong>Do you affiliate yourself with a certain religion and if so, which ones?</strong>&nbsp;I am Jewish by culture but am very open to all religions, love God and consider myself to be a spiritual person.</p> <p>  <strong>What is your all-time favorite book and why?</strong>&nbsp;<em>A Thousand Splendid Suns</em>. It changed my life. I have never been more connected to imaginary people</p> <p>  <strong>How much do you enjoy the theater?</strong>&nbsp;Love it! I used to do musical theater in high school. Miss it sometimes.</p> <p>  <strong>What's your biggest date fear?</strong>&nbsp;Bad breath and awkward kisser</p> <p>  <strong>If you could be any fruit or vegetable, which one would you be?</strong>&nbsp;Something disgusting so nobody eats me!</p>                                    </div>
+                </div>       
+            </div>
       	</div>
-      	<div id="bio_Lauren_H" class = "hide allBios">
+      	<div id="bio_Kristina" class = "hide allBios">
       		<div class="m-text-copy">
-
-                                                    <h2 class="module-title light text1 m-person-title">Lauren H.</h2>
-                        
-                                                    <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
-                        
-                        
-                                                                                    <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>
-                            
-                                                            <div class="m-person-bio expandable-text">
-                                    <div class="expandable-section open" style="word-wrap: break-word;">
-                                        <p><strong>Age:</strong> 25</p> <p><strong>Occupation:</strong> Kindergarten Teacher</p> <p><strong>Hometown:</strong> Ann Arbor, MI</p> <p><strong>Height:</strong> 5'5"</p> <p><strong>Tattoos:</strong> None</p> <p><strong>Favorite Music:</strong> Popular/hit list stuff. Also stuff from growing up. 90s stuff.</p> <p><strong>All-Time Favorite Movies:</strong> Elf, Legally Blonde, Mean Girls and Hangover</p> <p><strong>Hot or Cold Weather?:</strong> HOT! Because there is more to do outside.</p> <p><strong>If you could go anywhere in the U.S., where would you go and why? </strong>California – because that’s where The Bachelor mansion is. :)</p> <p><strong>What is the most outrageous thing you have ever done?</strong> Tubing through glow worm caves in New Zealand. All I could think of was the movie The Descent. It was scary, but awesome!</p> <p><strong>If you could be someone else for just one day, who would it be and why?</strong> Chris Harrison, because his job seems pretty amazing.</p> <p><strong>What is your most embarrassing moment?</strong> OMG, embarrassing stuff happens to me so much! The other day my boss was asking what Pinterest was and I pulled mine up to see what it was like – and there was all of this wedding stuff!! He was like, “Um, do you even have a boyfriend?” :(</p> <p><strong>Where do you see yourself in five years</strong>? Ah, I’ll be 30!! FML. Hopefully married! And either thinking about babies or with one or two already.</p> <p><strong>What is your best date memory?</strong> Honestly, my favorite date ever was going to the grocery store with a guy I got along well with. We were just joking around the whole time and it was a blast.</p> <p><strong>Where do you meet guys?&nbsp;</strong>On TV Shows… kidding!&nbsp;:) Mostly through my friends. They are all married and fix me up a lot.</p>                                    </div>
-                                </div>
-                                                    
-                        
-                    </div>
+				<h2 class="module-title light text1 m-person-title">Kristina</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 24</p> <p>  <strong>Occupation:</strong> Dental Hygienist</p> <p>  <strong>Hometown:</strong> Lexington, KY</p> <p>  <strong>Height:</strong> 5'2"</p> <p>  <strong>Tattoos?</strong>&nbsp;No.</p> <p>  <strong>Who do you admire most in the world and why</strong>? My parents. It takes courage to open your heart and home to four orphans and give them a life otherwise unobtainable.</p> <p>  <strong>If you could be someone else for just one day, who would it be and why?</strong>&nbsp;My biological mother. I'd like to know what she was going through when I was young and if choosing alcohol over kids was worth it.</p> <p>  <strong>Who is your favorite actor and why?</strong>&nbsp;Meryl Streep. She can adapt to any character assigned and do a wonderful job fulfilling that role.</p> <p>  <strong>What is your favorite television show and why?&nbsp;</strong><em>Ninja Warrior</em>. I am amazed by what a human body is capable of and it motivates me to work out.</p> <p>  <strong>If you could be a fictional character, who would you be and why?</strong>&nbsp;Fiona from <em>Shrek</em>. She's got some serious karate moves and she's feisty and darling.</p> <p>  <strong>Do you have a fear of aging and are you going anything to prevent it?</strong>&nbsp;No I don't fear aging. I think it's a beautiful thing. Aging represents life's milestones and memories</p> <p><strong>Who is your favorite clothes designer?</strong>&nbsp;Myself. Sometimes if I can't find an outfit for an event, I would end up making my own.</p>                                    </div>
+                </div>       
+            </div>
       	</div>
-      	<div id="bio_Lauren_R" class = "hide allBios">
+      	<div id="bio_Lacey" class = "hide allBios">
       		<div class="m-text-copy">
-
-                                                    <h2 class="module-title light text1 m-person-title">Lauren R.</h2>
-                        
-                                                    <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
-                        
-                        
-                                                                                    <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>
-                            
-                                                            <div class="m-person-bio expandable-text">
-                                    <div class="expandable-section open" style="word-wrap: break-word;">
-                                        <p><strong>Age:</strong> 26</p> <p><strong>Occupation:</strong> Math Teacher</p> <p><strong>Hometown:</strong> Houston, TX</p> <p><strong>Height:</strong> 5'5"</p> <p><strong>Tattoos:</strong> None</p> <p><strong>Favorite Music:</strong> I'm across the board... All genres! From Pachelbel to Drake. I love mainstream stuff, too, like Luke Bryan and Maroon 5. Open to anything "catchy".</p> <p><strong>All-time Favorite Movies:</strong> All of the Harry Potter movies, The Notebook (cliche, I know. I can't help it. I can't turn it off when it's on), Forest Gump, and Batman movies (I can't leave that one off...)<strong><span class="br"></span></strong></p><span class="br"></span><strong>What is a typical Saturday night like for you? </strong>It depends... If I'm feeling social, then dinner/cocktails with girlfriends, but if I'm feeling lazy, then kitten cuddles, popcorn and movies with my sister. I also love attending random events or going to new places.</p> <p><strong>Lunch with three people, dead or alive, and what would you order?</strong> Jesus, Michelangelo (just saw many of his paintings in Rome...what a talented weirdo), and Justin Timberlake. It'd be quite the trio! I'd order pizza.</p> <p><strong>What is the most outrageous thing you've ever done?</strong> Probably skydiving. Heights scare the crap out of me and I always said that I'd "never" do it. But I knew that concurring a fear would make me feel invincible. I was right.</p> <p><strong>If you could be someone else for just one day, who would it be and why?</strong> The future me. I like my life and I'd love to see a glimpse of what's in store for me later in life. I would hope a nice husband and an army of children.</p> <p><strong>What is the most romantic present you have ever received and why?</strong> A huge painting of a lighthouse over the ocean. The man that gave it to me spent 80+ hours painting it. I just thought that was so romantic that someone took that much time to make something so beautiful!</p> <p><strong>What three places would you like to travel to?</strong> New Zealand, South Africa and Croatia</p>                                    </div>
-                                </div>
-                                                    
-                        
-                    </div>
+				<h2 class="module-title light text1 m-person-title">Lacey</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+	                <div class="expandable-section is-truncated" style="">
+	                    <p>  <strong>&nbsp;</strong><strong>Age:</strong> 25</p> <p>  <strong>Occupation:</strong> Digital Marketing Manager</p> <p>  <strong>Hometown:</strong> Manhattan, NY</p> <p>  <strong>Height:</strong> 5'3"</p> <p>  <strong>Tattoos:</strong> No</p> <p>  <strong>If you could have lunch with three people, alive or dead, who would you pick and what would you order?</strong> Shakespeare, JK Rowling, Joe Jonas; burgers and fries.</p> <p>  <strong>What's your greatest achievement so far?</strong> Graduating with a double degree and learning Arabic.</p> <p>  <strong>All-time favorite movies:</strong> <em>Armageddon</em>, <em>Step Brothers</em>, <em>Wedding Crashers</em></p> <p>  <strong>What's your guilty pleasure TV show?</strong> <em>Dancing with the Stars</em></p> <p>  <strong>What's your biggest date fear?</strong> That he's going on another date right after (that has happened before).</p> <p>  <strong>If you could be any fruit or vegetable, which one would you be?</strong> Apple (a little tough on the outside but sweet inside).</p> <p>  <strong>What's your biggest regret?</strong> Giving people third and fourth chances</p> <p>  <strong>How important is your family's approval to you when it comes to dating?</strong> Very, I have never brought anyone home and my family means everything to me.</p> <p>  <strong>What's your ideal mates personality like?</strong> Makes me laugh, smart/intelligent, serious when he needs to be, but can also goof off.</p>                                    </div>
+	            </div>       
+            </div>
       	</div>
-      	<div id="bio_Leah" class = "hide allBios">
+      	<div id="bio_Lauren" class = "hide allBios">
       		<div class="m-text-copy">
-
-                                                    <h2 class="module-title light text1 m-person-title">Leah</h2>
-                        
-                                                    <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
-                        
-                        
-                                                                                    <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>
-                            
-                                                            <div class="m-person-bio expandable-text">
-                                    <div class="expandable-section open" style="word-wrap: break-word;">
-                                        <p><strong>Age:</strong> 25</p> <p><strong>Occupation:</strong>&nbsp;Event Planner</p> <p><strong>Hometown:</strong> Denver, CO</p> <p><strong>Height: </strong>5’5 3/4"</p> <p><strong>Tattoos</strong>: 2 doves on the back of my calves that I'm having laser removal on.</p> <p><strong>Favorite Music</strong>: Anything that has a good beat and lyrics and I can cycle to</p> <p><strong>All-Time Favorite Movies</strong>:Bridesmaids, Interstellar, The Dark Knight</p> <p><strong>Hot or cold?:</strong>&nbsp;Hot weather. I hate the feeling of being cold.</p> <p><strong>What’s the most outrageous thing you’ve ever done&nbsp;</strong>Probably twerking on the wall in my dress during my Bachelor interview.</p> <p><strong>If you could be a fictional character, who would you be, and why? </strong>Ariel. Who wouldn't want to be a mermaid?!</p> <p><strong>What does being married mean to you?&nbsp;</strong>Marriage means doing whatever it takes to keep the relationship alive. Being able to change and grow together and stay in love through thick and thin.</p> <p><strong>What are the top 3 things on your bucket list and why?&nbsp;</strong>Go to Greece. Greece is a beautiful country, it is very romantic and there are a lot of great cultural places to visit and explore. Also, great food!</p> <p>Meet the man of my dreams! I want to share my life with someone and enjoy everything the world has to offer together. I hope to meet him on The Bachelor!</p> <p>Fly on a helicopter and/or skydive! I have never been in a helicopter and I have always wanted to skydive.</p> <p><strong>Where do you meet guys? </strong>I don't!!! Bars are terrible. The gym is terrible. Online dating... no thanks!&nbsp;</p>                                    </div>
-                                </div>
-                                                    
-                        
-                    </div>
+				<h2 class="module-title light text1 m-person-title">Lauren</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 30</p> <p>  <strong>Occupation:</strong> Law School Graduate</p> <p>  <strong>Hometown:</strong> Naples, FL</p> <p>  <strong>Height:</strong> 5'7"</p> <p>  <strong>Tattoos:</strong> None.</p> <p>  <strong>What's your best date memory?</strong> Great dinner, conversation, and mini golf.</p> <p>  <strong>If you could be any animal, which would you be and why?</strong> A dolphin because they are so cute and smart and they get to live in such a beautiful environment, under the sea!</p> <p>  <strong>How would you describe yourself as a lover?</strong> I give 100% - always trying to keep the relationship fun and full of adventure.</p> <p>  <strong>Where do you see yourself in five years?</strong> Hopefully married with kids and lots of pets and a house full of laughter.</p> <p>  <strong>What are five things you can't live without?</strong> My super soft vintage Hall &amp; Oates t-shirt, chapstick, my family, sushi, music</p> <p>  <strong>Are you a country or a city person?</strong> Country. The outdoors revives me. I could live on a farm and off the land any day.</p> <p>  <strong>All-time favorite movies:</strong> <em>Step Brothers</em>, <em>Dirty Dancing</em>, <em>Hocus Pocus</em></p> <p>  <strong>If you could go anywhere in the U.S., where you would you go?</strong> State parks, like Grand Canyon or Utah. I love the rock formations.</p>                                    </div>
+                </div>       
+            </div>
       	</div>
-      	<div id="bio_Maegan" class = "hide allBios">
+      	<div id="bio_Michelle" class = "hide allBios">
       		<div class="m-text-copy">
-
-                                                    <h2 class="module-title light text1 m-person-title">Maegan</h2>
-                        
-                                                    <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
-                        
-                        
-                                                                                    <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>
-                            
-                                                            <div class="m-person-bio expandable-text">
-                                    <div class="expandable-section open" style="word-wrap: break-word;">
-                                        <p><strong>Age:</strong>&nbsp;30</p> <p><strong>Occupation:</strong> Cowgirl</p> <p><strong>Hometown:</strong> Weatherford, TX</p> <p><strong>Height:</strong> 5'4 3/4"</p> <p><strong>Tattoos:</strong> None</p> <p><strong>Favorite Music:</strong> Red Dirt Country (TX music)</p> <p><strong>All-Time Favorite Movies:</strong> Secretariat, Iron Man, Old School</p> <p><strong>Hot or Cold Weather?:</strong> Hot, hands down! I hate having to get all bundled up to go outside.</p> <p><strong>What is a typical Saturday night like for you? </strong>Sitting on the back patio with my sister, BBQ’ing and drinking some beers. My mini-horse and chocolate lab always hang with us too.</p> <p><strong>If you wanted to approach a man you had never met before, how would you go about it?</strong> Shoot, I do this all the time! It’s called you walk and ask the guy a question. It’s not rocket science. PS – Ass grabbing always works great!</p> <p><strong>Do you consider yourself neat or messy?</strong> Neat! OCD neat! My house is always put together and ready for company.</p> <p><strong>Are you a little bit country or more of a city person?</strong> Country through and through.</p> <p><strong>Do you have a serious fear of any kind of animal</strong>? Snakes. I’ll chop their heads off with a shovel if I find them on our property!</p> <p><strong>If you could be any animal, which one and why?</strong> Kangaroo. They kick ass. Literally.</p> <p><strong>If you’re interested in someone, do you tend to become shy or out-going</strong>? I try to watch my mouth when I’m around them, but honestly I’m never happy if I’m not being my complete self. I’d rather just put it all out there early on and let them decide if they can handle it.</p>                                    </div>
-                                </div>
-                                                    
-                        
-                    </div>
+				<h2 class="module-title light text1 m-person-title">Michelle</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 24</p> <p>  <strong>Occupation:</strong> Food Truck Owner</p> <p>  <strong>Hometown:</strong> Los Angeles, CA</p> <p>  <strong>Height:</strong> 5'1"</p> <p>  <strong>Tattoos:</strong> Yes, two – both on my arms.</p> <p>  <strong>If you could have lunch with three people, alive or dead, who (and what would you order)?</strong> Albus Dumbledore – Sunday roast, Gwen Stefani – Tacos, Princess Diana – Fish and chips</p> <p>  <strong>What's a typical Saturday night for you?</strong> Dinner and drinks with my girlfriends or take-out Chinese and a movie.</p> <p>  <strong>Do you speak any languages other than English?</strong> Portuguese</p> <p>  <strong>What's the most outrageous thing you've ever done?</strong> I went hang gliding in Rio.</p> <p>  <strong>What is your ideal mate's personality like?</strong> Must have a great sense of humor, caring, loyal, observant, adventurous</p> <p>  <strong>If you wanted to really impress a man, what would you do and why?</strong> I would take him kayaking because it's one of my favorite hobbies.</p> <p>  <strong>If you could be a fictional character, who would you be and why?</strong> Carrie Bradshaw – she's loyal to her friends, has a big heart, and an amazing closet.</p> <p><strong>I love it when my date…</strong> Makes me feel comfortable and notices the little things.</p>                                    </div>
+                </div>       
+            </div>
       	</div>
-      	<div id="bio_Mandi" class = "hide allBios">
-      		<div class="m-text-copy">
-
-                                                    <h2 class="module-title light text1 m-person-title">Mandi</h2>
-                        
-                                                    <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
-                        
-                        
-                                                                                    <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>
-                            
-                                                            <div class="m-person-bio expandable-text">
-                                    <div class="expandable-section open" style="word-wrap: break-word;">
-                                        <p><strong>Age:</strong> 28</p> <p><strong>Occupation:</strong> Dentist</p> <p><strong>Hometown:</strong> Portland, OR</p> <p><strong>Height:</strong> 5’8”</p> <p><strong>Tattoos:</strong> None.</p> <p><strong>Favorite Music:</strong> House, EDM</p> <p><strong>All-time Favorite Movies:</strong> Dazed and Confused, Happy Gilmore, Bridesmaids<strong><span class="br"></span> </strong></p> <p><strong>Cold or Hot Weather?:</strong> Hot --&nbsp; love being in a swimsuit.</p> <p><strong>What is your ideal mate’s personality like?</strong> Intelligent, funny, kind… but also kind of a badass. Loyal and honest.</p> <p><strong>What are your three best attributes?</strong> Ambitious, intelligent, legs for days.</p> <p><strong>What would an ex say are your three worst attributes?</strong> Have a tendency to drink too much, independent – do what I want, opinionated.</p> <p><strong>If you could be any animal, which one would you be and why?</strong> A free-range chicken, because they do whatever they want and lay delicious eggs.</p> <p><strong>What’s your greatest achievement to date?</strong> Getting my doctorate.</p> <p><strong>What are you most afraid of?</strong> Falling in love and having my heart broken.</p> <p><strong>&nbsp;</strong></p>                                    </div>
-
-
-                                </div>
-                                                    
-                        
-                    </div>
-	    </div>
       	<div id="bio_Olivia" class = "hide allBios">
       		<div class="m-text-copy">
-
-                                                    <h2 class="module-title light text1 m-person-title">Olivia</h2>
-                        
-                                                    <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
-                        
-                        
-                                                                                    <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>
-                            
-                                                            <div class="m-person-bio expandable-text">
-                                    <div class="expandable-section open" style="word-wrap: break-word;">
-                                        <p><strong>Age:</strong>&nbsp;23</p> <p><strong>Occupation:</strong>&nbsp;News Anchor</p> <p><strong>Hometown:</strong>&nbsp;Austin, TX</p> <p><strong>Height:</strong>&nbsp;5’8</p> <p><strong>Tattoos:</strong>&nbsp;None</p> <p><strong>Favorite Music:</strong>&nbsp;Alternative</p> <p><strong>All-Time Favorite Movies:</strong>&nbsp;Titanic, Shawshank Redemption, Anchorman</p> <p><strong>Cold or Hot Weather?:</strong>&nbsp;Cold weather because I’m a huge fan of hot chocolate, scarves, flannel sweaters and cuddling.</p> <p><strong>What is your most embarrassing moment?&nbsp;</strong>Nothing embarrasses me! I hate to say that. Maybe the time I set the record for time spent stuck in an elevator my freshman year of college.</p> <p><strong>What does being married mean to you?&nbsp;</strong>Marriage is spending life’s ups and downs with your best friend. It’s all about compromise, a commitment to give and take, love someone more than you love yourself. Accepting each other fully, flaws and all!</p> <p><strong>What’s your guiltiest pleasure of any kind?&nbsp;</strong>French fries. I could eat them for every single meal and I keep trying to give them up and I just don’t have the willpower.</p> <p><strong>What are you most afraid of?</strong>&nbsp;I don’t fear much except ending up alone. I’ve been on my own so much and I’m so independent. I would hate to wake up one day with everything I’ve worked so hard for but there’s no one in bed next to me.</p> <p><strong>If you could be a fictional character, who would you be, and why?</strong>&nbsp;Katniss Everdeen! She is one tough cookie and I admire her strength and her drive to survive, succeed and protect her family. She can go up against the boys! </p>                                    </div>
-                                </div>
-                                                    
-                        
-                    </div>
-      	</div>
+				<h2 class="module-title light text1 m-person-title">Olivia</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 25</p> <p>  <strong>Occupation:</strong> Apparel Sales Representative</p> <p>  <strong>Hometown:</strong> Anchorage, AK</p> <p>  <strong>Height:</strong> 5'7"</p> <p>  <strong>Tattoos?</strong> No.</p> <p>   <strong>If you wanted to approach a man you had never met before, how would you go about it?</strong>&nbsp;It depends on the situation and where we are at, but I would try to make eye contact with him and smile. If he comes over to me, I would introduce myself.</p> <p>  <strong>What's the most outrageous thing you have ever done?</strong>&nbsp;Trying out for my high school football team and becoming the kicker.</p> <p>  <strong>What is your most embarrassing moment?</strong>&nbsp;When I was a maid of honor for the first time. The speech I gave was so bad that I just started crying, had to stop the speech and sit down.</p> <p>  <strong>Who is your favorite author and why?</strong>&nbsp;Nicholas Sparks because I am a hopeless romantic.</p> <p>  <strong>What are you most afraid of?</strong>&nbsp;Spiders and not being able to find love.</p> <p>  <strong>If you could be a fictional character, who would you be and why?</strong> Superwoman, because she saves the world.</p>                                    </div>
+                </div>       
+            </div>
+	    </div>
       	<div id="bio_Rachel" class = "hide allBios">
       		<div class="m-text-copy">
-
-                                                    <h2 class="module-title light text1 m-person-title">Rachel</h2>
-                        
-                                                    <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
-                        
-                        
-                                                                                    <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>
-                            
-                                                            <div class="m-person-bio expandable-text">
-                                    <div class="expandable-section open" style="word-wrap: break-word;">
-                                        <p><strong>Age:</strong> 23</p> <p><strong>Occupation:</strong> Unemployed</p> <p><strong>Hometown:</strong>&nbsp;Little Rock, AR</p> <p><strong>Height:</strong> 5’5”</p> <p><strong>Tattoos:</strong> None.</p> <p><strong>Favorite Music:</strong> Pop/Hip Hop/Rap. Usually just whatever is trending.</p> <p><strong>All-time Favorite Movies:</strong> The Parent Trap, Sound of Music, Pride and Prejudice<strong><span class="br"></span> </strong></p> <p><strong>Cold or Hot Weather?:</strong> Hot! I like being tan and I get cold easily anyway. More things to do outside in warm weather!</p> <p><strong>If you could be any animal, which one and why?</strong> Cookie Monster, because I’m a sucker for good cookies. Does that count? Haha</p> <p><strong>What is your favorite holiday and why?</strong> Christmas – not because of the gifts, but because it always brings family together no matter what else is going on in life! Also, gift giving is my love language.</p> <p><strong>What are you most afraid of?</strong> Not settling down! I want so much before I’m 30: a place that feels like home, a husband, beginning to have kids, dog, money, etc.</p> <p><strong>Do you consider yourself a romantic?</strong> Absolutely! I adore when guys are sweet with their words and gestures. Putting thought into actions is more important to me than money.</p> <p><strong>What makes you nervous?</strong> Cute guys!</p> <p><strong>What is the longest relationship you have been in and why didn’t it work out?</strong> Year and a half – on and off. They guy was more interested in his friends and being popular than he was me.</p>                                    </div>
-                                </div>
-                                                    
-                        
-                    </div>
+				<h2 class="module-title light text1 m-person-title">Rachel</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 31</p> <p>  <strong>Occupation:</strong> Attorney</p> <p>  <strong>Hometown:</strong> Dallas, TX</p> <p>  <strong>Height:</strong> 5'4"</p> <p>  <strong>Tattoos?</strong>: Yes! Right rib cage – Reciprocity, left waist – bible verse</p> <p>  <strong>If you could be someone else for just one day, who would it be and why?</strong>&nbsp;Michelle Obama. She's everything!</p> <p>  <strong>What is you greatest achievement to date?</strong>&nbsp;Graduating law school and passing the bar (first time).</p> <p>  <strong>Do you have a serious fear of any kind of animal?</strong>&nbsp;I hate things that fly (e.g. birds, grasshoppers).</p> <p>  <strong>Do you have a fear of aging, and are you doing anything to prevent it?</strong>&nbsp;No. My mom is 60 and looks amazing.</p> <p>  <strong>What's your biggest regret you've had to date?</strong>&nbsp;Focusing too much on my career.</p> <p>  <strong>What's the most embarrassing thing you listen to?</strong>&nbsp;It's not embarrassing to me, but others would say 90s country music and Justin Bieber.</p> <p>  <strong>What are you most afraid of?&nbsp;</strong>That I've missed out on my chance at finding love.</p> <p><strong>Who is your favorite artist and why?</strong>&nbsp;Jean-Michel Basquiat. He was so mysterious and died so young. There is so much we don't know about him and could have received from him in the art world.</p>                                    </div>
+                </div>       
+            </div>
       	</div>
-      	<div id="bio_Samantha" class = "hide allBios">
+      	<div id="bio_Raven" class = "hide allBios">
       		<div class="m-text-copy">
-
-                                                    <h2 class="module-title light text1 m-person-title">Samantha</h2>
-                        
-                                                    <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
-                        
-                        
-                                                                                    <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>
-                            
-                                                            <div class="m-person-bio expandable-text">
-                                    <div class="expandable-section open" style="word-wrap: break-word;">
-                                        <p><strong>Age:</strong> 26</p> <p><strong>Occupation:</strong> Attorney</p> <p><strong>Hometown:</strong> New Smyrna Beach, FL</p> <p><strong>Height</strong>:5’4</p> <p><strong>Tattoos</strong>:1</p> <p><strong>Favorite Music</strong>: Country</p> <p><strong>All-Time Favorite Movies</strong>:Remember the Titans, Strangers, The Bone Collector</p> <p><strong>Cold or Hot Weather?</strong> : I like both – hot because of the beach and cold because of snow.</p> <p><strong>What is your greatest achievement to date?</strong> Graduating Law School in the top 20% of my class.</p> <p><strong>If you wanted to really impress a man, what would you do and why?</strong> I would hope that just being myself and spending quality time would be enough. If he is the right man for me, I shouldn’t have to work so hard to impress him.</p> <p><strong>What’s your biggest date fear? </strong>Being on a date with someone whom you do not feel a connection with and there is awkward silence. Then there is always bad breath…</p> <p><strong>What are five things you can’t live without? </strong>Straightener, family, coffee, friends and WiFi (haha)</p> <p><strong>How important is your family’s approval to you when it concerns dating a certain someone, and why?</strong> My parents’ approval means everything to me. I don’t know if I could end up with someone they absolutely didn’t like.</p>                                    </div>
-                                </div>
-                                                    
-                        
-                    </div>
+				<h2 class="module-title light text1 m-person-title">Raven</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 25</p> <p>  <strong>Occupation:</strong> Fashion Boutique Owner</p> <p>  <strong>Hometown:</strong> Hoxie, AR</p> <p>  <strong>Height: </strong>5'6"</p> <p>  <strong>Tattoos:</strong> No</p> <p>  <strong>All-time favorite movies: </strong><em>Uptown Girls</em>, <em>Bridesmaids</em>, <em>Step Brothers</em></p> <p>  <strong>If you could be someone else for just one day, who would it be and why? </strong>Blue Ivy – who doesn't want to be the child of Jay Z and Beyonce.</p> <p>  <strong>Who is your favorite actor and why?</strong> Brittany Murphy (when she was alive). I loved her spirit!</p> <p>  <strong>If you could be a fictional character, who would you be and why? </strong>Jasmine! That hair and a pet tiger!</p> <p>  <strong>Do you have a fear of aging, and are you doing anything to prevent it?</strong> No! Oh, I'm sure I'll use cosmetic procedures to my advantage, but tastefully done.</p> <p>  <strong>What is the most romantic present you have ever received and why? </strong>A diamond necklace and roses left on my car. I didn't even care if they were diamonds. I just never had a man buy me anything before. So thoughtful!</p> <p>  <strong>What hair products do you use?</strong> Anything that's cheap! LOL</p> <p><strong>How good of a cook are you?</strong> Terrible!</p>                                    </div>
+                </div>       
+            </div>
       	</div>
-      	<div id="bio_Shushanna" class = "hide allBios">
+      	<div id="bio_Sarah" class = "hide allBios">
       		<div class="m-text-copy">
-
-                                                    <h2 class="module-title light text1 m-person-title">Shushanna</h2>
-                        
-                                                    <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
-                        
-                        
-                                                                                    <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>
-                            
-                                                            <div class="m-person-bio expandable-text">
-                                    <div class="expandable-section open" style="word-wrap: break-word;">
-                                        <p><strong>Age:</strong> 27</p> <p><strong>Occupation:</strong>&nbsp;Mathematician</p> <p><strong>Hometown:</strong> Salt Lake City, Utah</p> <p><strong>Height:</strong> 5'2"</p> <p><strong>Tattoos:</strong> None</p> <p><strong>Favorite Music:</strong> Deep House, EDM, Russian</p> <p><strong>All-Time Favorite Movies:</strong> Inception, Shutter Island, Fast &amp; Furious</p> <p><strong>Hot or Cold Weather?:</strong> I like both!</p> <p><strong>Are you a little bit country or more of a city person?</strong> City person, even though I grew up as a country girl.</p> <p><strong>What is your ideal mate’s personality like?</strong> Spontaneous, energetic, adventurous, smart, intelligent, funny, supportive, easy going, strong.</p> <p><strong>What’s the closest you have ever come to being married, and why didn’t it work out?</strong> After five years of being together, we wanted different things from life. And I couldn’t live with his mom.</p> <p><strong>Favorite memory from your childhood?</strong> Playing checkers with my grandfather before school.</p> <p><strong>How good of a cook are you?</strong> I love cooking a lot. No one’s ever complained. Usually people ask for the recipes.</p> <p><strong>Do you have a serious fear of any kind of animal?</strong> If bed bugs are considered an animal, then bed bugs. :)</p> <p><strong>What do you hope to get out of participating in "The Bachelor"?</strong> At some point I stopped believing in love again. I thought something was wrong with me or I’m just so busy that I don’t want anyone in my life. Maybe this get away will help to open my eyes and meet someone special. And even if it doesn’t happen on the show, I believe this show will help me with my hopes and loss.</p>                                    </div>
-                                </div>
-                                                    
-                        
-                    </div>
+				<h2 class="module-title light text1 m-person-title">Sarah</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 26</p> <p>  <strong>Occupation:</strong> Grade School Teacher</p> <p>  <strong>Hometown:</strong> Newport Beach, CA</p> <p>  <strong>Height:</strong> 5'5"</p> <p>  <strong>Tattoos:</strong> None</p> <p>  <strong>If you could be any animal, which would you be and why?</strong> A puppy! Or, if you're a bird, I'm a bird right? :)</p> <p>  <strong>What's the most outrageous thing you've ever done?</strong> Maybe this, or moving to NYC with 3 bucks, 2 bags, and 1 me.</p> <p>  <strong>Which political party do you align with?</strong> Socially Democratic, economically Republican</p> <p>  <strong>What's your favorite flower?</strong> White roses. They're gorgeous and simple and romantic.</p> <p>  <strong>If you could be a fictional character, who would you be?</strong> Meredith Grey, Olivia Pope, or Carrie Bradshaw, the ultimate girls!</p> <p>  <strong>If you wanted to approach a man you'd never met before, how would you go about it?</strong> Find something witty to say.</p> <p>  <strong>Do you like to gamble?</strong> I love it...when I'm winning! I'm good at walking away to make sure that I am. I call it, the hit and run.</p> <p>  <strong>What's the most romantic present you've ever received?</strong> A star named after me, just like in <em>A Walk to Remember</em> because I hadn't told him I liked that, he came up with it.</p>                                    </div>
+                </div>       
+            </div>
       	</div>
-      	<div id="bio_Tiara" class = "hide allBios">
+      	<div id="bio_Susannah" class = "hide allBios">
       		<div class="m-text-copy">
-
-                                                    <h2 class="module-title light text1 m-person-title">Tiara</h2>
-                        
-                                                    <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
-                        
-                        
-                                                                                    <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>
-                            
-                                                            <div class="m-person-bio expandable-text">
-                                    <div class="expandable-section open" style="word-wrap: break-word;">
-                                        <p><strong>Age:</strong> 26</p> <p><strong>Occupation:</strong> Chicken Enthusiast</p> <p><strong>Hometown:</strong> Redmond, WA</p> <p><strong>Height:</strong> 5'8"</p> <p><strong>Tattoos:</strong> None</p> <p><strong>Favorite Music:</strong> Rap, techno, sometimes country</p> <p><strong>All-Time Favorite Movies:</strong> Other Woman, Cloudy with a Chance of Meatballs, The Notebook</p> <p><strong>Hot or Cold Weather?:</strong> Medium weather. Too hot makes me feel uncomfortable.</p> <p><strong>What is your guiltiest pleasure of any kind?</strong> Chickens. If I see chickens anywhere, I want to stop and hold them.</p> <p><strong>What does marriage mean to you?</strong> Till death do we part. End of story.</p> <p><strong>What's the best trip you have ever been on and why?</strong> Ireland! I rode horses for 10 days!</p> <p><strong>What are five things you can't live without?</strong> My chickens, my horse, food, my car, my dad and sister.</p> <p><strong>Do you like being the center of attention or do you prefer being more mysterious?</strong> I have a lot to say and offer, so I do enjoy being the center of attention.</p> <p><strong>Do you have a serious fear of any kind of animal?</strong> Big dogs scare me. I got bit in the face by a pitbull.</p> <p><strong><strong>Who do you admire most in the world and why?</strong> </strong>Jeff Files, my old boss who passed away of ALS in 2014. He overcame so much in his life. He is a real role model.</p>                                    </div>
-                                </div>
-                                                    
-                        
-                    </div>
+				<h2 class="module-title light text1 m-person-title">Susannah</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 26</p> <p>  <strong>Occupation:</strong> Account Manager</p> <p>  <strong>Hometown:</strong> San Diego, CA</p> <p>  <strong>Height: </strong>5'6"</p> <p>  <strong>Tattoos:</strong> Yes, an elephant on my back, flowers on my side, bows on the backs of my ankles</p> <p>  <strong>All-time favorite movies: </strong><em>Titanic</em>, <em>Inglourious Basterds</em>, <em>Avatar</em></p> <p>  <strong>If you could be someone else for just one day, who would it be and why? </strong>Chrissy Teigen. I want to know what it's like to have such a perfect (looking) life.</p> <p>  <strong>What is your most embarrassing moment?</strong> When I tried to look sexy picking up a pen in front of my high school crush and banged my head into the table.</p> <p>  <strong>If you could be a fictional character, who would you be and why? </strong>This may be extra girly, but I would want to be Ariel. She's a mermaid! Plus she has amazing hair and a seashell bra.</p> <p>  <strong>If you could be any fruit or vegetable, which one would you be? </strong>Watermelon, because they're sweet and are best during summer.</p> <p>  <strong>If you could be any animal, which one and why? </strong>A lioness, because they're queens of the jungle but still elegant.</p> <p>  <strong>What's your guiltiest pleasure of any kind? </strong>Buying expensive shoes or not expensive shoes. I just love shoes.</p> <p><strong>What is your greatest achievement to date? </strong>Flying to Europe on a whim with one of my best friends.</p>                                    </div>
+                </div>       
+            </div>
+      	</div>
+      	<div id="bio_Taylor" class = "hide allBios">
+      		<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">Taylor</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 23</p> <p>  <strong>Occupation:</strong> Mental Health Counselor</p> <p>  <strong>Hometown:</strong> Seattle, WA</p> <p>  <strong>Height:</strong> 5'4"</p> <p>  <strong>Tattoos:</strong> No</p> <p>  <strong>What's the most outrageous thing you have ever done?</strong> Streaking</p> <p>  <strong>What are your three best attributes?</strong> Loyal, transparency, honesty</p> <p>  <strong>Who is your favorite clothes designer?</strong> Forever 21</p> <p>  <strong>What is the most romantic present you've ever received?</strong> A card because I love words of affirmation.</p> <p>  <strong>What U.S. city is the most romantic to you and why?</strong> Seattle, because it's home.</p> <p>  <strong>I hate it when my date…</strong> Only talks about himself or only asks about me.</p> <p>  <strong>Who do you admire most in the world, and why?</strong> Brené Brown for strength and courage to be memorable.</p> <p>  <strong>What's your guiltiest pleasure of any kind?</strong> Chocolate</p> <p><strong>If you really wanted to impress a man what would you do, and why? </strong>1) Be myself 2) Be open and authentic 3) Look bomb</p>                                    </div>
+                </div>       
+            </div>
+      	</div>
+      	<div id="bio_Vanessa" class = "hide allBios">
+      		<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">Vanessa</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 29</p> <p>  <strong>Occupation:</strong> Special Education Teacher</p> <p>  <strong>Hometown:</strong> Montreal, Quebec, Canada</p> <p>  <strong>Height:</strong> 5'3½"</p> <p>  <strong>Tattoos:</strong> Nope!</p> <p>  <strong>What are your three best attributes?</strong> My personality, my drive to succeed and work hard, my patience</p> <p>  <strong>If you could be any fruit or vegetable, which one would you be?</strong> An onion because they're a staple item and can be found all year round.</p> <p>  <strong>Do you have any phobias?</strong> Sharks/bees</p> <p>  <strong>What does your ideal mate look like?</strong> I don't really have a type, but a great smile is definitely necessary.</p> <p>  <strong>What are you most afraid of?</strong> Hurting people's feelings.</p> <p>  <strong>Do you speak any languages other than English?</strong> French and Italian</p> <p>  <strong>What's the most romantic present you have ever received, and why?</strong> A promise ring – because it's a freaking promise ring!</p> <p>  <strong>How important is your family's approval to you when it comes to dating?</strong> Very important. I respect my family's opinions as they usually are right in the end.</p>                                    </div>
+                </div>       
+            </div>
+      	</div>
+      	<div id="bio_Whitney" class = "hide allBios">
+      		<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">Whitney</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 25</p> <p>  <strong>Occupation:</strong> Pilates Instructor</p> <p>  <strong>Hometown:</strong> Chanhassen, MN</p> <p>  <strong>Height:</strong> 5'8"</p> <p>  <strong>Tattoos:</strong> No</p> <p>  <strong>If you could be any animal, which would you be and why?</strong> An eagle because I can see life from a different perspective</p> <p>  <strong>If you could be someone else for just one day, who would it be and why?</strong> Gisele Bündchen/Brady because she has the reputation of being a really successful model and married to Tom Brady. :)</p> <p>  <strong>Do you have a serious fear of any kind of animal?</strong> Horses</p> <p>  <strong>What are your favorite sports?</strong> Hockey, golf, dance, and football.</p> <p>  <strong>What's your biggest regret?</strong> I don't live life with regrets!</p> <p>  <strong>What are your favorite foods?</strong> Fresh fruits, dark chocolate, pancakes, French fries</p> <p>  <strong>How much do you enjoy the theater?</strong> I like going to movies but also fun to rent them at home.</p> <p>  <strong>What does being married mean to you?</strong> Loving, caring, communicating, supporting each other through life experiences. Also, creating our own family.</p>                                    </div>
+                </div>       
+            </div>
       	</div>
       </div> <!-- /.modal-body -->
     </div><!-- /.modal-content -->
@@ -1074,209 +905,224 @@
 	<div class="ui-widget ui-helper-clearfix" style = "width:100%">
 		<div class = "col-md-5">
 	 		<ul id="sortable" class="sortable ui-helper-reset ui-helper-clearfix" style = "width:100%;">
-	  			<li name = "Amanda" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Amanda">
-	  				<img title="Amanda" src="pics/Amanda.PNG" class="img-responsive">
+	  			<li name = "Alexis" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Alexis">
+	  				<img title="Alexis" src="pics/Alexis.PNG" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
-	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Amanda.PNG')">
-	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Amanda &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Amanda')"></a></h5>
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Alexis.PNG')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Alexis &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Alexis')"></a></h5>
 	  			</li>
 
-	  			<li name = "Amber" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Amber">
-	  				<img title="Amber" src="pics/Amber.PNG" class="img-responsive">
+	  			<li name = "Angela" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Angela">
+	  				<img title="Angela" src="pics/Angela.PNG" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
-	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Amber.PNG')">
-	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp Amber &nbsp&nbsp&nbsp&nbsp&nbsp
-	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Amber')"></a></h5>
-	  			</li>
-	  			<li name = "Becca" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Becca">
-	  				<img title="Becca" src="pics/Becca.PNG" class="img-responsive">
-	  				<h5  style = "position:relative; bottom:7px">
-	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Becca.PNG')">
-	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp Becca &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Becca')"></a></h5>
-	  			</li>
-	  			<li name = "Breanne" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Breanne">
-	  				<img title="Breanne" src="pics/Breanne.PNG" class="img-responsive">
-	  				<h5  style = "position:relative; bottom:7px">
-	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Breanne.PNG')">
-	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Breanne &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Breanne')"></a></h5>
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Angela.PNG')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp Angela &nbsp&nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Angela')"></a></h5>
 	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
 	  			</li>
-	  			<li name = "Caila" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Caila">
-	  				<img title="Caila" src="pics/Caila.PNG" class="img-responsive">
+	  			<li name = "Astrid" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Astrid">
+	  				<img title="Astrid" src="pics/Astrid.PNG" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
-	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Caila.PNG')">
-	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp Caila &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Caila')"></a></h5>
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Astrid.PNG')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp Astrid &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Astrid')"></a></h5>
 	  			</li>
-	  			<li name = "Emily" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Emily">
-	  				<img title="Emily" src="pics/Emily.PNG" class="img-responsive">
+	  			<li name = "Briana" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Briana">
+	  				<img title="Briana" src="pics/Briana.PNG" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
-	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Emily.PNG')">
-	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Emily &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Emily')"></a></h5>
-	  			</li>
-	  			<li name = "Haley" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Haley">
-	  				<img title="Haley" src="pics/Haley.PNG" class="img-responsive">
-	  				<h5  style = "position:relative; bottom:7px">
-	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Haley.PNG')">
-	  				  	</a>&nbsp&nbsp Haley &nbsp&nbsp
-	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Haley')"></a></h5>
-	  			</li>
-	  			<li name = "Izzy" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Izzy">
-	  				<img title="Izzy" src="pics/Izzy.PNG" class="img-responsive">
-	  				<h5  style = "position:relative; bottom:7px">
-	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Izzy.PNG')">
-	  				  	</a>&nbsp&nbsp&nbsp Izzy &nbsp&nbsp&nbsp
-	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Izzy')"></a></h5>
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Briana.PNG')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Briana &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Briana')"></a></h5>
 	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
 	  			</li>
-	  			<li name = "Jackie" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Jackie">
-	  				<img title="Jackie" src="pics/Jackie.PNG" class="img-responsive">
+	  			<li name = "Brittany" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Brittany">
+	  				<img title="Brittany" src="pics/Brittany.PNG" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
-	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Jackie.PNG')">
-	  				  	</a>&nbsp&nbsp&nbsp&nbsp Jackie &nbsp&nbsp&nbsp&nbsp
-	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Jackie')"></a></h5>	
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Brittany.PNG')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp Brittany &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Brittany')"></a></h5>
 	  			</li>
-	  			<li name = "Jami" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Jami">
-	  				<img title="Jami" src="pics/Jami.PNG" class="img-responsive">
+	  			<li name = "Christen" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Christen">
+	  				<img title="Christen" src="pics/Christen.PNG" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
-	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Jami.PNG')">
-	  				  	</a>&nbsp&nbsp&nbsp Jami &nbsp&nbsp&nbsp
-	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Jami')"></a></h5>
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Christen.PNG')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Christen &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Christen')"></a></h5>
 	  			</li>
-	  			<li name = "Jennifer" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Jennifer">
-	  				<img title="Jennifer" src="pics/Jennifer.PNG" class="img-responsive">
+	  			<li name = "Corinne" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Corinne">
+	  				<img title="Corinne" src="pics/Corinne.PNG" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
-	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Jennifer.PNG')">
-	  				  	</a>&nbsp&nbsp&nbsp&nbsp Jennifer &nbsp&nbsp&nbsp&nbsp
-	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Jennifer')"></a></h5>
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Corinne.PNG')">
+	  				  	</a>&nbsp&nbsp Corinne &nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Corinne')"></a></h5>
 	  			</li>
-	  			<li name = "Jessica" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Jessica">
-	  				<img title="Jessica" src="pics/Jessica.PNG" class="img-responsive">
+	  			<li name = "Danielle L" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Danielle_L">
+	  				<img title="Danielle L" src="pics/Danielle_L.PNG" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
-	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Jessica.PNG')">
-	  				  	</a>&nbsp&nbsp&nbsp&nbsp Jessica &nbsp&nbsp&nbsp&nbsp
-	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Jessica')"></a></h5>
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Danielle_L.PNG')">
+	  				  	</a>&nbsp&nbsp&nbsp Danielle L &nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Danielle_L')"></a></h5>
+	  			</li>
+	  			<li name = "Danielle M" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Danielle_M">
+	  				<img title="Danielle M" src="pics/Danielle_M.PNG" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Danielle_M.PNG')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp Danielle M &nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Danielle_M')"></a></h5>	
+	  			</li>
+	  			<li name = "Dominique" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Dominique">
+	  				<img title="Dominique" src="pics/Dominique.PNG" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Dominique.PNG')">
+	  				  	</a>&nbsp&nbsp&nbsp Dominique &nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Dominique')"></a></h5>
+	  			</li>
+	  			<li name = "Liz" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Liz">
+	  				<img title="Liz" src="pics/Liz.PNG" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Liz.PNG')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp Liz &nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Liz')"></a></h5>
+	  			</li>
+	  			<li name = "Elizabeth" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Elizabeth">
+	  				<img title="Elizabeth" src="pics/Elizabeth.PNG" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Elizabeth.PNG')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp Elizabeth &nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Elizabeth')"></a></h5>
+	  			</li>
+	  			<li name = "Hailey" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Hailey">
+	  				<img title="Hailey" src="pics/Hailey.PNG" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Hailey.PNG')">
+	  				  	</a>&nbsp&nbsp&nbsp Hailey &nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Hailey')"></a></h5>
+	  			</li>
+	  			<li name = "Ida Marie" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Ida_Marie">
+	  				<img title="Ida Marie" src="pics/Ida_Marie.PNG" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Ida_Marie.PNG')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp Ida Marie &nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Ida_Marie')"></a></h5>
 	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
 	  			</li>
-	  			<li name = "JoJo" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "JoJo">
-	  				<img title="JoJo" src="pics/JoJo.PNG" class="img-responsive">
+	  			<li name = "Jaimi" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Jaimi">
+	  				<img title="Jaimi" src="pics/Jaimi.PNG" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
-	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/JoJo.PNG')">
-	  				  	</a>&nbsp&nbsp&nbsp JoJo &nbsp&nbsp&nbsp
-	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('JoJo')"></a></h5>
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Jaimi.PNG')">
+	  				  	</a>&nbsp&nbsp&nbsp Jaimi &nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Jaimi')"></a></h5>
 	  			</li>
-	  			<li name = "Jubilee" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Jubilee">
-	  				<img title="Jubilee" src="pics/Jubilee.PNG" class="img-responsive">
+	  			<li name = "Jasmine B" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Jasmine_B">
+	  				<img title="Jasmine B" src="pics/Jasmine_B.PNG" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
-	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Jubilee.PNG')">
-	  				  	</a>&nbsp&nbsp&nbsp&nbsp Jubilee &nbsp&nbsp&nbsp&nbsp
-	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Jubilee')"></a></h5>
-	  			</li>
-	  			<li name = "Lace" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Lace">
-	  				<img title="Lace" src="pics/Lace.PNG" class="img-responsive">
-	  				<h5  style = "position:relative; bottom:7px">
-	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Lace.PNG')">
-	  				  	</a>&nbsp&nbsp&nbsp Lace &nbsp&nbsp&nbsp
-	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Lace')"></a></h5>
-	  			</li>
-	  			<li name = "Laura" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Laura">
-	  				<img title="Laura" src="pics/Laura.PNG" class="img-responsive">
-	  				<h5  style = "position:relative; bottom:7px">
-	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Laura.PNG')">
-	  				  	</a>&nbsp&nbsp&nbsp&nbsp Laura &nbsp&nbsp&nbsp&nbsp
-	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Laura')"></a></h5>
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Jasmine_B.PNG')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp Jasmine B &nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Jasmine_B')"></a></h5>
 	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
 	  			</li>
-	  			<li name = "LB" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "LB">
-	  				<img title="LB" src="pics/LB.PNG" class="img-responsive">
+	  			<li name = "Jasmine G" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Jasmine_G">
+	  				<img title="Jasmine G" src="pics/Jasmine_G.PNG" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
-	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/LB.PNG')">
-	  				  	</a>&nbsp&nbsp&nbsp&nbsp LB &nbsp&nbsp&nbsp&nbsp
-	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('LB')"></a></h5>
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Jasmine_G.PNG')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp Jasmine G &nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Jasmine_G')"></a></h5>
 	  			</li>
-	  			<li name = "Lauren B" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Lauren_B">
-	  				<img title="Lauren B" src="pics/Lauren_B.PNG" class="img-responsive">
+	  			<li name = "Josephine" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Josephine">
+	  				<img title="Josephine" src="pics/Josephine.PNG" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
-	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Lauren_B.PNG')">
-	  				  	</a>&nbsp&nbsp&nbsp&nbsp Lauren B &nbsp&nbsp&nbsp&nbsp
-	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Lauren_B')"></a></h5>
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Josephine.PNG')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp Josephine &nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Josephine')"></a></h5>
 	  			</li>
-	  			<li name = "Lauren H" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Lauren_H">
-	  				<img title="Lauren H" src="pics/Lauren_H.PNG" class="img-responsive">
+	  			<li name = "Kristina" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Kristina">
+	  				<img title="Kristina" src="pics/Kristina.PNG" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
-	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Lauren_H.PNG')">
-	  				  	</a>&nbsp&nbsp&nbsp Lauren H &nbsp&nbsp&nbsp
-	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Lauren_H')"></a></h5>
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Kristina.PNG')">
+	  				  	</a>&nbsp&nbsp&nbsp Kristina &nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Kristina')"></a></h5>
 	  			</li>
-	  			<li name = "Lauren R" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Lauren_R">
-	  				<img title="Lauren R" src="pics/Lauren_R.PNG" class="img-responsive">
+	  			<li name = "Lacey" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Lacey">
+	  				<img title="Lacey" src="pics/Lacey.PNG" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
-	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Lauren_R.PNG')">
-	  				  	</a>&nbsp&nbsp&nbsp Lauren R &nbsp&nbsp&nbsp
-	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Lauren_R')"></a></h5>
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Lacey.PNG')">
+	  				  	</a>&nbsp&nbsp&nbsp Lacey &nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Lacey')"></a></h5>
+	  			</li>
+	  			<li name = "Lauren" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Lauren">
+	  				<img title="Lauren" src="pics/Lauren.PNG" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Lauren.PNG')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Lauren &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Lauren')"></a></h5>
 	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
 	  			</li>
-	  			<li name = "Leah" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Leah">
-	  				<img title="Leah" src="pics/Leah.PNG" class="img-responsive">
+	  			<li name = "Michelle" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Michelle">
+	  				<img title="Michelle" src="pics/Michelle.PNG" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
-	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Leah.PNG')">
-	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Leah &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Leah')"></a></h5>
-	  			</li>
-	  			<li name = "Maegan" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Maegan">
-	  				<img title="Maegan" src="pics/Maegan.PNG" class="img-responsive">
-	  				<h5  style = "position:relative; bottom:7px">
-	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Maegan.PNG')">
-	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp Maegan &nbsp&nbsp&nbsp&nbsp&nbsp
-	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Maegan')"></a></h5>
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Michelle.PNG')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp Michelle &nbsp&nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Michelle')"></a></h5>
 	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
 	  			</li>
-	  			<li name = "Mandi" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Mandi">
-	  				<img title="Mandi" src="pics/Mandi.PNG" class="img-responsive">
-	  				<h5  style = "position:relative; bottom:7px">
-	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Mandi.PNG')">
-	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Mandi &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Mandi')"></a></h5>
-	  			</li>
-	  			<li name = "Olivia" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Olivia">
+	  			<li name = "Olivia" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Olivia">
 	  				<img title="Olivia" src="pics/Olivia.PNG" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
 	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Olivia.PNG')">
-	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp Olivia &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Olivia &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Olivia')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
 	  			</li>
 	  			<li name = "Rachel" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Rachel">
 	  				<img title="Rachel" src="pics/Rachel.PNG" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
 	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Rachel.PNG')">
-	  				  	</a>&nbsp&nbsp&nbsp Rachel &nbsp&nbsp&nbsp
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp Rachel &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Rachel')"></a></h5>
 	  			</li>
-	  			<li name = "Samantha" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Samantha">
-	  				<img title="Samantha" src="pics/Samantha.PNG" class="img-responsive">
+	  			<li name = "Raven" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Raven">
+	  				<img title="Raven" src="pics/Raven.PNG" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
-	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Samantha.PNG')">
-	  				  	</a>&nbsp&nbsp&nbsp Samantha &nbsp&nbsp&nbsp
-	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Samantha')"></a></h5>
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Raven.PNG')">
+	  				  	</a>&nbsp&nbsp&nbsp Raven &nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Raven')"></a></h5>
 	  			</li>
-	  			<li name = "Shushanna" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Shushanna">
-	  				<img title="Shushanna" src="pics/Shushanna.PNG" class="img-responsive">
+	  			<li name = "Sarah" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Sarah">
+	  				<img title="Sarah" src="pics/Sarah.PNG" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
-	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Shushanna.PNG')">
-	  				  	</a>&nbsp&nbsp&nbsp Shushanna &nbsp&nbsp&nbsp
-	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Shushanna')"></a></h5>
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Sarah.PNG')">
+	  				  	</a>&nbsp&nbsp&nbsp Sarah &nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Sarah')"></a></h5>
 	  			</li>
-	  			<li name = "Tiara" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Tiara">
-	  				<img title="Tiara" src="pics/Tiara.PNG" class="img-responsive">
+	  			<li name = "Susannah" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Susannah">
+	  				<img title="Susannah" src="pics/Susannah.PNG" class="img-responsive">
 	  				<h5  style = "position:relative; bottom:7px">
-	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Tiara.PNG')">
-	  				  	</a>&nbsp&nbsp&nbsp Tiara &nbsp&nbsp&nbsp
-	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Tiara')"></a></h5>
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Susannah.PNG')">
+	  				  	</a>&nbsp&nbsp&nbsp Susannah &nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Susannah')"></a></h5>
 	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
+	  			</li>
+	  			<li name = "Taylor" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Taylor">
+	  				<img title="Taylor" src="pics/Taylor.PNG" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Taylor.PNG')">
+	  				  	</a>&nbsp&nbsp&nbsp Taylor &nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Taylor')"></a></h5>
+	  			</li>
+	  			<li name = "Vanessa" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Vanessa">
+	  				<img title="Vanessa" src="pics/Vanessa.PNG" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Vanessa.PNG')">
+	  				  	</a>&nbsp&nbsp&nbsp Vanessa &nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Vanessa')"></a></h5>
+	  			</li>
+	  			<li name = "Whitney" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Whitney">
+	  				<img title="Whitney" src="pics/Whitney.PNG" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Whitney.PNG')">
+	  				  	</a>&nbsp&nbsp&nbsp Whitney &nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Whitney')"></a></h5>
 	  			</li>
 			</ul>
 		</div>
