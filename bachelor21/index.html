@@ -1,0 +1,1397 @@
+<!doctype html>
+<html lang="us">
+<head>
+	<meta charset="utf-8">
+	<title>The Bachelor Bracket</title>
+	<link href="css/dark-hive/jquery-ui-1.10.3.custom.css" rel="stylesheet">
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/bootstrap-select.min.css" rel="stylesheet">
+	<script src="js/jquery-1.9.1.js"></script>
+	<script src="js/jquery-ui-1.10.3.custom.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/bootstrap-select.min.js"></script>
+
+	<style>
+		#sortable { float: left; width: 65%; min-height: 12em;}
+  		  .sortable.custom-state-active { background: #eee; }
+		  .sortable li { float: left; width:175px; height: 194px; margin: 3px 3px 3px 0; padding: 1px; text-align: center;}
+		  .sortable li a { float: right; }
+		  .sortable li img { width: 100%; cursor: move; }
+
+  		.dropContainer {height: 257px; padding: 1%; }
+  		.dropContainer h4 { line-height: 16px; margin: 0 0 0.4em; }
+		.dropContainer h4 .ui-icon { float: left; }
+		.dropContainer .sortable h5 { display: none;}
+
+		body {
+			background-image: url(pics/background.jpg);
+			background-size: cover;
+		}
+
+		.podbar {
+		    bottom:0;
+		    position:fixed;
+		    z-index:150;
+		    height:45px;
+		    width:100%;
+		}
+
+		.hidden {
+			pointer-events: none;
+		}
+
+		.threeDHeader {
+			display:block;
+			color: #fff;
+        	text-shadow: 0px 1px 0px #999, 0px 2px 0px #888, 0px 3px 0px #777, 0px 4px 0px #666, 0px 5px 0px #555, 0px 6px 0px #444, 0px 7px 0px #333, 0px 8px 7px #001135;
+        	font: 50px 'ChunkFiveRegular';
+		}
+
+		.eliminatedText {
+			display:block;
+			position:relative;
+			text-shadow: 0px -1px 4px red, 0px -2px 10px yellow, 0px -10px 20px #ff8000, 0px -18px 40px orange;
+			opacity: 1;
+			bottom:140px;
+			right: -5px;
+			color: red;
+        	font: 25px 'LeagueGothicRegular';
+			transform:rotate(315deg);
+			-ms-transform:rotate(315deg);
+			-moz-transform: rotate(315deg);
+			-webkit-transform:rotate(315deg); /* Safari and Chrome */
+		}
+
+	</style>
+	</head>
+<body>
+
+	<script>
+		var week3Eliminations = 14;
+		var week4Eliminations = 11;
+		var week5Eliminations = 9;
+		var week6Eliminations = 6;
+		var week7Eliminations = 4;
+		var week8Eliminations = 3;
+		var week9Eliminations = 2;
+		var week10Eliminations = 1;
+
+	    $(function() {
+	    	$( "#tabs" ).tabs();
+
+	        var $sortable = $( "#sortable" ),
+	        $dropContainer = $( "#container1" );
+	        var $dropContainer2 = $("#container2");
+	        var $dropContainer3 = $("#container3");
+	        var $dropContainer4 = $("#container4");
+	        var $dropContainer5 = $("#container5");
+	        var $dropContainer6 = $("#container6");
+	        var $dropContainer7 = $("#container7");
+	        var $dropContainer8 = $("#container8");
+		 
+		    // let the women be draggable items
+		    $( "li", $sortable ).draggable({
+		      cancel: "a.glyphicon", // clicking an icon won't initiate dragging
+		      revert: "invalid", // when not dropped, the item will revert back to its initial position
+		      containment: "document",
+		      appendTo: $(".row"),
+		      helper: "clone",
+		      cursor: "move",
+		      start: function(event, ui) {
+		      	var offset = $(document).scrollTop();
+		      	ui.helper.css({width:'175px',height:'194px', position:'absolute', bottom:"100px"});
+		      }
+		    });
+
+		    // Make the group of women droppable as well so that they can be put back into the list
+		    $sortable.droppable({
+		      accept: ".dropContainer li",
+		      activeClass: "custom-state-active",
+		      drop: function( event, ui ) {
+		        removePic( ui.draggable );
+		        $(ui.helper).remove(); //destroy clone
+           	    $(ui.draggable).remove(); //remove from list
+		      }
+		    });
+
+		    $('.eliminatedWomen').draggable({disabled:true });
+		 
+		    //drop women into the container
+		    $dropContainer.droppable({
+		      accept: "#sortable > li",
+			  drop: function( event, ui ) {
+			  	var duplicateWoman = $(this).find("#" + $(ui.draggable).attr('id'));
+			  	var str = $(ui.draggable).attr('id');
+			  	var id = str.replace("_", " ");
+			  	var listLength = $('#container1 li').length;
+			  	document.getElementById("numberPicked1").innerHTML = listLength == week3Eliminations ? week3Eliminations : listLength+1;
+
+			  	if (listLength == week3Eliminations)
+			  		alertError("Nice try,", " but you can't add more than " + week3Eliminations + " women for this week.");
+
+			  	else if (duplicateWoman.length > 0) {
+			  		document.getElementById("numberPicked1").innerHTML = $('#container1 li').length; 
+			  		alertError(id, " may be hot, but you can't add her twice. Pick someone else.");
+			  	}
+
+			  	else {
+			  		var copy = $(ui.draggable).clone().draggable({
+				      revert: function(valid_drop) {
+				      		if(!valid_drop) {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked1").innerHTML = $('#container1 li').length;
+				      			return true; 
+				      		}
+				      		else {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked1").innerHTML = $('#container1 li').length; 
+				      		}
+				      	}, // when not dropped, the item will revert back to its initial position
+				      containment: "document",
+				      cursor: "move",
+				      drag: function(event, ui) {
+		        	  	document.getElementById("numberPicked1").innerHTML = $('#container1 li').length-1;
+		      		  },
+				    });
+					addPic(copy, $(this)); //add a clone so that the original will stay in the list
+			    }
+			  }
+		    });
+
+		    //drop women into the container
+		    $dropContainer2.droppable({
+		      accept: "#sortable > li",
+			  drop: function( event, ui ) {
+			  	var duplicateWoman = $(this).find("#" + $(ui.draggable).attr('id'));
+			  	var previousWeekCheck = $dropContainer.find("#" + $(ui.draggable).attr('id'));
+			  	var str = $(ui.draggable).attr('id');
+			  	var id = str.replace("_", " ");
+			  	var listLength = $('#container2 li').length;
+			  	document.getElementById("numberPicked2").innerHTML = listLength == week4Eliminations ? week4Eliminations : listLength+1;
+
+			  	if ($('#container2 li').length == week4Eliminations)
+			  		alertError("Nice try,", " but you can't add more than " + week4Eliminations + " women for this week.");
+
+			  	else if (duplicateWoman.length > 0) {
+			  		document.getElementById("numberPicked2").innerHTML = $('#container2 li').length; 
+			  		alertError(id, " may be hot, but you can't add her twice. Pick someone else.");;
+			  	}
+
+			  	else if (previousWeekCheck.length < 1) {
+			  		document.getElementById("numberPicked2").innerHTML = $('#container2 li').length;
+			  		alertError(id, " wasn't picked last week. Go change your picks, or choose a different woman.");
+			  	}
+
+			  	else {
+			  		var copy = $(ui.draggable).clone().draggable({
+				      revert: function(valid_drop) {
+				      		if(!valid_drop) {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked2").innerHTML = $('#container2 li').length;
+				      			return true; 
+				      		}
+				      		else {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked2").innerHTML = $('#container2 li').length; 
+				      		}
+				      	}, // when not dropped, the item will revert back to its initial position
+				      containment: "document",
+				      cursor: "move",				      
+				      drag: function(event, ui) {
+		        	  	document.getElementById("numberPicked2").innerHTML = $('#container2 li').length-1;
+		      		  },
+				    });
+					addPic(copy, $(this)); //add a clone so that the original will stay in the list
+			    }
+			  }
+		    });
+
+		     //drop women into the container
+		    $dropContainer3.droppable({
+		      accept: "#sortable > li",
+			  drop: function( event, ui ) {
+			  	var duplicateWoman = $(this).find("#" + $(ui.draggable).attr('id'));
+			  	var previousWeekCheck = $dropContainer2.find("#" + $(ui.draggable).attr('id'));
+			  	var str = $(ui.draggable).attr('id');
+			  	var id = str.replace("_", " ");
+			  	var listLength = $('#container3 li').length;
+			  	document.getElementById("numberPicked3").innerHTML = listLength == week5Eliminations ? week5Eliminations : listLength+1;
+
+			  	if ($('#container3 li').length == week5Eliminations)
+			  		alertError("Nice try,", " but you can't add more than " + week5Eliminations + " women for this week.");
+
+			  	else if (duplicateWoman.length > 0) {
+			  		document.getElementById("numberPicked3").innerHTML = $('#container3 li').length; 
+			  		alertError(id, " may be hot, but you can't add her twice. Pick someone else.");
+			  	}
+
+			  	else if (previousWeekCheck.length < 1) {
+			  		document.getElementById("numberPicked3").innerHTML = $('#container3 li').length; 
+			  		alertError(id, " wasn't picked last week. Go change your picks, or choose a different woman.");
+			  	}
+			  	else {
+			  		var copy = $(ui.draggable).clone().draggable({
+				      revert: function(valid_drop) {
+				      		if(!valid_drop) {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked3").innerHTML = $('#container3 li').length;
+				      			return true; 
+				      		}
+				      		else {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked3").innerHTML = $('#container3 li').length; 
+				      		}
+				      	}, // when not dropped, the item will revert back to its initial position
+				      containment: "document",
+				      cursor: "move",				      
+				      drag: function(event, ui) {
+		        	  	document.getElementById("numberPicked3").innerHTML = $('#container3 li').length-1;
+		      		  },
+				    });
+					addPic(copy, $(this)); //add a clone so that the original will stay in the list
+			    }
+			  }
+		    });
+
+		    //drop women into the container
+		    $dropContainer4.droppable({
+		      accept: "#sortable > li",
+			  drop: function( event, ui ) {
+			  	var duplicateWoman = $(this).find("#" + $(ui.draggable).attr('id'));
+			  	var previousWeekCheck = $dropContainer3.find("#" + $(ui.draggable).attr('id'));
+			  	var str = $(ui.draggable).attr('id');
+			  	var id = str.replace("_", " ");
+			  	var listLength = $('#container4 li').length;
+			  	document.getElementById("numberPicked4").innerHTML = listLength == week6Eliminations ? week6Eliminations : listLength+1;
+
+			  	if ($('#container4 li').length == week6Eliminations)
+			  		alertError("Nice try,", " but you can't add more than " + week6Eliminations + " women for this week.");
+
+			  	else if (duplicateWoman.length > 0) {
+			  		document.getElementById("numberPicked4").innerHTML = $('#container4 li').length; 
+			  		alertError(id, " may be hot, but you can't add her twice. Pick someone else.");
+			  	}
+
+			  	else if (previousWeekCheck.length < 1) {
+			  		document.getElementById("numberPicked4").innerHTML = $('#container4 li').length; 
+			  		alertError(id, " wasn't picked last week. Go change your picks, or choose a different woman.");
+			  	}
+
+			  	else {
+			  		var copy = $(ui.draggable).clone().draggable({
+				      revert: function(valid_drop) {
+				      		if(!valid_drop) {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked4").innerHTML = $('#container4 li').length;
+				      			return true; 
+				      		}
+				      		else {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked4").innerHTML = $('#container4 li').length; 
+				      		}
+				      	}, // when not dropped, the item will revert back to its initial position
+				      containment: "document",
+				      cursor: "move",				      
+				      drag: function(event, ui) {
+		        	  	document.getElementById("numberPicked4").innerHTML = $('#container4 li').length-1;
+		      		  },
+				    });
+					addPic(copy, $(this)); //add a clone so that the original will stay in the list
+			    }
+			  }
+		    });
+
+		   	//drop women into the container
+		    $dropContainer5.droppable({
+		      accept: "#sortable > li",
+			  drop: function( event, ui ) {
+			  	var duplicateWoman = $(this).find("#" + $(ui.draggable).attr('id'));
+			  	var previousWeekCheck = $dropContainer4.find("#" + $(ui.draggable).attr('id'));
+			  	var str = $(ui.draggable).attr('id');
+			  	var id = str.replace("_", " ");
+			  	var listLength = $('#container5 li').length;
+			  	document.getElementById("numberPicked5").innerHTML = listLength == week7Eliminations ? week7Eliminations : listLength+1;
+
+			  	if ($('#container5 li').length == week7Eliminations)
+			  		alertError("Nice try,", " but you can't add more than " + week7Eliminations + " women for this week.");
+
+			  	else if (duplicateWoman.length > 0) {
+			  		document.getElementById("numberPicked5").innerHTML = $('#container5 li').length; 
+			  		alertError(id, " may be hot, but you can't add her twice. Pick someone else.");
+			  	}
+
+			  	else if (previousWeekCheck.length < 1) {
+			  		document.getElementById("numberPicked5").innerHTML = $('#container5 li').length; 
+			  		alertError(id, " wasn't picked last week. Go change your picks, or choose a different woman.");
+			  	}
+			  	else {
+			  		var copy = $(ui.draggable).clone().draggable({
+				      revert: function(valid_drop) {
+				      		if(!valid_drop) {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked5").innerHTML = $('#container5 li').length;
+				      			return true; 
+				      		}
+				      		else {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked5").innerHTML = $('#container5 li').length; 
+				      		}
+				      	}, // when not dropped, the item will revert back to its initial position
+				      containment: "document",
+				      cursor: "move",				      
+				      drag: function(event, ui) {
+		        	  	document.getElementById("numberPicked5").innerHTML = $('#container5 li').length-1;
+		      		  },
+				    });
+					addPic(copy, $(this)); //add a clone so that the original will stay in the list
+			    }
+			  }
+		    });
+
+		    //drop women into the container
+		    $dropContainer6.droppable({
+		      accept: "#sortable > li",
+			  drop: function( event, ui ) {
+			  	var duplicateWoman = $(this).find("#" + $(ui.draggable).attr('id'));
+			  	var previousWeekCheck = $dropContainer5.find("#" + $(ui.draggable).attr('id'));
+			  	var str = $(ui.draggable).attr('id');
+			  	var id = str.replace("_", " ");
+			  	var listLength = $('#container6 li').length;
+			  	document.getElementById("numberPicked6").innerHTML = listLength == week8Eliminations ? week8Eliminations : listLength+1;
+
+			  	if ($('#container6 li').length == week8Eliminations)
+			  		alertError("Nice try,", " but you can't add more than " + week8Eliminations + " women for this week.");
+
+			  	else if (duplicateWoman.length > 0) {
+			  		document.getElementById("numberPicked6").innerHTML = $('#container6 li').length; 
+			  		alertError(id, " may be hot, but you can't add her twice. Pick someone else.");
+			  	}
+
+			  	else if (previousWeekCheck.length < 1) {
+			  		document.getElementById("numberPicked6").innerHTML = $('#container6 li').length;
+			  		alertError(id, " wasn't picked last week. Go change your picks, or choose a different woman.");
+			  	}
+			  	else {
+			  		var copy = $(ui.draggable).clone().draggable({
+				      revert: function(valid_drop) {
+				      		if(!valid_drop) {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked6").innerHTML = $('#container6 li').length;
+				      			return true; 
+				      		}
+				      		else {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked6").innerHTML = $('#container6 li').length; 
+				      		}
+				      	}, // when not dropped, the item will revert back to its initial position
+				      containment: "document",
+				      cursor: "move",				      
+				      drag: function(event, ui) {
+		        	  	document.getElementById("numberPicked6").innerHTML = $('#container6 li').length-1;
+		      		  },
+				    });
+					addPic(copy, $(this)); //add a clone so that the original will stay in the list
+			    }
+			  }
+		    });
+
+		    //drop women into the container
+		    $dropContainer7.droppable({
+		      accept: "#sortable > li",
+			  drop: function( event, ui ) {
+			  	var duplicateWoman = $(this).find("#" + $(ui.draggable).attr('id'));
+			  	var previousWeekCheck = $dropContainer6.find("#" + $(ui.draggable).attr('id'));
+			  	var str = $(ui.draggable).attr('id');
+			  	var id = str.replace("_", " ");
+			  	var listLength = $('#container7 li').length;
+			  	document.getElementById("numberPicked7").innerHTML = listLength == week9Eliminations ? week9Eliminations : listLength+1;
+
+			  	if ($('#container7 li').length == week9Eliminations)
+			  		alertError("Nice try,", " but you can't add more than " + week9Eliminations + " women for this week.");
+
+			  	else if (duplicateWoman.length > 0) {
+			  		document.getElementById("numberPicked7").innerHTML = $('#container7 li').length; 
+			  		alertError(id, " may be hot, but you can't add her twice. Pick someone else.");
+			  	}
+
+			  	else if (previousWeekCheck.length < 1) {
+			  		document.getElementById("numberPicked7").innerHTML = $('#container7 li').length; 
+			  		alertError(id, " wasn't picked last week. Go change your picks, or choose a different woman.");
+			  	}
+			  	else {
+			  		var copy = $(ui.draggable).clone().draggable({
+				      revert: function(valid_drop) {
+				      		if(!valid_drop) {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked7").innerHTML = $('#container7 li').length;
+				      			return true; 
+				      		}
+				      		else {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked7").innerHTML = $('#container7 li').length;
+				      		}
+				      	}, // when not dropped, the item will revert back to its initial position
+				      containment: "document",
+				      cursor: "move",				      
+				      drag: function(event, ui) {
+		        	  	document.getElementById("numberPicked7").innerHTML = $('#container7 li').length-1;
+		      		  },
+				    });
+					addPic(copy, $(this)); //add a clone so that the original will stay in the list
+			    }
+			  }
+		    });
+
+		    //drop women into the container
+		    $dropContainer8.droppable({
+		      accept: "#sortable > li",
+			  drop: function( event, ui ) {
+			  	var duplicateWoman = $(this).find("#" + $(ui.draggable).attr('id'));
+			  	var previousWeekCheck = $dropContainer7.find("#" + $(ui.draggable).attr('id'));
+			  	var str = $(ui.draggable).attr('id');
+			  	var id = str.replace("_", " ");
+			  	var listLength = $('#container8 li').length;
+			  	document.getElementById("numberPicked8").innerHTML = listLength == week10Eliminations ? week10Eliminations : listLength+1;
+
+			  	if ($('#container8 li').length == week10Eliminations)
+			  		alertError("Nice try,", " but you can't add more than " + week10Eliminations + " woman for this week.");
+
+			  	else if (duplicateWoman.length > 0) {
+			  		document.getElementById("numberPicked8").innerHTML = $('#container8 li').length; 
+			  		alertError(id, " may be hot, but you can't add her twice. Pick someone else.");
+			  	}
+
+			  	else if (previousWeekCheck.length < 1) {
+			  		document.getElementById("numberPicked8").innerHTML = $('#container8 li').length; 
+			  		alertError(id, " wasn't picked last week. Go change your picks, or choose a different woman.");
+			  	}
+			  	else {
+			  		var copy = $(ui.draggable).clone().draggable({
+				      revert: function(valid_drop) {
+				      		if(!valid_drop) {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked8").innerHTML = $('#container8 li').length;
+				      			return true; 
+				      		}
+				      		else {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked8").innerHTML = $('#container8 li').length; 
+				      		}
+				      	}, // when not dropped, the item will revert back to its initial position
+				      containment: "document",
+				      cursor: "move",				      
+				      drag: function(event, ui) {
+		        	  	document.getElementById("numberPicked8").innerHTML = $('#container8 li').length-1;
+		      		  },
+				    });
+					addPic(copy, $(this)); //add a clone so that the original will stay in the list
+			    }
+			  }
+		    });
+		 
+		    function addPic($pic, $container) {
+		      $pic.fadeOut(function() {
+		        var $list = $( "ul", $container ).length ?
+		          $( "ul", $container ) :
+		          $( "<ul class='sortable ui-helper-reset'/>" ).appendTo( $container );
+        		$pic.appendTo( $list ).fadeIn(function() {
+          		$pic
+            		.animate({ width: "85px", height:"85px" })
+        		});
+		      });
+		      $('#alertError').hide(); //hide the error message after a new woman has been added
+		    }
+
+			function removePic( $pic ) {
+		      $pic.fadeOut(function() {
+          		$pic
+            		.animate({ width: "100px", height:"58px" })
+        	  });
+		    }
+
+		    //When a tab is clicked hide profiles that can no longer be selected
+		    $( "#tabs" ).tabs({
+		    	activate: function(event, ui) {
+		    		var picks = [];
+		    		if (ui.newTab.index() != 0) {
+		    			$( "#container" + (ui.newTab.index()) + " li" ).each(function( index ) {
+							picks.push($( this ).attr('id')); //append list of picks from previous weeks container
+						});
+		    		}
+		    		else {
+		    			$( "#sortable li" ).each(function( index ) {
+		    				picks.push($( this ).attr('id')); //add everyone to the list for first week
+		    			});
+		    		}
+		    		hideDraggables(picks);
+		    	}
+		    });
+		});
+
+		function alertError(id, error) {
+				$('#alertError').removeClass("hidden");
+			    $('#alertError').html("<div class='alert alert-danger'>" + "<strong>" + id + "</strong>" + error + 
+			    	"<button type='button' id = 'closeButton' class='close' data-dismiss='alert' aria-hidden='true'>×</button> </div>");
+      			$('#alertError').slideDown("slow");
+		}
+
+		function hideDraggables(exclusionList) {
+			$( "#sortable li" ).each(function( index ) {
+				$(this).removeClass("hide"); //unhide everyone first
+				if (exclusionList.indexOf($( this ).attr('id')) == -1)
+					$(this).addClass("hide"); //hide this pick since it isn't an option based on the previous week's picks
+			});
+		}
+
+		$('#alertError').bind('close.bs.alert', function() {
+			$('#alertError').addClass("hidden"); //Need hidden class so that the links at the bottom of the page can be clicked
+		})
+		//Above event won't call for whatever reason when you click the x button
+		//Need special click event for bootstrap close button, again, I have no idea why.
+		$(document).on("click", "#closeButton", function(event){
+			$('#alertError').addClass("hidden");
+		});
+	</script>
+
+<h1 style = "position: relative; bottom: 10px; left: 10px; color:white;"><strong><span class="threeDHeader" >The Bachelor Bracket!</span></strong></h1>
+<!-- Initially hidden alert class to be set by alert functions -->
+<div id = "alertError" class = "podbar hidden">
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+  <!-- papER Town -->
+    <div class="modal-content" id = "myModalBackground" style = "background-color:lavender">
+      <div class="modal-body">
+      	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      	<div id="myModalBody"></div>
+      	<div id="bio_Alexis" class = "hide allBios">
+      		<div class="m-text-copy">
+                <h2 class="module-title light text1 m-person-title">Alexis</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 23</p> <p>  <strong>Occupation:</strong> Aspiring Dolphin Trainer</p> <p>  <strong>Hometown:</strong> Secaucus, NJ</p> <p>  <strong>Height:</strong> 5'6"</p> <p>  <strong>Tattoos:</strong> Yes. I have an Aries symbol on my wrist and "smile with the rising sun" on my left hip.</p> <p>  <strong>All-time favorite movies: </strong>Good Will Hunting, Titanic, Tristan and Isolde</p> <p>  <strong>If you could be any animal, which one and why?</strong> Dolphin or dog. I love the ocean and dogs are very active!</p> <p>  <strong>How would you describe yourself as a lover?</strong> Caring, romantic, honest</p> <p>  <strong>What is the most outrageous thing you have ever done? </strong>Move to Miami alone!</p> <p>  <strong>What are five things you can't live without?</strong> My family, my dog, my best friend, my fake eyelashes and whitening strips</p> <p>  <strong>What is your most embarrassing moment?</strong> My ex-boyfriend telling me I had a mustache at a Giants game.</p> <p>  <strong>If you could be a fictional character, who would you be and why?</strong> The Little Mermaid. Who doesn't want to be a mermaid?</p> <p>  <strong>What are you most afraid of?</strong> E.T. the alien</p>                                    </div>
+                </div>                                
+            </div>
+      	</div>
+      	<div id="bio_Angela" class = "hide allBios">
+      		<div class="m-text-copy">
+                <h2 class="module-title light text1 m-person-title">Angela</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 26</p> <p>  <strong>Occupation:</strong> Model</p> <p>  <strong>Hometown:</strong> Greenville, SC</p> <p>  <strong>Height:</strong> 5'7"</p> <p>  <strong>Tattoos:</strong> No</p> <p>  <strong>All-time favorite movies:&nbsp;</strong><em>Ace Ventura</em>, <em>Despicable Me</em>, <em>The Notebook</em></p> <p>  <strong>If you could be any animal, which one and why? </strong>Dolphin. They are playful and sociable and live in family groups.</p> <p>  <strong>What is the most outrageous thing you have ever done? </strong>Move 500+ miles away from home with no family.</p> <p>  <strong>What are five things you can't live without? </strong>Lip balm, water, hair tie, iPhone and most importantly – my mom. &nbsp;:)</p> <p>  <strong>Where do you see yourself in 5 years? </strong>Definitely married, have one kid so far. Be a stay at home mom. Still model some if possible. Enjoying life with my family.&nbsp;</p> <p>  <strong>If I never had to ______, I would be very happy.</strong> Drive myself anywhere</p> <p>  <strong>What's your worst date memory?</strong> A guy putting down the name as "Batman" while we waited for a table. So immature.</p> <p>  <strong>What's your guiltiest pleasure of any kind?</strong> Desserts! Oh, and I lick the popcorn bag too. I'm a weirdo. My brother and I used to do it all the time when we were little. So unhealthy. LOL.</p>                                    </div>
+                </div>
+            </div>
+      	</div>
+      	<div id="bio_Astrid" class = "hide allBios">
+      		<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">Astrid</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 26</p> <p>  <strong>Occupation:</strong> Plastic Surgery Office Manager</p> <p>  <strong>Hometown:</strong> Tampa, FL</p> <p>  <strong>Height: </strong>5'7 ½"</p> <p>  <strong>Tattoos:</strong> Feather with quote on left underarm &amp; half heart/infinity symbol on right wrist</p> <p>  <strong>All-time favorite movies:&nbsp;</strong><em>Titanic</em>, <em>The Other Woman</em>, <em>Beauty and the Beast</em>, Bourne movies</p> <p>  <strong>If you could be any animal, which one and why? </strong>Dolphin, so I could rescue lost sailors and swim in the ocean doing tricks.</p> <p>  <strong>What are five things you can't live without? </strong>My mom, my phone, lashes, yoga, red wine</p> <p>  <strong>If you could be a fictional character, who would you be and why? </strong>The Little Mermaid before legs. I would love to explore the ocean.</p> <p>  <strong>Do you have a serious fear of any kind of animal?</strong> Horses freak me out. I've had some bad experiences.</p> <p>  <strong>If I never had to ______, I would be very happy. </strong>Work</p> <p>  <strong>What's your favorite television show and why?</strong> <em>Scandal</em>. Love Rachel Pope!</p> <p>  <strong>What's your guilty pleasure television show?</strong> Real Housewives of all cities.</p> <p><strong>What are you most afraid of?</strong> Dying alone and just getting old and wrinkly.</p>                                    </div>
+                </div>        
+            </div>
+      	</div>
+      	<div id="bio_Briana" class = "hide allBios">
+      		<div class="m-text-copy">
+      			<h2 class="module-title light text1 m-person-title">Briana</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 28</p> <p>  <strong>Occupation:</strong> Surgical Unit Nurse</p> <p>  <strong>Hometown:</strong> Salt Lake City, UT</p> <p>  <strong>Height:</strong> 5'4"</p> <p>  <strong>Tattoos:</strong> Celtic knot that means eternity on my right foot</p> <p>  <strong>All-time favorite movies:&nbsp;</strong><em>Zoolander</em>, <em>How to Lose a Guy in 10 Days</em>, <em>Shawshank Redemption</em></p> <p>  <strong>If you could be any animal, which one and why? </strong>Dolphin so I could breathe underwater, do flips and be cute.</p> <p>  <strong>What is the most outrageous thing you have ever done? </strong>Moved to Utah</p> <p>  <strong>What are five things you can't live without? </strong>Coffee, my water bottle, family/friends, socks, chapstick</p> <p>  <strong>If you could be a fictional character, who would you be and why? </strong>Ariel from <em>The Little Mermaid</em>. She's a mermaid with great hair, cool animal friends and she marries a cutie.</p> <p>  <strong>If you could be any fruit or vegetable, which one would you be? </strong>Pineapple: Hawaiian, delicious, tropical, and pretty.</p> <p>  <strong>What is your favorite television show &amp; why?</strong> <em>Friends</em>. I watch a million reruns and it never gets old.</p> <p>  <strong>What's your guiltiest pleasure of any kind? </strong>Big Mac Meal from McDonalds</p>                                    </div>
+                </div>      
+            </div>
+      	</div>
+      	<div id="bio_Brittany" class = "hide allBios">
+      		<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">Brittany</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+				<div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 26</p> <p>  <strong>Occupation:</strong> Travel Nurse</p> <p>  <strong>Hometown:</strong> Santa Monica, CA</p> <p>  <strong>Height:</strong> 5'2"</p> <p>  <strong>Tattoos:</strong> No</p> <p>  <strong>What are five things you can't live without? </strong>My mom, tennis shoes, the sun, chocolate, and music.</p> <p>  <strong>Where do you see yourself in 5 years?</strong> Hopefully married with a child and with a successful career in a hospital.</p> <p>  <strong>Do you have any phobias?</strong> Snakes</p> <p>  <strong>I hate it when my date...</strong>&nbsp;Is rude to servers or is on his phone.</p> <p>  <strong>How much do you like camping?</strong> A lot! As long as it's not cold outside.</p> <p>  <strong>Who do you admire most in the world?</strong> Beyoncé: She is a strong, sexy, independent woman who can sing and dance like no other. Plus, she is a Virgo like me!</p> <p>  <strong>Do you prefer team sports or solo sports and why?</strong> Team: I love some competition and it makes it more exciting and a good time.</p> <p>  <strong>If you really wanted to impress a man what would you do?</strong> Cook him dinner. Because food is the way to a man's heart.</p>                                    </div>
+                </div>                       
+            </div>
+      	</div>
+      	<div id="bio_Christen" class = "hide allBios">
+      		<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">Christen</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 25</p> <p>  <strong>Occupation:</strong> Wedding Videographer</p> <p>  <strong>Hometown:</strong> Tulsa, OK</p> <p>  <strong>Height: </strong>5'5"</p> <p>  <strong>Tattoos:</strong> Yes, one on my wrist. The life of Jesus in symbols.</p> <p>  <strong>All-time favorite movies: </strong><em>A Time to Kill</em>, <em>Remember the Titans</em>, <em>Zoolander</em></p> <p>  <strong>If you could break any law, with no repercussions, which law, and why?</strong> I would break into the White House and spend months sleeping in a storage closet and observing what actually goes on behind closed doors.</p> <p>  <strong>If you could be any fruit or vegetable, which one would you be? </strong>A grapefruit! They're sweet and sour. Ha! They're colorful. They smell great. And they're so full of life and energy. That's me. :) And you have to peel them back to get to the good stuff.</p> <p>  <strong>If you could be any animal, which one and why? </strong>Wild Mustang. They are wild, free and uninhibited. They run with the wind.</p> <p>  <strong>What's your guilty pleasure television show? </strong>I used to watch <em>DWTS</em> and then pause the TV and practice all of the dance moves like they were goin' out of style.</p> <p>  <strong>If you could be someone else for just one day, who would it be and why?</strong> The President. So curious what actually goes on back there (a.k.a. the show, <em>Scandal</em>).</p> <p>  <strong>What are you most afraid of?</strong> Failure</p> <p><strong>If you could be a fictional character, who would you be and why? </strong>Katniss Everdeen. She's tough and hot and she marches to the beat of her own drum! Dig it!</p>                                    </div>
+                </div>       
+            </div>
+      	</div>
+      	<div id="bio_Corinne" class = "hide allBios">
+      		<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">Corinne</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 24</p> <p>  <strong>Occupation:</strong> Business Owner</p> <p>  <strong>Height:</strong> 5'1"</p> <p>  <strong>Hometown:</strong> Miami, FL</p> <p>  <strong>Tattoos:</strong> Yes, but hidden and are being lasered off, so they are already faded.</p> <p>  <strong>If you could be any animal, which would you be and why?</strong> I would be a cheetah. They're strong and fierce.</p> <p>  <strong>What's your most embarrassing moment?</strong> Too many to count!</p> <p>  <strong>What do you do for a living?</strong> I own an online business. It's very important to me, but the cool thing is it's online, so I can run it from anywhere.</p> <p>  <strong>I hate it when my date...</strong>&nbsp;Is in love with themselves.</p> <p>  <strong>What's your guilty pleasure TV show?</strong> <em>Frasier</em></p> <p>  <strong>Describe your idea of the ultimate date:</strong> Just us, the ultimate dining experience in an amazing place.</p> <p>  <strong>What U.S. city is the most romantic to you and why?</strong> Chicago. It has a lot of fun activities you would want to share with someone special.</p> <p><strong>If you could be a fictional character, who would you be and why?</strong> Snow White – I want to find my Prince Charming.</p>                                    </div>
+                </div>       
+            </div>
+      	</div>
+      	<div id="bio_Danielle_L" class = "hide allBios">
+      		<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">Danielle L.</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 27</p> <p>  <strong>Occupation:</strong> Small Business Owner</p> <p>  <strong>Hometown:</strong> Los Angeles, CA</p> <p>  <strong>Height: </strong>5'5"</p> <p>  <strong>Tattoos:</strong> A lotus on the back of my neck, and two butterfly tattoos – one on the back of each ankle.</p> <p>  <strong>All-time favorite movies: </strong><em>A Walk to Remember</em>, <em>Love Actually</em>, <em>The Notebook</em></p> <p>  <strong>If you could be any animal, which one and why? </strong>I would be a fox! They are responsive, sometimes cunning and adaptive.</p> <p>  <strong>Who do you admire most in the world and why?</strong> I admire Chrissy Teigen. She's gorgeous, strong willed, and unapologetically herself. She and John Legend are couple goals!</p> <p>  <strong>What is the most outrageous thing you have ever done? </strong>I climbed up on a cliff and swung from a rope on top of a waterfall jumping into the water. The sign said "Locals Only," but we did it anyways.</p> <p>  <strong>What's the most embarrassing thing you listen to?</strong> <em>Glee</em> Soundtracks!</p> <p>  <strong>If you could be a fictional character, who would you be and why? </strong>Rachel Pope! Beautiful, powerful, strong and intelligent. Gladiators in suits.</p> <p>  <strong>What is your favorite all-time book and why?</strong> <em>The 5 Languages of Love</em>! Discover yourself, your relationship needs. It's beneficial in all relationships (friends, lovers, co-workers).</p> <p><strong>What is your greatest achievement to date?</strong> Opening my own business at the age of 23!</p>                                    </div>
+                </div>       
+            </div>
+      	</div>
+      	<div id="bio_Danielle_M" class = "hide allBios">
+      		<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">Danielle M.</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 31</p> <p>  <strong>Occupation:</strong> Neonatal Nurse</p> <p>  <strong>Hometown:</strong> Nashville, TN</p> <p>  <strong>Height: </strong>5'10"</p> <p>  <strong>Tattoos:</strong> Yes, on my ribs – getting removed. On my low back – almost removed. And one on my left ringer finger that says "strength."</p> <p>  <strong>All-time favorite movies: </strong><em>The Sandlot</em>, <em>Ferris Bueller</em>, <em>The Notebook</em></p> <p>  <strong>If you could be any animal, which one and why? </strong>A Pegasus – haha! So I can run and fly and have a beautiful mane.</p> <p>  <strong>What is the most outrageous thing you have ever done? </strong>Moved to Nashville and put myself back together.</p> <p>  <strong>What are five things you can't live without? </strong>Family, friends, water, chocolate, green smoothies</p> <p>  <strong>If you could break any law, with no repercussions, which law, and why? </strong>Pretty sure there's a law in Louisiana or Tennessee that states you can't eat ice cream on the sidewalk or something weird like that. I'll break that one.</p> <p>  <strong>When and why did you leave your hometown?</strong> I lost my fiancé and I needed to start fresh somewhere.</p> <p>  <strong>What's the closest you have ever come to being married, and why didn't it work out</strong>? Engaged – my fiancé passed away.</p> <p>  <strong>If you could be a fictional character, who would you be and why? </strong>Hermione Granger. She's a smart, clever, beautiful witch.</p>                                    </div>
+                </div>       
+            </div>
+      	</div>
+      	<div id="bio_Dominique" class = "hide allBios">
+      		<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">Dominique</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 25</p> <p>  <strong>Occupation:</strong> Restaurant Server</p> <p>  <strong>Hometown:</strong> Los Angeles, CA</p> <p>  <strong>Height: </strong>5'4"</p> <p>  <strong>Tattoos:</strong> No</p> <p>  <strong>All-time favorite movies: </strong><em>Titanic</em>. It has everything! Romance, action, drama! <em>Dirty Dancing</em>, because it is a classic. And <em>2012</em>. I have an obsession with end of the world movies.</p> <p>  <strong>Where do you meet guys?</strong> In the last few years I've met most guys at work or online via dating apps like Tinder and Bumble.</p> <p>  <strong>If you could be any animal, which one and why? </strong>I would be any kind of flying bird. I love to travel and see the world and could do that easily as a bird.</p> <p>  <strong>Lunch with three people alive or dead, and what would you order?</strong> My grandfather, Leonardo DiCaprio and Jesus – and we'd be eating burritos from Chipotle.</p> <p>  <strong>What are your favorite activities to do with a group?</strong> Have brunch and gossip about current events, hiking and attending a concert.</p> <p>  <strong>What are five things you can't live without? </strong>My dog, my family, Chipotle burritos, music and sunshine</p> <p>  <strong>If you could be a fictional character, who would you be and why? </strong>I would be Rachel Pope from <em>Scandal</em>. She's a strong female boss who makes her own rules and happens to be in a hot love triangle with two gorgeous men.</p> <p>  <strong>If you could be any fruit or vegetable, which one would you be? </strong>I'd be a pineapple. Hard on the outside and sweet on the inside.</p>                                    </div>
+                </div>       
+            </div>
+      	</div>
+      	<div id="bio_Liz" class = "hide allBios">
+      		<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">Liz</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 29</p> <p>  <strong>Occupation:</strong> Doula</p> <p>  <strong>Hometown:</strong> Las Vegas, NV</p> <p>  <strong>Height: </strong>5'4"</p> <p>  <strong>Tattoos:</strong> Yes – a fish, flower, arrow, tree, another tree, a saying, a star, another saying. They are on my sides, left foot, left wrist, right finger and back.</p> <p>  <strong>All-time favorite movies:&nbsp;</strong><em>Man on Fire</em>, <em>Bridesmaids</em>, <em>Brokedown Palace</em></p> <p>  <strong>What are five things you can't live without? </strong>Coconut oil, floss, music, fresh air and my Bible</p> <p>  <strong>What is your greatest achievement to date? </strong>Helping my sister birth my niece, Grace. I got to be her doula and cut her umbilical cord.</p> <p>  <strong>If I never had to ______, I would be very happy. </strong>Kill someone</p> <p>  <strong>What's the most embarrassing thing you listen to? </strong>I am not embarrassed of anything I listen to and I openly am a Belieber.</p> <p>  <strong>What's your guiltiest pleasure of any kind?</strong> Picking my nose while driving. I can't help it and for some reason it's always in my car.</p> <p>  <strong>What is your least favorite sport, why?</strong> Golf – it's boring and angers me.</p> <p><strong>If you could be any fruit or vegetable, which one would you be? </strong>A grape so I would get better with age.</p>                                    </div>
+                </div>       
+            </div>
+      	</div>
+      	<div id="bio_Elizabeth" class = "hide allBios">
+      		<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">Elizabeth</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 24</p> <p>  <strong>Occupation:</strong> Marketing Manager</p> <p>  <strong>Hometown:</strong> Dallas, TX</p> <p>  <strong>Height: </strong>5'7"</p> <p>  <strong>Tattoos:</strong> No</p> <p>  <strong>All-time favorite movies:&nbsp;</strong><em>The Notebook</em>, <em>Sleeping with Other People</em>, <em>Finding Nemo</em></p> <p>  <strong>Where do you meet guys?</strong> I've been into dating apps like Bumble and Hinge lately. I'd prefer to meet through mutual friends or in front of millions of weekly viewers. :)</p> <p>  <strong>If you could be someone else for just one day, who would it be and why?</strong> Kate Middleton or Britney Spears. Kate, because she's a princess, duh! Britney, because she's the queen, duh!</p> <p>  <strong>Do you consider yourself neat or messy?</strong> I like to be organized messy.</p> <p>  <strong>What is your greatest achievement to date? </strong>Not just one thing. My life has been a journey of achievements that only I would appreciate.</p> <p>  <strong>Do you have any phobias that would prohibit participation in certain activities? (heights, claustrophobia, crowds, darkness, OCD, etc.)</strong> Claustrophobia and Misophonia – it's a real thing. Look it up on Google!</p> <p>  <strong>What is your favorite television show and why?</strong> <em>Game of Thrones</em>, if I don't want people to judge me. <em>Ja'mie: Private School Girl</em>, if I don't care!</p> <p>  <strong>Do you have any family holiday or special event traditions that you plan to uphold? </strong>I love Christmas – food/dinner, Christmas Village. I would love it if my kids could go to my high school.</p>                                    </div>
+                </div>       
+            </div>
+      	</div>
+      	<div id="bio_Hailey" class = "hide allBios">
+      		<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">Hailey</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  Age: 23</p> <p>  <strong>Occupation:</strong> Photographer</p> <p>  <strong>Hometown:</strong> Vancouver, British Columbia, Canada</p> <p>  <strong>Height:</strong> 5'7"</p> <p>  <strong>Tattoos:</strong> 7. Fingers – dots, collar bone – heart, forearm – "Hank," behind ear – flowers, ankle – poppy, elbow – "M," wrist – bobby pin.</p> <p>  <strong>Do you consider yourself a romantic?</strong> Nope. I'm very passionate and can be intense but I'm not into making out all the time and being sang to.</p> <p>  <strong>What's your greatest achievement to date?</strong> Traveling to China to build schools and teach in orphanages.</p> <p>  <strong>Do you have any phobias?</strong> I'm not into butterflies at all. Jumping bugs suck. Butterflies are a solid no for me though.</p> <p>  <strong>What kind of music do you listen to most often?</strong> Sheryl Crow is my girl. 90s rock, alternative, hip-hop. But usually 90s.</p> <p>  <strong>Who is your favorite author?</strong> Dr. Seuss – he was such an inventor. He said that when he couldn't think of a word to describe something, he'd just simply make it up.</p> <p>  <strong>What's your ideal mate's personality like?</strong> Independent, confident, caring, funny, supportive, adventurous, clever.</p> <p>  <strong>Do you plan on having kids some day?</strong> Yes. Two would be great. A lot of things are made for families of four. Only children are strange.</p> <p><strong>What are you most afraid of?</strong> Letting myself down. Accomplishing nothing.</p>                                    </div>
+                </div>      
+            </div>
+      	</div>
+      	<div id="bio_Ida_Marie" class = "hide allBios">
+      		<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">Ida Marie</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 23</p> <p>  <strong>Occupation:</strong> Sales Manager</p> <p>  <strong>Hometown:</strong> Harlingen, TX</p> <p>  <strong>Height:</strong> 5'8"</p> <p>  <strong>Tattoos?&nbsp;</strong>Yes, on my ribs and my dad's date of birth in roman numerals.</p> <p>  <strong>If you could be any animal, which one and why?</strong>&nbsp;A giraffe, duh! They are beautiful.</p> <p>  <strong>If you could be someone else for just one day, who would it be and why?</strong>&nbsp;Selena Gomez. I can't sing to save my life, so to belt out a tune for a crowd would be awesome.</p> <p>  <strong>What kind of snacks do you like?</strong>&nbsp;Cheetos with a pickle.</p> <p>  <strong>All-time favorite movies?</strong>&nbsp;<em>Step Brothers</em>, <em>Clueless</em>, <em>Wedding Ringer</em></p> <p>  <strong>What is your favorite all-time book and why?:</strong> I need to read more books.</p> <p>  <strong>Who is your favorite author?:</strong> Again, I need to read more books.</p> <p>  <strong>What's your biggest date fear?:</strong> Falling or getting food stuck in my teeth.</p> <p>  <strong>I love it when my date:</strong> Makes me laugh, knows how to have a good time, and kisses me when I least expect it.</p> <p>  <strong>If you could be any fruit or vegetable, what would you be?:</strong> Strawberry – they are sexual and taste great with wine.</p>                                    </div>
+                </div>       
+            </div>
+      	</div>
+      	<div id="bio_Jaimi" class = "hide allBios">
+      		<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">Jaimi</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 28</p> <p>  <strong>Occupation:</strong> Chef</p> <p>  <strong>Hometown:</strong> New Orleans, LA</p> <p>  <strong>Height:</strong> 5'2"</p> <p>  <strong>Tattoos?</strong> Wrists – "Forever Smiles," side – "To Die For," Left lower back – heart shaped grenade, right lower abdomen – symbol of my initials, a heart and the #5</p> <p>  <strong>If you could be any animal, which one and why?</strong> A tiger. In Bali. I like warmer climates, I like to be social, and they're strong and beautiful.</p> <p>  <strong>What is the most outrageous thing you have ever done?</strong> I've crowd surfed, which was amazing.</p> <p>  <strong>What is your greatest achievement to date?</strong>&nbsp;Catering the Oscars.</p> <p>  <strong>What are you most afraid of?</strong>&nbsp;Probably not knowing truly if someone loves me as much as I love them.</p> <p>  <strong>If you wanted to really impress a man, what would you do and why?</strong>&nbsp;Depending on how much bigger he is than me, I could bench press him with my legs. It's pretty exciting and surprising.</p> <p>  <strong>What's your worst date memory?:</strong> I went on a blind date and he got up in the restaurant and sang to me. First and last date.</p> <p><strong>Do you follow a specific diet (i.e. vegetarian, macrobiotic, etc.)?:</strong> Pesco-pollo-lacto-ovo-paro-tarian. Just fish + bird, plus byproducts.</p>                                    </div>
+                </div>      
+            </div>
+      	</div>
+      	<div id="bio_Jasmine_B" class = "hide allBios">
+      		<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">Jasmine B.</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 25</p> <p>  <strong>Occupation:</strong> Flight Attendant</p> <p>  <strong>Hometown:</strong> Tacoma, WA</p> <p>  <strong>Height:</strong> 5'2.5"</p> <p>  <strong>Tattoos?</strong>&nbsp;Yes. "Always and Forever" on my left foot along the side</p> <p>  <strong>What would an ex say are your 3 worst attributes?</strong>&nbsp;I'm too nice, I care too much what others think, and I get stressed easily.</p> <p>  <strong>If you could be any animal, which one would you be and why?</strong>&nbsp;An owl, so I could fly. Plus, they are so unique. They are the quietest and have superior eyes, wings and ears. I want to see and hear everything, even in the dark.</p> <p>  <strong>Who is your favorite author and why?</strong> Steve Harvey. He dished out great advice on success and relationships.</p> <p>  <strong>What's your guiltiest pleasure of any kind?</strong>&nbsp;Cracking my neck</p> <p>  <strong>What's the closest you have ever come to being married and why didn't it work out?</strong>&nbsp;Engaged. Because I was too young and he ended up proving he doesn't deserve my greatness</p> <p>  <strong>Do you prefer a man who wants to be pursued or a man who pursues you and why?</strong>&nbsp;A man who pursues me. I don't usually chase men. I know I'm attractive and have a lot of great qualities. A man who pursues me gives me assurance that I'm what he wants.</p>                                    </div>
+                </div>       
+            </div>
+      	</div>
+      	<div id="bio_Jasmine_G" class = "hide allBios">
+			<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">Jasmine G.</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 29</p> <p>  <strong>Occupation:</strong> Pro Basketball Dancer</p> <p>  <strong>Hometown:</strong> San Francisco, CA</p> <p>  <strong>Height:</strong> 5'7"</p> <p>  <strong>Tattoos?</strong>&nbsp;Yes. Inside lip and wrist. Star and my sorority.</p> <p>  <strong>Lunch with three people, alive or dead and what would you order?</strong>&nbsp;RuPaul, Dave Chappelle, Prince. I would order pizza.</p> <p>  <strong>Who do you admire most in the world and why?</strong>&nbsp;My mother. Everything she has given up for me to be where I am is just unreal. I never met someone who works that hard.</p> <p>  <strong>If you could be someone else for just one day, who would it be and why?</strong>&nbsp;Guy Fieri. He can cook. He gets to travel and eat food from all over the country and he is hilarious! I'm the girl version.</p> <p>  <strong>All-time favorite movies?</strong>&nbsp;<em>A League of Their Own</em>, <em>Don't Tell Mom the Babysitter's Dead</em>, <em>The Sandlot</em></p> <p>  <strong>What are you most afraid of?</strong>&nbsp;Being left in open water alone!</p> <p>  <strong>If you could be a fictional character, who would you be and why?</strong>&nbsp;I would be Rachel Pope from <em>Scandal</em>. She's such a power woman. Great job. Boss lady. However her love life sucks. Too familiar.</p> <p>  <strong>If you won the lottery, what would you do with your winnings?:</strong> First I would buy socks because I can never find them! Then buy out a sports team.</p>                                    </div>
+                </div>       
+            </div>
+      	</div>
+      	<div id="bio_Josephine" class = "hide allBios">
+      		<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">Josephine</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 24</p> <p>  <strong>Occupation:</strong> Registered Nurse</p> <p>  <strong>Hometown:</strong> Santa Cruz, CA</p> <p>  <strong>Height:</strong> 5'7 ¾"</p> <p>  <strong>Tattoos?:</strong> None</p> <p>  <strong>If you could be any animal, which one and why?</strong>&nbsp;Hmmm... Good question. A tiger or lion. They're clever, loving and get things done! Also they run in packs so they always have support. :)</p> <p>  <strong>Who do you admire most in the world and why?</strong>&nbsp;My brother. Hands down. He has been my greatest inspiration, best friend and biggest motivator in life.</p> <p>  <strong>If you could be someone else for just one day, who would it be and why?</strong>&nbsp;Steven Hawking just to know what it's like to have a brain like that!</p> <p>  <strong>Do you affiliate yourself with a certain religion and if so, which ones?</strong>&nbsp;I am Jewish by culture but am very open to all religions, love God and consider myself to be a spiritual person.</p> <p>  <strong>What is your all-time favorite book and why?</strong>&nbsp;<em>A Thousand Splendid Suns</em>. It changed my life. I have never been more connected to imaginary people</p> <p>  <strong>How much do you enjoy the theater?</strong>&nbsp;Love it! I used to do musical theater in high school. Miss it sometimes.</p> <p>  <strong>What's your biggest date fear?</strong>&nbsp;Bad breath and awkward kisser</p> <p>  <strong>If you could be any fruit or vegetable, which one would you be?</strong>&nbsp;Something disgusting so nobody eats me!</p>                                    </div>
+                </div>       
+            </div>
+      	</div>
+      	<div id="bio_Kristina" class = "hide allBios">
+      		<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">Kristina</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 24</p> <p>  <strong>Occupation:</strong> Dental Hygienist</p> <p>  <strong>Hometown:</strong> Lexington, KY</p> <p>  <strong>Height:</strong> 5'2"</p> <p>  <strong>Tattoos?</strong>&nbsp;No.</p> <p>  <strong>Who do you admire most in the world and why</strong>? My parents. It takes courage to open your heart and home to four orphans and give them a life otherwise unobtainable.</p> <p>  <strong>If you could be someone else for just one day, who would it be and why?</strong>&nbsp;My biological mother. I'd like to know what she was going through when I was young and if choosing alcohol over kids was worth it.</p> <p>  <strong>Who is your favorite actor and why?</strong>&nbsp;Meryl Streep. She can adapt to any character assigned and do a wonderful job fulfilling that role.</p> <p>  <strong>What is your favorite television show and why?&nbsp;</strong><em>Ninja Warrior</em>. I am amazed by what a human body is capable of and it motivates me to work out.</p> <p>  <strong>If you could be a fictional character, who would you be and why?</strong>&nbsp;Fiona from <em>Shrek</em>. She's got some serious karate moves and she's feisty and darling.</p> <p>  <strong>Do you have a fear of aging and are you going anything to prevent it?</strong>&nbsp;No I don't fear aging. I think it's a beautiful thing. Aging represents life's milestones and memories</p> <p><strong>Who is your favorite clothes designer?</strong>&nbsp;Myself. Sometimes if I can't find an outfit for an event, I would end up making my own.</p>                                    </div>
+                </div>       
+            </div>
+      	</div>
+      	<div id="bio_Lacey" class = "hide allBios">
+      		<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">Lacey</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+	                <div class="expandable-section is-truncated" style="">
+	                    <p>  <strong>&nbsp;</strong><strong>Age:</strong> 25</p> <p>  <strong>Occupation:</strong> Digital Marketing Manager</p> <p>  <strong>Hometown:</strong> Manhattan, NY</p> <p>  <strong>Height:</strong> 5'3"</p> <p>  <strong>Tattoos:</strong> No</p> <p>  <strong>If you could have lunch with three people, alive or dead, who would you pick and what would you order?</strong> Shakespeare, JK Rowling, Joe Jonas; burgers and fries.</p> <p>  <strong>What's your greatest achievement so far?</strong> Graduating with a double degree and learning Arabic.</p> <p>  <strong>All-time favorite movies:</strong> <em>Armageddon</em>, <em>Step Brothers</em>, <em>Wedding Crashers</em></p> <p>  <strong>What's your guilty pleasure TV show?</strong> <em>Dancing with the Stars</em></p> <p>  <strong>What's your biggest date fear?</strong> That he's going on another date right after (that has happened before).</p> <p>  <strong>If you could be any fruit or vegetable, which one would you be?</strong> Apple (a little tough on the outside but sweet inside).</p> <p>  <strong>What's your biggest regret?</strong> Giving people third and fourth chances</p> <p>  <strong>How important is your family's approval to you when it comes to dating?</strong> Very, I have never brought anyone home and my family means everything to me.</p> <p>  <strong>What's your ideal mates personality like?</strong> Makes me laugh, smart/intelligent, serious when he needs to be, but can also goof off.</p>                                    </div>
+	            </div>       
+            </div>
+      	</div>
+      	<div id="bio_Lauren" class = "hide allBios">
+      		<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">Lauren</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 30</p> <p>  <strong>Occupation:</strong> Law School Graduate</p> <p>  <strong>Hometown:</strong> Naples, FL</p> <p>  <strong>Height:</strong> 5'7"</p> <p>  <strong>Tattoos:</strong> None.</p> <p>  <strong>What's your best date memory?</strong> Great dinner, conversation, and mini golf.</p> <p>  <strong>If you could be any animal, which would you be and why?</strong> A dolphin because they are so cute and smart and they get to live in such a beautiful environment, under the sea!</p> <p>  <strong>How would you describe yourself as a lover?</strong> I give 100% - always trying to keep the relationship fun and full of adventure.</p> <p>  <strong>Where do you see yourself in five years?</strong> Hopefully married with kids and lots of pets and a house full of laughter.</p> <p>  <strong>What are five things you can't live without?</strong> My super soft vintage Hall &amp; Oates t-shirt, chapstick, my family, sushi, music</p> <p>  <strong>Are you a country or a city person?</strong> Country. The outdoors revives me. I could live on a farm and off the land any day.</p> <p>  <strong>All-time favorite movies:</strong> <em>Step Brothers</em>, <em>Dirty Dancing</em>, <em>Hocus Pocus</em></p> <p>  <strong>If you could go anywhere in the U.S., where you would you go?</strong> State parks, like Grand Canyon or Utah. I love the rock formations.</p>                                    </div>
+                </div>       
+            </div>
+      	</div>
+      	<div id="bio_Michelle" class = "hide allBios">
+      		<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">Michelle</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 24</p> <p>  <strong>Occupation:</strong> Food Truck Owner</p> <p>  <strong>Hometown:</strong> Los Angeles, CA</p> <p>  <strong>Height:</strong> 5'1"</p> <p>  <strong>Tattoos:</strong> Yes, two – both on my arms.</p> <p>  <strong>If you could have lunch with three people, alive or dead, who (and what would you order)?</strong> Albus Dumbledore – Sunday roast, Gwen Stefani – Tacos, Princess Diana – Fish and chips</p> <p>  <strong>What's a typical Saturday night for you?</strong> Dinner and drinks with my girlfriends or take-out Chinese and a movie.</p> <p>  <strong>Do you speak any languages other than English?</strong> Portuguese</p> <p>  <strong>What's the most outrageous thing you've ever done?</strong> I went hang gliding in Rio.</p> <p>  <strong>What is your ideal mate's personality like?</strong> Must have a great sense of humor, caring, loyal, observant, adventurous</p> <p>  <strong>If you wanted to really impress a man, what would you do and why?</strong> I would take him kayaking because it's one of my favorite hobbies.</p> <p>  <strong>If you could be a fictional character, who would you be and why?</strong> Carrie Bradshaw – she's loyal to her friends, has a big heart, and an amazing closet.</p> <p><strong>I love it when my date…</strong> Makes me feel comfortable and notices the little things.</p>                                    </div>
+                </div>       
+            </div>
+      	</div>
+      	<div id="bio_Olivia" class = "hide allBios">
+      		<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">Olivia</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 25</p> <p>  <strong>Occupation:</strong> Apparel Sales Representative</p> <p>  <strong>Hometown:</strong> Anchorage, AK</p> <p>  <strong>Height:</strong> 5'7"</p> <p>  <strong>Tattoos?</strong> No.</p> <p>   <strong>If you wanted to approach a man you had never met before, how would you go about it?</strong>&nbsp;It depends on the situation and where we are at, but I would try to make eye contact with him and smile. If he comes over to me, I would introduce myself.</p> <p>  <strong>What's the most outrageous thing you have ever done?</strong>&nbsp;Trying out for my high school football team and becoming the kicker.</p> <p>  <strong>What is your most embarrassing moment?</strong>&nbsp;When I was a maid of honor for the first time. The speech I gave was so bad that I just started crying, had to stop the speech and sit down.</p> <p>  <strong>Who is your favorite author and why?</strong>&nbsp;Nicholas Sparks because I am a hopeless romantic.</p> <p>  <strong>What are you most afraid of?</strong>&nbsp;Spiders and not being able to find love.</p> <p>  <strong>If you could be a fictional character, who would you be and why?</strong> Superwoman, because she saves the world.</p>                                    </div>
+                </div>       
+            </div>
+	    </div>
+      	<div id="bio_Rachel" class = "hide allBios">
+      		<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">Rachel</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 31</p> <p>  <strong>Occupation:</strong> Attorney</p> <p>  <strong>Hometown:</strong> Dallas, TX</p> <p>  <strong>Height:</strong> 5'4"</p> <p>  <strong>Tattoos?</strong>: Yes! Right rib cage – Reciprocity, left waist – bible verse</p> <p>  <strong>If you could be someone else for just one day, who would it be and why?</strong>&nbsp;Michelle Obama. She's everything!</p> <p>  <strong>What is you greatest achievement to date?</strong>&nbsp;Graduating law school and passing the bar (first time).</p> <p>  <strong>Do you have a serious fear of any kind of animal?</strong>&nbsp;I hate things that fly (e.g. birds, grasshoppers).</p> <p>  <strong>Do you have a fear of aging, and are you doing anything to prevent it?</strong>&nbsp;No. My mom is 60 and looks amazing.</p> <p>  <strong>What's your biggest regret you've had to date?</strong>&nbsp;Focusing too much on my career.</p> <p>  <strong>What's the most embarrassing thing you listen to?</strong>&nbsp;It's not embarrassing to me, but others would say 90s country music and Justin Bieber.</p> <p>  <strong>What are you most afraid of?&nbsp;</strong>That I've missed out on my chance at finding love.</p> <p><strong>Who is your favorite artist and why?</strong>&nbsp;Jean-Michel Basquiat. He was so mysterious and died so young. There is so much we don't know about him and could have received from him in the art world.</p>                                    </div>
+                </div>       
+            </div>
+      	</div>
+      	<div id="bio_Raven" class = "hide allBios">
+      		<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">Raven</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 25</p> <p>  <strong>Occupation:</strong> Fashion Boutique Owner</p> <p>  <strong>Hometown:</strong> Hoxie, AR</p> <p>  <strong>Height: </strong>5'6"</p> <p>  <strong>Tattoos:</strong> No</p> <p>  <strong>All-time favorite movies: </strong><em>Uptown Girls</em>, <em>Bridesmaids</em>, <em>Step Brothers</em></p> <p>  <strong>If you could be someone else for just one day, who would it be and why? </strong>Blue Ivy – who doesn't want to be the child of Jay Z and Beyonce.</p> <p>  <strong>Who is your favorite actor and why?</strong> Brittany Murphy (when she was alive). I loved her spirit!</p> <p>  <strong>If you could be a fictional character, who would you be and why? </strong>Jasmine! That hair and a pet tiger!</p> <p>  <strong>Do you have a fear of aging, and are you doing anything to prevent it?</strong> No! Oh, I'm sure I'll use cosmetic procedures to my advantage, but tastefully done.</p> <p>  <strong>What is the most romantic present you have ever received and why? </strong>A diamond necklace and roses left on my car. I didn't even care if they were diamonds. I just never had a man buy me anything before. So thoughtful!</p> <p>  <strong>What hair products do you use?</strong> Anything that's cheap! LOL</p> <p><strong>How good of a cook are you?</strong> Terrible!</p>                                    </div>
+                </div>       
+            </div>
+      	</div>
+      	<div id="bio_Sarah" class = "hide allBios">
+      		<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">Sarah</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 26</p> <p>  <strong>Occupation:</strong> Grade School Teacher</p> <p>  <strong>Hometown:</strong> Newport Beach, CA</p> <p>  <strong>Height:</strong> 5'5"</p> <p>  <strong>Tattoos:</strong> None</p> <p>  <strong>If you could be any animal, which would you be and why?</strong> A puppy! Or, if you're a bird, I'm a bird right? :)</p> <p>  <strong>What's the most outrageous thing you've ever done?</strong> Maybe this, or moving to NYC with 3 bucks, 2 bags, and 1 me.</p> <p>  <strong>Which political party do you align with?</strong> Socially Democratic, economically Republican</p> <p>  <strong>What's your favorite flower?</strong> White roses. They're gorgeous and simple and romantic.</p> <p>  <strong>If you could be a fictional character, who would you be?</strong> Meredith Grey, Olivia Pope, or Carrie Bradshaw, the ultimate girls!</p> <p>  <strong>If you wanted to approach a man you'd never met before, how would you go about it?</strong> Find something witty to say.</p> <p>  <strong>Do you like to gamble?</strong> I love it...when I'm winning! I'm good at walking away to make sure that I am. I call it, the hit and run.</p> <p>  <strong>What's the most romantic present you've ever received?</strong> A star named after me, just like in <em>A Walk to Remember</em> because I hadn't told him I liked that, he came up with it.</p>                                    </div>
+                </div>       
+            </div>
+      	</div>
+      	<div id="bio_Susannah" class = "hide allBios">
+      		<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">Susannah</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 26</p> <p>  <strong>Occupation:</strong> Account Manager</p> <p>  <strong>Hometown:</strong> San Diego, CA</p> <p>  <strong>Height: </strong>5'6"</p> <p>  <strong>Tattoos:</strong> Yes, an elephant on my back, flowers on my side, bows on the backs of my ankles</p> <p>  <strong>All-time favorite movies: </strong><em>Titanic</em>, <em>Inglourious Basterds</em>, <em>Avatar</em></p> <p>  <strong>If you could be someone else for just one day, who would it be and why? </strong>Chrissy Teigen. I want to know what it's like to have such a perfect (looking) life.</p> <p>  <strong>What is your most embarrassing moment?</strong> When I tried to look sexy picking up a pen in front of my high school crush and banged my head into the table.</p> <p>  <strong>If you could be a fictional character, who would you be and why? </strong>This may be extra girly, but I would want to be Ariel. She's a mermaid! Plus she has amazing hair and a seashell bra.</p> <p>  <strong>If you could be any fruit or vegetable, which one would you be? </strong>Watermelon, because they're sweet and are best during summer.</p> <p>  <strong>If you could be any animal, which one and why? </strong>A lioness, because they're queens of the jungle but still elegant.</p> <p>  <strong>What's your guiltiest pleasure of any kind? </strong>Buying expensive shoes or not expensive shoes. I just love shoes.</p> <p><strong>What is your greatest achievement to date? </strong>Flying to Europe on a whim with one of my best friends.</p>                                    </div>
+                </div>       
+            </div>
+      	</div>
+      	<div id="bio_Taylor" class = "hide allBios">
+      		<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">Taylor</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 23</p> <p>  <strong>Occupation:</strong> Mental Health Counselor</p> <p>  <strong>Hometown:</strong> Seattle, WA</p> <p>  <strong>Height:</strong> 5'4"</p> <p>  <strong>Tattoos:</strong> No</p> <p>  <strong>What's the most outrageous thing you have ever done?</strong> Streaking</p> <p>  <strong>What are your three best attributes?</strong> Loyal, transparency, honesty</p> <p>  <strong>Who is your favorite clothes designer?</strong> Forever 21</p> <p>  <strong>What is the most romantic present you've ever received?</strong> A card because I love words of affirmation.</p> <p>  <strong>What U.S. city is the most romantic to you and why?</strong> Seattle, because it's home.</p> <p>  <strong>I hate it when my date…</strong> Only talks about himself or only asks about me.</p> <p>  <strong>Who do you admire most in the world, and why?</strong> Brené Brown for strength and courage to be memorable.</p> <p>  <strong>What's your guiltiest pleasure of any kind?</strong> Chocolate</p> <p><strong>If you really wanted to impress a man what would you do, and why? </strong>1) Be myself 2) Be open and authentic 3) Look bomb</p>                                    </div>
+                </div>       
+            </div>
+      	</div>
+      	<div id="bio_Vanessa" class = "hide allBios">
+      		<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">Vanessa</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 29</p> <p>  <strong>Occupation:</strong> Special Education Teacher</p> <p>  <strong>Hometown:</strong> Montreal, Quebec, Canada</p> <p>  <strong>Height:</strong> 5'3½"</p> <p>  <strong>Tattoos:</strong> Nope!</p> <p>  <strong>What are your three best attributes?</strong> My personality, my drive to succeed and work hard, my patience</p> <p>  <strong>If you could be any fruit or vegetable, which one would you be?</strong> An onion because they're a staple item and can be found all year round.</p> <p>  <strong>Do you have any phobias?</strong> Sharks/bees</p> <p>  <strong>What does your ideal mate look like?</strong> I don't really have a type, but a great smile is definitely necessary.</p> <p>  <strong>What are you most afraid of?</strong> Hurting people's feelings.</p> <p>  <strong>Do you speak any languages other than English?</strong> French and Italian</p> <p>  <strong>What's the most romantic present you have ever received, and why?</strong> A promise ring – because it's a freaking promise ring!</p> <p>  <strong>How important is your family's approval to you when it comes to dating?</strong> Very important. I respect my family's opinions as they usually are right in the end.</p>                                    </div>
+                </div>       
+            </div>
+      	</div>
+      	<div id="bio_Whitney" class = "hide allBios">
+      		<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">Whitney</h2>
+                <span class="text3 extra-light grey m-person-subtitle">Bachelorette</span>
+                <div class="text2 grey extra-light sectionheader lowercase">Contestant Biography</div>           
+                <div class="m-person-bio copy-content m-expandable-text open">
+                    <div class="expandable-section is-truncated" style="">
+                        <p>  <strong>Age:</strong> 25</p> <p>  <strong>Occupation:</strong> Pilates Instructor</p> <p>  <strong>Hometown:</strong> Chanhassen, MN</p> <p>  <strong>Height:</strong> 5'8"</p> <p>  <strong>Tattoos:</strong> No</p> <p>  <strong>If you could be any animal, which would you be and why?</strong> An eagle because I can see life from a different perspective</p> <p>  <strong>If you could be someone else for just one day, who would it be and why?</strong> Gisele Bündchen/Brady because she has the reputation of being a really successful model and married to Tom Brady. :)</p> <p>  <strong>Do you have a serious fear of any kind of animal?</strong> Horses</p> <p>  <strong>What are your favorite sports?</strong> Hockey, golf, dance, and football.</p> <p>  <strong>What's your biggest regret?</strong> I don't live life with regrets!</p> <p>  <strong>What are your favorite foods?</strong> Fresh fruits, dark chocolate, pancakes, French fries</p> <p>  <strong>How much do you enjoy the theater?</strong> I like going to movies but also fun to rent them at home.</p> <p>  <strong>What does being married mean to you?</strong> Loving, caring, communicating, supporting each other through life experiences. Also, creating our own family.</p>                                    </div>
+                </div>       
+            </div>
+      	</div>
+      </div> <!-- /.modal-body -->
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class = "row" style = "position:relative; left: 10px">
+	<div class="ui-widget ui-helper-clearfix" style = "width:100%">
+		<div class = "col-md-5">
+	 		<ul id="sortable" class="sortable ui-helper-reset ui-helper-clearfix" style = "width:100%;">
+	  			<li name = "Alexis" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Alexis">
+	  				<img title="Alexis" src="pics/Alexis.png" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Alexis.png')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Alexis &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Alexis')"></a></h5>
+	  			</li>
+
+	  			<li name = "Angela" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Angela">
+	  				<img title="Angela" src="pics/Angela.png" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Angela.png')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp Angela &nbsp&nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Angela')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
+	  			</li>
+	  			<li name = "Astrid" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Astrid">
+	  				<img title="Astrid" src="pics/Astrid.png" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Astrid.png')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp Astrid &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Astrid')"></a></h5>
+	  			</li>
+	  			<li name = "Briana" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Briana">
+	  				<img title="Briana" src="pics/Briana.png" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Briana.png')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Briana &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Briana')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
+	  			</li>
+	  			<li name = "Brittany" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Brittany">
+	  				<img title="Brittany" src="pics/Brittany.png" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Brittany.png')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp Brittany &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Brittany')"></a></h5>
+	  			</li>
+	  			<li name = "Christen" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Christen">
+	  				<img title="Christen" src="pics/Christen.png" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Christen.png')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Christen &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Christen')"></a></h5>
+	  			</li>
+	  			<li name = "Corinne" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Corinne">
+	  				<img title="Corinne" src="pics/Corinne.png" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Corinne.png')">
+	  				  	</a>&nbsp&nbsp Corinne &nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Corinne')"></a></h5>
+	  			</li>
+	  			<li name = "Danielle L" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Danielle_L">
+	  				<img title="Danielle L" src="pics/Danielle_L.png" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Danielle_L.png')">
+	  				  	</a>&nbsp&nbsp&nbsp Danielle L &nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Danielle_L')"></a></h5>
+	  			</li>
+	  			<li name = "Danielle M" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Danielle_M">
+	  				<img title="Danielle M" src="pics/Danielle_M.png" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Danielle_M.png')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp Danielle M &nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Danielle_M')"></a></h5>	
+	  			</li>
+	  			<li name = "Dominique" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Dominique">
+	  				<img title="Dominique" src="pics/Dominique.png" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Dominique.png')">
+	  				  	</a>&nbsp&nbsp&nbsp Dominique &nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Dominique')"></a></h5>
+	  			</li>
+	  			<li name = "Liz" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Liz">
+	  				<img title="Liz" src="pics/Liz.png" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Liz.png')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp Liz &nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Liz')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
+	  			</li>
+	  			<li name = "Elizabeth" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Elizabeth">
+	  				<img title="Elizabeth" src="pics/Elizabeth.png" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Elizabeth.png')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp Elizabeth &nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Elizabeth')"></a></h5>
+	  			</li>
+	  			<li name = "Hailey" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Hailey">
+	  				<img title="Hailey" src="pics/Hailey.png" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Hailey.png')">
+	  				  	</a>&nbsp&nbsp&nbsp Hailey &nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Hailey')"></a></h5>
+	  			</li>
+	  			<li name = "Ida Marie" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Ida_Marie">
+	  				<img title="Ida Marie" src="pics/Ida_Marie.png" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Ida_Marie.png')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp Ida Marie &nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Ida_Marie')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
+	  			</li>
+	  			<li name = "Jaimi" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Jaimi">
+	  				<img title="Jaimi" src="pics/Jaimi.png" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Jaimi.png')">
+	  				  	</a>&nbsp&nbsp&nbsp Jaimi &nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Jaimi')"></a></h5>
+	  			</li>
+	  			<li name = "Jasmine B" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Jasmine_B">
+	  				<img title="Jasmine B" src="pics/Jasmine_B.png" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Jasmine_B.png')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp Jasmine B &nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Jasmine_B')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
+	  			</li>
+	  			<li name = "Jasmine G" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Jasmine_G">
+	  				<img title="Jasmine G" src="pics/Jasmine_G.png" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Jasmine_G.png')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp Jasmine G &nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Jasmine_G')"></a></h5>
+	  			</li>
+	  			<li name = "Josephine" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Josephine">
+	  				<img title="Josephine" src="pics/Josephine.png" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Josephine.png')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp Josephine &nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Josephine')"></a></h5>
+	  			</li>
+	  			<li name = "Kristina" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Kristina">
+	  				<img title="Kristina" src="pics/Kristina.png" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Kristina.png')">
+	  				  	</a>&nbsp&nbsp&nbsp Kristina &nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Kristina')"></a></h5>
+	  			</li>
+	  			<li name = "Lacey" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Lacey">
+	  				<img title="Lacey" src="pics/Lacey.png" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Lacey.png')">
+	  				  	</a>&nbsp&nbsp&nbsp Lacey &nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Lacey')"></a></h5>
+	  			</li>
+	  			<li name = "Lauren" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Lauren">
+	  				<img title="Lauren" src="pics/Lauren.png" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Lauren.png')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Lauren &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Lauren')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
+	  			</li>
+	  			<li name = "Michelle" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Michelle">
+	  				<img title="Michelle" src="pics/Michelle.png" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Michelle.png')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp Michelle &nbsp&nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Michelle')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
+	  			</li>
+	  			<li name = "Olivia" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Olivia">
+	  				<img title="Olivia" src="pics/Olivia.png" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Olivia.png')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Olivia &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Olivia')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
+	  			</li>
+	  			<li name = "Rachel" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Rachel">
+	  				<img title="Rachel" src="pics/Rachel.png" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Rachel.png')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp Rachel &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Rachel')"></a></h5>
+	  			</li>
+	  			<li name = "Raven" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Raven">
+	  				<img title="Raven" src="pics/Raven.png" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Raven.png')">
+	  				  	</a>&nbsp&nbsp&nbsp Raven &nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Raven')"></a></h5>
+	  			</li>
+	  			<li name = "Sarah" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Sarah">
+	  				<img title="Sarah" src="pics/Sarah.png" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Sarah.png')">
+	  				  	</a>&nbsp&nbsp&nbsp Sarah &nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Sarah')"></a></h5>
+	  			</li>
+	  			<li name = "Susannah" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Susannah">
+	  				<img title="Susannah" src="pics/Susannah.png" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Susannah.png')">
+	  				  	</a>&nbsp&nbsp&nbsp Susannah &nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Susannah')"></a></h5>
+	  				  	<h2> <span class="eliminatedText">ELIMINATED</span></h2>
+	  			</li>
+	  			<li name = "Taylor" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Taylor">
+	  				<img title="Taylor" src="pics/Taylor.png" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Taylor.png')">
+	  				  	</a>&nbsp&nbsp&nbsp Taylor &nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Taylor')"></a></h5>
+	  			</li>
+	  			<li name = "Vanessa" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Vanessa">
+	  				<img title="Vanessa" src="pics/Vanessa.png" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Vanessa.png')">
+	  				  	</a>&nbsp&nbsp&nbsp Vanessa &nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Vanessa')"></a></h5>
+	  			</li>
+	  			<li name = "Whitney" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Whitney">
+	  				<img title="Whitney" src="pics/Whitney.png" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Whitney.png')">
+	  				  	</a>&nbsp&nbsp&nbsp Whitney &nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Whitney')"></a></h5>
+	  			</li>
+			</ul>
+		</div>
+
+	<!-- Tabs -->
+		<div class = "col-md-7" style = "position:fixed; right: -5px; width: 800px">
+			<!-- <form role = "form" id = "submissionForm" style = "position:relative; top: -20px; color:white;" class = "form-horizontal" 
+					action="mailto:bachelorbracket18@gmail.com?Subject=Bracket Entry" method="post" enctype="text/plain"> -->
+			<form id="submissionForm" action="https://docs.google.com/forms/d/1VfE7v7hmYYE84rKREQVX2Rbr2LgAohxd_EwC96QxjuA/formResponse" role="form"
+				style = "position:relative; top: -20px; color:white;" class = "form-horizontal">
+				<div id="tabs">
+					<ul>
+						<li><a href="#tabs-1">Week 3</a></li>
+						<li><a href="#tabs-2">Week 4</a></li>
+						<li><a href="#tabs-3">Week 5</a></li>
+						<li><a href="#tabs-4">Week 6</a></li>
+						<li><a href="#tabs-5">Week 7</a></li>
+						<li><a href="#tabs-6">Week 8</a></li>
+						<li><a href="#tabs-7">Week 9</a></li>
+						<li><a href="#tabs-8">Week 10</a></li>
+					</ul>
+
+					<div id="tabs-1">
+						<div class="ui-widget ui-helper-clearfix" style = "width:col-md-7;">
+							<p><strong>Choose 14 women for this week. You have picked <span id = "numberPicked1">0</span>/14</strong></p>
+							<div id="container1" class="dropContainer ui-widget-content ui-state-default">
+							</div>
+						</div>
+					</div>
+					<div id="tabs-2">
+						<div class="ui-widget ui-helper-clearfix" style = "width:col-md-7;">
+							<p><strong>Choose 11 women for this week. You have picked <span id = "numberPicked2">0</span>/11</strong></p>
+							<div id="container2" class="dropContainer ui-widget-content ui-state-default">
+							</div>
+						</div>
+					</div>
+					<div id="tabs-3">
+						<div class="ui-widget ui-helper-clearfix" style = "width:col-md-7;">
+							<p><strong>Choose 9 women for this week. You have picked <span id = "numberPicked3">0</span>/9</strong></p>
+							<div id="container3" class="dropContainer ui-widget-content ui-state-default">
+							</div>
+						</div>
+					</div>
+					<div id="tabs-4">
+						<div class="ui-widget ui-helper-clearfix" style = "width:col-md-7;">
+							<p><strong>Choose 6 women for this week. You have picked <span id = "numberPicked4">0</span>/6</strong></p>
+							<div id="container4" class="dropContainer ui-widget-content ui-state-default">
+							</div>
+						</div>
+					</div>
+					<div id="tabs-5">
+						<div class="ui-widget ui-helper-clearfix" style = "width:col-md-7;">
+							<p><strong>Choose 4 women for this week. You have picked <span id = "numberPicked5">0</span>/4</strong></p>
+							<div id="container5" class="dropContainer ui-widget-content ui-state-default">
+							</div>
+						</div>
+					</div>
+					<div id="tabs-6">					
+						<div class="ui-widget ui-helper-clearfix" style = "width:col-md-7;">
+							<p><strong>Choose 3 women for this week. You have picked <span id = "numberPicked6">0</span>/3</strong></p>
+							<div id="container6" class="dropContainer ui-widget-content ui-state-default">
+							</div>
+						</div>
+					</div>
+					<div id="tabs-7">
+						<div class="ui-widget ui-helper-clearfix" style = "width:col-md-7;">
+							<p><strong>Choose 2 women for this week. You have picked <span id = "numberPicked7">0</span>/2</strong></p>
+							<div id="container7" class="dropContainer ui-widget-content ui-state-default">
+							</div>
+						</div>
+					</div>
+					<div id="tabs-8">					
+						<div class="ui-widget ui-helper-clearfix" style = "width:col-md-7;">
+							<p><strong>Choose the final woman! You have picked <span id = "numberPicked8">0</span>/1</strong></p>
+							<div id="container8" class="dropContainer ui-widget-content ui-state-default">
+							</div>
+						</div>
+					</div>
+				</div> <!--End Tabs -->
+
+			  <h5>Done? Choose your name and submit.</h5>
+
+			  <div class="form-group">
+			    <label for="name" class = "col-md-2 control-label">Name:</label>
+			    <div class = "col-md-4">
+			    	<!-- Name and Id given by Google Form -->
+			    	<select name="entry.206844228" id="entry_206844228" class="form-control selectpicker valid">
+			    		<option>Choose your name</option>
+			    		<option>Amanda</option>
+			    		<option>Austyn</option>
+			    		<option>Brad</option>
+			    		<option>Carissa</option>
+			    		<option>Cassia</option>
+			    		<option>Courtney</option>
+			    		<option>Dana</option>
+			    		<option>Emilee</option>
+			    		<option>Hack</option>
+			    		<option>Hannah</option>
+			    		<option>James</option>
+			    		<option>Kristen</option>
+			    		<option>Matthew</option>
+			    		<option>Paulina</option>
+			    		<option>Rachel</option>
+			    		<option>Riyaz</option>
+			    		<option>Ryan</option>
+			    		<option>Sanchit</option>
+			    		<option>Sarah</option>
+			    		<option>Tebine</option>
+			    		<option>Thomas</option>
+			    	</select>
+			    </div>
+			  </div>
+
+			  <div class = "form-group hide">
+			  	<textarea name="entry.1299310825" id="entry_1299310825"></textarea>
+			  </div>
+
+			  <div class = "form-group">
+			  	  <label for="name" class = "col-md-2 control-label"></label>
+				  <div class ="col-md-2">
+				  	<button id = "formfill" class="btn btn-primary">Submit</button>
+				  </div>
+			  </div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script>
+	$('a').tooltip({placement:"bottom"});
+	$('.selectpicker').selectpicker();
+
+	$('#formfill').click(function() {
+		var week3picks = "";
+		var week4picks = "";
+		var week5picks = "";
+		var week6picks = "";
+		var week7picks = "";
+		var week8picks = "";
+		var week9picks = "";
+		var week10picks = "";
+
+		$( "#container1 li" ).each(function( index ) {
+			week3picks += $( this ).attr('id') + ";";
+		});
+
+		$( "#container2 li" ).each(function( index ) {
+			week4picks += $( this ).attr('id') + ";";
+		});
+		
+		$( "#container3 li" ).each(function( index ) {
+			week5picks += $( this ).attr('id') + ";";
+		});
+		
+		$( "#container4 li" ).each(function( index ) {
+			week6picks += $( this ).attr('id') + ";";
+		});
+		
+		$( "#container5 li" ).each(function( index ) {
+			week7picks += $( this ).attr('id') + ";";
+		});
+
+		$( "#container6 li" ).each(function( index ) {
+			week8picks += $( this ).attr('id') + ";";
+		});
+
+		$( "#container7 li" ).each(function( index ) {
+			week9picks += $( this ).attr('id') + ";";
+		});
+
+		$( "#container8 li" ).each(function( index ) {
+			week10picks += $( this ).attr('id') + ";";
+		});
+
+		document.getElementById("entry_1299310825").value = "week3="+week3picks+"\n"+ "week4="+week4picks+"\n"+ "week5="+week5picks+"\n"+
+															"week6="+week6picks+"\n"+ "week7="+week7picks+"\n"+ "week8="+week8picks+"\n"+
+															"week9="+week9picks+"\n"+ "week10="+week10picks;
+	});
+
+	$('#submissionForm').on('submit', function() {
+		$('#alertError').hide(); //hide any errors after a new submit
+		if ($('#entry_206844228').val() == "Choose your name") {
+			alertError("You need to choose your name.", "");
+			return false;
+		}
+
+		//Check all lengths before submission
+		if ($('#container1 li').length != week3Eliminations) {
+			alertError("", "Week 3 has not been completed yet.");
+			return false;
+		}
+		else if ($('#container2 li').length != week4Eliminations) {
+			alertError("", "Week 4 has not been completed yet.");
+			return false;
+		}
+		else if ($('#container3 li').length != week5Eliminations) {
+			alertError("", "Week 5 has not been completed yet.");
+			return false;
+		}
+		else if ($('#container4 li').length != week6Eliminations) {
+			alertError("", "Week 6 has not been completed yet.");
+			return false;
+		}
+		else if ($('#container5 li').length != week7Eliminations) {
+			alertError("", "Week 7 has not been completed yet.");
+			return false;
+		}
+		else if ($('#container6 li').length != week8Eliminations) {
+			alertError("", "Week 8 has not been completed yet.");
+			return false;
+		}
+		else if ($('#container7 li').length != week9Eliminations) {
+			alertError("", "Week 9 has not been completed yet.");
+			return false;
+		}
+		else if ($('#container8 li').length != week10Eliminations) {
+			alertError("", "Week 10 has not been completed yet.");
+			return false;
+		}
+		var finalChecks = true;
+		var loopBreak = 0;
+		for(j = 8; j > 0; j--) {
+			console.log(j);
+			var containerIdStart = "#container" + j + " li";
+			$( containerIdStart ).each(function( index ) {
+				for(i = 1; i<j; i++) {
+					console.log("i=" + i);
+					containerId = "#container" + i
+					var prevCheck = $(containerId).find("#" + $( this ).attr('id'));
+					console.log(prevCheck.length);
+					if (prevCheck.length <= 0) {
+						if (loopBreak == 0) {
+							finalChecks = false;
+							var str = $(this).attr('id');
+					  		var id = str.replace("_", " ");
+							alertError(id + " is in week " + (j+2) + ", but not in week " + (i+2), "");
+							loopBreak = 1;
+							return false;
+						}
+					}
+				}
+			});
+		}
+		return finalChecks;
+    });
+
+	function enlargeImage(picURI) {
+		$('#myModalBackground').width("570px");
+		$('#myModalBackground').css( "left","0px");
+		var picHeight = 500;
+		$('#myModalBody').html("<img src='"+picURI+"' style='position:relative; left: -5px; height:"+picHeight+"px'>");
+		$('#myModal').modal();
+	}
+
+	function showBio(id) {
+		var picURI = "pics/bios/" + id + ".png";
+		var bioId = "#bio_" + id;
+		$('#myModalBackground').width("900px");
+		$('#myModalBackground').css( "left","-130px");
+		$('#myModalBody').html("<img src='"+picURI+"' width=825px>");
+		$(bioId).removeClass("hide");
+		$('#myModal').modal();
+	}
+
+	$('#myModal').on('hidden.bs.modal', function () {
+		//hide all bios after closing the modal
+		$('.allBios').addClass("hide");
+	})
+</script>
+</body>
+</html>
