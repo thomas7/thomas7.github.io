@@ -1,0 +1,1598 @@
+<!doctype html>
+<html lang="us">
+<head>
+	<meta charset="utf-8">
+	<title>The Bachelor Bracket</title>
+	<link href="css/dark-hive/jquery-ui-1.10.3.custom.css" rel="stylesheet">
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/bootstrap-select.min.css" rel="stylesheet">
+	<script src="js/jquery-1.9.1.js"></script>
+	<script src="js/jquery-ui-1.10.3.custom.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/bootstrap-select.min.js"></script>
+
+	<style>
+		#sortable { float: left; width: 65%; min-height: 12em;}
+  		  .sortable.custom-state-active { background: #eee; }
+		  .sortable li { float: left; width:175px; height: 194px; margin: 3px 3px 3px 0; padding: 1px; text-align: center;}
+		  .sortable li a { float: right; }
+		  .sortable li img { width: 100%; cursor: move; }
+
+  		.dropContainer {height: 257px; padding: 1%; }
+  		.dropContainer h4 { line-height: 16px; margin: 0 0 0.4em; }
+		.dropContainer h4 .ui-icon { float: left; }
+		.dropContainer .sortable h5 { display: none;}
+
+		body {
+			background-image: url(pics/background.jpg);
+			background-size: cover;
+		}
+
+		.podbar {
+		    bottom:0;
+		    position:fixed;
+		    z-index:150;
+		    height:45px;
+		    width:100%;
+		}
+
+		.hidden {
+			pointer-events: none;
+		}
+
+		.threeDHeader {
+			display:block;
+			color: #fff;
+        	text-shadow: 0px 1px 0px #999, 0px 2px 0px #888, 0px 3px 0px #777, 0px 4px 0px #666, 0px 5px 0px #555, 0px 6px 0px #444, 0px 7px 0px #333, 0px 8px 7px #001135;
+        	font: 50px 'ChunkFiveRegular';
+		}
+
+		.eliminatedText {
+			display:block;
+			position:relative;
+			text-shadow: 0px -1px 4px red, 0px -2px 10px yellow, 0px -10px 20px #ff8000, 0px -18px 40px orange;
+			opacity: 1;
+			bottom:140px;
+			right: -5px;
+			color: red;
+        	font: 25px 'LeagueGothicRegular';
+			transform:rotate(315deg);
+			-ms-transform:rotate(315deg);
+			-moz-transform: rotate(315deg);
+			-webkit-transform:rotate(315deg); /* Safari and Chrome */
+		}
+
+		.sectionheader {
+			margin-top: 10px;
+			font-size: 25px;
+		}
+
+	</style>
+	</head>
+<body>
+
+	<script>
+		var week3Eliminations = 14;
+		var week4Eliminations = 11;
+		var week5Eliminations = 9;
+		var week6Eliminations = 6;
+		var week7Eliminations = 4;
+		var week8Eliminations = 3;
+		var week9Eliminations = 2;
+		var week10Eliminations = 1;
+
+	    $(function() {
+	    	$( "#tabs" ).tabs();
+
+	        var $sortable = $( "#sortable" ),
+	        $dropContainer = $( "#container1" );
+	        var $dropContainer2 = $("#container2");
+	        var $dropContainer3 = $("#container3");
+	        var $dropContainer4 = $("#container4");
+	        var $dropContainer5 = $("#container5");
+	        var $dropContainer6 = $("#container6");
+	        var $dropContainer7 = $("#container7");
+	        var $dropContainer8 = $("#container8");
+		 
+		    // let the women be draggable items
+		    $( "li", $sortable ).draggable({
+		      cancel: "a.glyphicon", // clicking an icon won't initiate dragging
+		      revert: "invalid", // when not dropped, the item will revert back to its initial position
+		      containment: "document",
+		      appendTo: $(".row"),
+		      helper: "clone",
+		      cursor: "move",
+		      start: function(event, ui) {
+		      	var offset = $(document).scrollTop();
+		      	ui.helper.css({width:'175px',height:'194px', position:'absolute', bottom:"100px"});
+		      }
+		    });
+
+		    // Make the group of women droppable as well so that they can be put back into the list
+		    $sortable.droppable({
+		      accept: ".dropContainer li",
+		      activeClass: "custom-state-active",
+		      drop: function( event, ui ) {
+		        removePic( ui.draggable );
+		        $(ui.helper).remove(); //destroy clone
+           	    $(ui.draggable).remove(); //remove from list
+		      }
+		    });
+
+		    $('.eliminatedWomen').draggable({disabled:true });
+		 
+		    //drop women into the container
+		    $dropContainer.droppable({
+		      accept: "#sortable > li",
+			  drop: function( event, ui ) {
+			  	var duplicateWoman = $(this).find("#" + $(ui.draggable).attr('id'));
+			  	var str = $(ui.draggable).attr('id');
+			  	var id = str.replace("_", " ");
+			  	var listLength = $('#container1 li').length;
+			  	document.getElementById("numberPicked1").innerHTML = listLength == week3Eliminations ? week3Eliminations : listLength+1;
+
+			  	if (listLength == week3Eliminations)
+			  		alertError("Nice try,", " but you can't add more than " + week3Eliminations + " women for this week.");
+
+			  	else if (duplicateWoman.length > 0) {
+			  		document.getElementById("numberPicked1").innerHTML = $('#container1 li').length; 
+			  		alertError(id, " may be hot, but you can't add her twice. Pick someone else.");
+			  	}
+
+			  	else {
+			  		var copy = $(ui.draggable).clone().draggable({
+				      revert: function(valid_drop) {
+				      		if(!valid_drop) {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked1").innerHTML = $('#container1 li').length;
+				      			return true; 
+				      		}
+				      		else {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked1").innerHTML = $('#container1 li').length; 
+				      		}
+				      	}, // when not dropped, the item will revert back to its initial position
+				      containment: "document",
+				      cursor: "move",
+				      drag: function(event, ui) {
+		        	  	document.getElementById("numberPicked1").innerHTML = $('#container1 li').length-1;
+		      		  },
+				    });
+					addPic(copy, $(this)); //add a clone so that the original will stay in the list
+			    }
+			  }
+		    });
+
+		    //drop women into the container
+		    $dropContainer2.droppable({
+		      accept: "#sortable > li",
+			  drop: function( event, ui ) {
+			  	var duplicateWoman = $(this).find("#" + $(ui.draggable).attr('id'));
+			  	var previousWeekCheck = $dropContainer.find("#" + $(ui.draggable).attr('id'));
+			  	var str = $(ui.draggable).attr('id');
+			  	var id = str.replace("_", " ");
+			  	var listLength = $('#container2 li').length;
+			  	document.getElementById("numberPicked2").innerHTML = listLength == week4Eliminations ? week4Eliminations : listLength+1;
+
+			  	if ($('#container2 li').length == week4Eliminations)
+			  		alertError("Nice try,", " but you can't add more than " + week4Eliminations + " women for this week.");
+
+			  	else if (duplicateWoman.length > 0) {
+			  		document.getElementById("numberPicked2").innerHTML = $('#container2 li').length; 
+			  		alertError(id, " may be hot, but you can't add her twice. Pick someone else.");;
+			  	}
+
+			  	else if (previousWeekCheck.length < 1) {
+			  		document.getElementById("numberPicked2").innerHTML = $('#container2 li').length;
+			  		alertError(id, " wasn't picked last week. Go change your picks, or choose a different woman.");
+			  	}
+
+			  	else {
+			  		var copy = $(ui.draggable).clone().draggable({
+				      revert: function(valid_drop) {
+				      		if(!valid_drop) {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked2").innerHTML = $('#container2 li').length;
+				      			return true; 
+				      		}
+				      		else {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked2").innerHTML = $('#container2 li').length; 
+				      		}
+				      	}, // when not dropped, the item will revert back to its initial position
+				      containment: "document",
+				      cursor: "move",				      
+				      drag: function(event, ui) {
+		        	  	document.getElementById("numberPicked2").innerHTML = $('#container2 li').length-1;
+		      		  },
+				    });
+					addPic(copy, $(this)); //add a clone so that the original will stay in the list
+			    }
+			  }
+		    });
+
+		     //drop women into the container
+		    $dropContainer3.droppable({
+		      accept: "#sortable > li",
+			  drop: function( event, ui ) {
+			  	var duplicateWoman = $(this).find("#" + $(ui.draggable).attr('id'));
+			  	var previousWeekCheck = $dropContainer2.find("#" + $(ui.draggable).attr('id'));
+			  	var str = $(ui.draggable).attr('id');
+			  	var id = str.replace("_", " ");
+			  	var listLength = $('#container3 li').length;
+			  	document.getElementById("numberPicked3").innerHTML = listLength == week5Eliminations ? week5Eliminations : listLength+1;
+
+			  	if ($('#container3 li').length == week5Eliminations)
+			  		alertError("Nice try,", " but you can't add more than " + week5Eliminations + " women for this week.");
+
+			  	else if (duplicateWoman.length > 0) {
+			  		document.getElementById("numberPicked3").innerHTML = $('#container3 li').length; 
+			  		alertError(id, " may be hot, but you can't add her twice. Pick someone else.");
+			  	}
+
+			  	else if (previousWeekCheck.length < 1) {
+			  		document.getElementById("numberPicked3").innerHTML = $('#container3 li').length; 
+			  		alertError(id, " wasn't picked last week. Go change your picks, or choose a different woman.");
+			  	}
+			  	else {
+			  		var copy = $(ui.draggable).clone().draggable({
+				      revert: function(valid_drop) {
+				      		if(!valid_drop) {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked3").innerHTML = $('#container3 li').length;
+				      			return true; 
+				      		}
+				      		else {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked3").innerHTML = $('#container3 li').length; 
+				      		}
+				      	}, // when not dropped, the item will revert back to its initial position
+				      containment: "document",
+				      cursor: "move",				      
+				      drag: function(event, ui) {
+		        	  	document.getElementById("numberPicked3").innerHTML = $('#container3 li').length-1;
+		      		  },
+				    });
+					addPic(copy, $(this)); //add a clone so that the original will stay in the list
+			    }
+			  }
+		    });
+
+		    //drop women into the container
+		    $dropContainer4.droppable({
+		      accept: "#sortable > li",
+			  drop: function( event, ui ) {
+			  	var duplicateWoman = $(this).find("#" + $(ui.draggable).attr('id'));
+			  	var previousWeekCheck = $dropContainer3.find("#" + $(ui.draggable).attr('id'));
+			  	var str = $(ui.draggable).attr('id');
+			  	var id = str.replace("_", " ");
+			  	var listLength = $('#container4 li').length;
+			  	document.getElementById("numberPicked4").innerHTML = listLength == week6Eliminations ? week6Eliminations : listLength+1;
+
+			  	if ($('#container4 li').length == week6Eliminations)
+			  		alertError("Nice try,", " but you can't add more than " + week6Eliminations + " women for this week.");
+
+			  	else if (duplicateWoman.length > 0) {
+			  		document.getElementById("numberPicked4").innerHTML = $('#container4 li').length; 
+			  		alertError(id, " may be hot, but you can't add her twice. Pick someone else.");
+			  	}
+
+			  	else if (previousWeekCheck.length < 1) {
+			  		document.getElementById("numberPicked4").innerHTML = $('#container4 li').length; 
+			  		alertError(id, " wasn't picked last week. Go change your picks, or choose a different woman.");
+			  	}
+
+			  	else {
+			  		var copy = $(ui.draggable).clone().draggable({
+				      revert: function(valid_drop) {
+				      		if(!valid_drop) {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked4").innerHTML = $('#container4 li').length;
+				      			return true; 
+				      		}
+				      		else {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked4").innerHTML = $('#container4 li').length; 
+				      		}
+				      	}, // when not dropped, the item will revert back to its initial position
+				      containment: "document",
+				      cursor: "move",				      
+				      drag: function(event, ui) {
+		        	  	document.getElementById("numberPicked4").innerHTML = $('#container4 li').length-1;
+		      		  },
+				    });
+					addPic(copy, $(this)); //add a clone so that the original will stay in the list
+			    }
+			  }
+		    });
+
+		   	//drop women into the container
+		    $dropContainer5.droppable({
+		      accept: "#sortable > li",
+			  drop: function( event, ui ) {
+			  	var duplicateWoman = $(this).find("#" + $(ui.draggable).attr('id'));
+			  	var previousWeekCheck = $dropContainer4.find("#" + $(ui.draggable).attr('id'));
+			  	var str = $(ui.draggable).attr('id');
+			  	var id = str.replace("_", " ");
+			  	var listLength = $('#container5 li').length;
+			  	document.getElementById("numberPicked5").innerHTML = listLength == week7Eliminations ? week7Eliminations : listLength+1;
+
+			  	if ($('#container5 li').length == week7Eliminations)
+			  		alertError("Nice try,", " but you can't add more than " + week7Eliminations + " women for this week.");
+
+			  	else if (duplicateWoman.length > 0) {
+			  		document.getElementById("numberPicked5").innerHTML = $('#container5 li').length; 
+			  		alertError(id, " may be hot, but you can't add her twice. Pick someone else.");
+			  	}
+
+			  	else if (previousWeekCheck.length < 1) {
+			  		document.getElementById("numberPicked5").innerHTML = $('#container5 li').length; 
+			  		alertError(id, " wasn't picked last week. Go change your picks, or choose a different woman.");
+			  	}
+			  	else {
+			  		var copy = $(ui.draggable).clone().draggable({
+				      revert: function(valid_drop) {
+				      		if(!valid_drop) {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked5").innerHTML = $('#container5 li').length;
+				      			return true; 
+				      		}
+				      		else {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked5").innerHTML = $('#container5 li').length; 
+				      		}
+				      	}, // when not dropped, the item will revert back to its initial position
+				      containment: "document",
+				      cursor: "move",				      
+				      drag: function(event, ui) {
+		        	  	document.getElementById("numberPicked5").innerHTML = $('#container5 li').length-1;
+		      		  },
+				    });
+					addPic(copy, $(this)); //add a clone so that the original will stay in the list
+			    }
+			  }
+		    });
+
+		    //drop women into the container
+		    $dropContainer6.droppable({
+		      accept: "#sortable > li",
+			  drop: function( event, ui ) {
+			  	var duplicateWoman = $(this).find("#" + $(ui.draggable).attr('id'));
+			  	var previousWeekCheck = $dropContainer5.find("#" + $(ui.draggable).attr('id'));
+			  	var str = $(ui.draggable).attr('id');
+			  	var id = str.replace("_", " ");
+			  	var listLength = $('#container6 li').length;
+			  	document.getElementById("numberPicked6").innerHTML = listLength == week8Eliminations ? week8Eliminations : listLength+1;
+
+			  	if ($('#container6 li').length == week8Eliminations)
+			  		alertError("Nice try,", " but you can't add more than " + week8Eliminations + " women for this week.");
+
+			  	else if (duplicateWoman.length > 0) {
+			  		document.getElementById("numberPicked6").innerHTML = $('#container6 li').length; 
+			  		alertError(id, " may be hot, but you can't add her twice. Pick someone else.");
+			  	}
+
+			  	else if (previousWeekCheck.length < 1) {
+			  		document.getElementById("numberPicked6").innerHTML = $('#container6 li').length;
+			  		alertError(id, " wasn't picked last week. Go change your picks, or choose a different woman.");
+			  	}
+			  	else {
+			  		var copy = $(ui.draggable).clone().draggable({
+				      revert: function(valid_drop) {
+				      		if(!valid_drop) {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked6").innerHTML = $('#container6 li').length;
+				      			return true; 
+				      		}
+				      		else {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked6").innerHTML = $('#container6 li').length; 
+				      		}
+				      	}, // when not dropped, the item will revert back to its initial position
+				      containment: "document",
+				      cursor: "move",				      
+				      drag: function(event, ui) {
+		        	  	document.getElementById("numberPicked6").innerHTML = $('#container6 li').length-1;
+		      		  },
+				    });
+					addPic(copy, $(this)); //add a clone so that the original will stay in the list
+			    }
+			  }
+		    });
+
+		    //drop women into the container
+		    $dropContainer7.droppable({
+		      accept: "#sortable > li",
+			  drop: function( event, ui ) {
+			  	var duplicateWoman = $(this).find("#" + $(ui.draggable).attr('id'));
+			  	var previousWeekCheck = $dropContainer6.find("#" + $(ui.draggable).attr('id'));
+			  	var str = $(ui.draggable).attr('id');
+			  	var id = str.replace("_", " ");
+			  	var listLength = $('#container7 li').length;
+			  	document.getElementById("numberPicked7").innerHTML = listLength == week9Eliminations ? week9Eliminations : listLength+1;
+
+			  	if ($('#container7 li').length == week9Eliminations)
+			  		alertError("Nice try,", " but you can't add more than " + week9Eliminations + " women for this week.");
+
+			  	else if (duplicateWoman.length > 0) {
+			  		document.getElementById("numberPicked7").innerHTML = $('#container7 li').length; 
+			  		alertError(id, " may be hot, but you can't add her twice. Pick someone else.");
+			  	}
+
+			  	else if (previousWeekCheck.length < 1) {
+			  		document.getElementById("numberPicked7").innerHTML = $('#container7 li').length; 
+			  		alertError(id, " wasn't picked last week. Go change your picks, or choose a different woman.");
+			  	}
+			  	else {
+			  		var copy = $(ui.draggable).clone().draggable({
+				      revert: function(valid_drop) {
+				      		if(!valid_drop) {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked7").innerHTML = $('#container7 li').length;
+				      			return true; 
+				      		}
+				      		else {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked7").innerHTML = $('#container7 li').length;
+				      		}
+				      	}, // when not dropped, the item will revert back to its initial position
+				      containment: "document",
+				      cursor: "move",				      
+				      drag: function(event, ui) {
+		        	  	document.getElementById("numberPicked7").innerHTML = $('#container7 li').length-1;
+		      		  },
+				    });
+					addPic(copy, $(this)); //add a clone so that the original will stay in the list
+			    }
+			  }
+		    });
+
+		    //drop women into the container
+		    $dropContainer8.droppable({
+		      accept: "#sortable > li",
+			  drop: function( event, ui ) {
+			  	var duplicateWoman = $(this).find("#" + $(ui.draggable).attr('id'));
+			  	var previousWeekCheck = $dropContainer7.find("#" + $(ui.draggable).attr('id'));
+			  	var str = $(ui.draggable).attr('id');
+			  	var id = str.replace("_", " ");
+			  	var listLength = $('#container8 li').length;
+			  	document.getElementById("numberPicked8").innerHTML = listLength == week10Eliminations ? week10Eliminations : listLength+1;
+
+			  	if ($('#container8 li').length == week10Eliminations)
+			  		alertError("Nice try,", " but you can't add more than " + week10Eliminations + " woman for this week.");
+
+			  	else if (duplicateWoman.length > 0) {
+			  		document.getElementById("numberPicked8").innerHTML = $('#container8 li').length; 
+			  		alertError(id, " may be hot, but you can't add her twice. Pick someone else.");
+			  	}
+
+			  	else if (previousWeekCheck.length < 1) {
+			  		document.getElementById("numberPicked8").innerHTML = $('#container8 li').length; 
+			  		alertError(id, " wasn't picked last week. Go change your picks, or choose a different woman.");
+			  	}
+			  	else {
+			  		var copy = $(ui.draggable).clone().draggable({
+				      revert: function(valid_drop) {
+				      		if(!valid_drop) {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked8").innerHTML = $('#container8 li').length;
+				      			return true; 
+				      		}
+				      		else {
+				      			$(this).removeClass("inmotion");
+				      			document.getElementById("numberPicked8").innerHTML = $('#container8 li').length; 
+				      		}
+				      	}, // when not dropped, the item will revert back to its initial position
+				      containment: "document",
+				      cursor: "move",				      
+				      drag: function(event, ui) {
+		        	  	document.getElementById("numberPicked8").innerHTML = $('#container8 li').length-1;
+		      		  },
+				    });
+					addPic(copy, $(this)); //add a clone so that the original will stay in the list
+			    }
+			  }
+		    });
+		 
+		    function addPic($pic, $container) {
+		      $pic.fadeOut(function() {
+		        var $list = $( "ul", $container ).length ?
+		          $( "ul", $container ) :
+		          $( "<ul class='sortable ui-helper-reset'/>" ).appendTo( $container );
+        		$pic.appendTo( $list ).fadeIn(function() {
+          		$pic
+            		.animate({ width: "85px", height:"85px" })
+        		});
+		      });
+		      $('#alertError').hide(); //hide the error message after a new woman has been added
+		    }
+
+			function removePic( $pic ) {
+		      $pic.fadeOut(function() {
+          		$pic
+            		.animate({ width: "100px", height:"58px" })
+        	  });
+		    }
+
+		    //When a tab is clicked hide profiles that can no longer be selected
+		    $( "#tabs" ).tabs({
+		    	activate: function(event, ui) {
+		    		var picks = [];
+		    		if (ui.newTab.index() != 0) {
+		    			$( "#container" + (ui.newTab.index()) + " li" ).each(function( index ) {
+							picks.push($( this ).attr('id')); //append list of picks from previous weeks container
+						});
+		    		}
+		    		else {
+		    			$( "#sortable li" ).each(function( index ) {
+		    				picks.push($( this ).attr('id')); //add everyone to the list for first week
+		    			});
+		    		}
+		    		hideDraggables(picks);
+		    	}
+		    });
+		});
+
+		function alertError(id, error) {
+				$('#alertError').removeClass("hidden");
+			    $('#alertError').html("<div class='alert alert-danger'>" + "<strong>" + id + "</strong>" + error + 
+			    	"<button type='button' id = 'closeButton' class='close' data-dismiss='alert' aria-hidden='true'>×</button> </div>");
+      			$('#alertError').slideDown("slow");
+		}
+
+		function hideDraggables(exclusionList) {
+			$( "#sortable li" ).each(function( index ) {
+				$(this).removeClass("hide"); //unhide everyone first
+				if (exclusionList.indexOf($( this ).attr('id')) == -1)
+					$(this).addClass("hide"); //hide this pick since it isn't an option based on the previous week's picks
+			});
+		}
+
+		$('#alertError').bind('close.bs.alert', function() {
+			$('#alertError').addClass("hidden"); //Need hidden class so that the links at the bottom of the page can be clicked
+		})
+		//Above event won't call for whatever reason when you click the x button
+		//Need special click event for bootstrap close button, again, I have no idea why.
+		$(document).on("click", "#closeButton", function(event){
+			$('#alertError').addClass("hidden");
+		});
+	</script>
+
+<h1 style = "position: relative; bottom: 10px; left: 10px; color:white;"><strong><span class="threeDHeader" >The Bachelor Bracket!</span></strong></h1>
+<!-- Initially hidden alert class to be set by alert functions -->
+<div id = "alertError" class = "podbar hidden">
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+  <!-- papER Town -->
+    <div class="modal-content" id = "myModalBackground" style = "background-color:lavender">
+      <div class="modal-body">
+      	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      	<div id="myModalBody"></div>
+      	<div id="bio_Adrianne" class = "hide allBios">
+			<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">
+					Adrianne "Jane"                            </h2>
+												<span class="text3 extra-light grey m-person-subtitle">
+						26<br>  Social Worker<br> West Hollywood, CA                                </span>
+				
+																			<div class="text2 grey extra-light sectionheader lowercase">
+						Bachelorette Biography
+					</div>
+				
+												<div class="m-person-bio copy-content m-expandable-text">
+						<div class="expandable-section clearfix" style="overflow-wrap: break-word;">
+							<p>  A native to Los Angeles, Jane is a free spirit with infectious energy. As a social worker, she uses her positive vibes and good nature to help care for seniors at an elderly day care facility. When she's not at work, Jane loves spending time with her mom and her dog, Bella.</p> <p>Fun facts:<br></br> - She loves tacos and Tapatio.<br></br> - Her grandmother taught her to speak Russian.<br></br> - She would choose her checkered sneakers over heels or stilettos any day!</p>                                    </div>
+					</div>
+			</div>
+      	</div>
+      	<div id="bio_Alex_B" class = "hide allBios">
+			<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">
+					Alex B.                            </h2>
+												<span class="text3 extra-light grey m-person-subtitle">
+						29<br>  Dog Rescuer<br> Vancouver, BC                                </span>
+				
+																			<div class="text2 grey extra-light sectionheader lowercase">
+						Bachelorette Biography
+					</div>
+				
+												<div class="m-person-bio copy-content m-expandable-text">
+						<div class="expandable-section clearfix" style="overflow-wrap: break-word;">
+							<p>  Alex is the proud owner of a successful dog rescue business, which takes her all over the world in search of four-legged friends to save. To date, she's saved almost 5000 dogs from slaughter. Luckily for Alex, rumor has it Colton is a dog lover too.</p> <p>Fun facts:<br></br> - She once lived in a van in Australia.<br></br> - Her favorite movies are <i>The Mighty Ducks</i>, <i>The Lion King</i> and <i>Old School</i>.<br></br> - Country is her favorite music genre.<br></br></p>                                    </div>
+					</div>
+			</div>
+      	</div>
+      	<div id="bio_Alex_D" class = "hide allBios">
+			<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">
+					Alex D.                            </h2>
+												<span class="text3 extra-light grey m-person-subtitle">
+						23<br>  Sloth<br> Boston, MA                                </span>
+				
+																			<div class="text2 grey extra-light sectionheader lowercase">
+						Bachelorette Biography
+					</div>
+				
+												<div class="m-person-bio copy-content m-expandable-text">
+						<div class="expandable-section clearfix" style="overflow-wrap: break-word;">
+							<p>  A New England girl through and through, Alex was born on Cape Cod, went to college at University of Massachusetts and now lives in Boston. When she's not cheering on the Patriots or the Red Sox, she's working as an account manager for an IT staffing agency. Alex talks fast, but tends to move slowly...verrrrrrrrrrry slowly.</p> <p>Fun facts:<br></br> - If she could have lunch with anyone, she'd pick Ellen Degeneres.<br></br> - She loves animals, and if she could have any job in the world, she'd be a zookeeper.<br></br> - Her big brother is her role model. </p>                                    </div>
+					</div>
+			</div>
+      	</div>
+      	<div id="bio_Angelique" class = "hide allBios">
+			<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">
+					Angelique                            </h2>
+												<span class="text3 extra-light grey m-person-subtitle">
+						28<br>  Marketing Salesperson<br> Hamilton, NJ                                </span>
+				
+																			<div class="text2 grey extra-light sectionheader lowercase">
+						Bachelorette Biography
+					</div>
+				
+												<div class="m-person-bio copy-content m-expandable-text">
+						<div class="expandable-section clearfix" style="overflow-wrap: break-word;">
+							<p>  Angelique is a small-town Jersey girl with a love of corny jokes. Here's one for you, Angelique: Why did Colton cross the road? To meet you, of course!</p> <p>Fun facts:<br></br> - Her favorite TV show is <b><a href="https://abc.go.com/shows/how-to-get-away-with-murder"><i>How To Get Away with Murder</i></a></b>, and her favorite actress is <b><a href="https://abc.go.com/shows/how-to-get-away-with-murder/cast/viola-davis">Viola Davis</a></b>. <br></br> - She's always dreamed of owning a clothing boutique. <br></br> - If she could have any super power, she'd be able to tell if anyone was lying. </p>                                    </div>
+					</div>
+			</div>
+      	</div>
+      	<div id="bio_Annie" class = "hide allBios">
+			<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">
+					Annie                            </h2>
+												<span class="text3 extra-light grey m-person-subtitle">
+						23<br>  Financial Associate<br> New York, NY                                </span>
+				
+																			<div class="text2 grey extra-light sectionheader lowercase">
+						Bachelorette Biography
+					</div>
+				
+												<div class="m-person-bio copy-content m-expandable-text">
+						<div class="expandable-section clearfix" style="overflow-wrap: break-word;">
+							<p>  Annie grew up on a farm in Wisconsin where she learned to ride horses. She competed in nationals for horse riding before attending the University of Alabama to study finance. Annie loves country music and swing dancing. She's hoping to sweep Colton off his feet!</p> <p>Fun facts:<br></br> - She describes herself as a party-starter who always wants everyone to have fun.<br></br> - She hates mosquitos, but they love her. <br></br> - Ryan Gosling is her favorite actor. </p>                                    </div>
+					</div>
+			</div>
+      	</div>
+      	<div id="bio_Bri" class = "hide allBios">
+			<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">
+					Bri                            </h2>
+												<span class="text3 extra-light grey m-person-subtitle">
+						24<br>  Model<br> Los Angeles, CA                                </span>
+				
+																			<div class="text2 grey extra-light sectionheader lowercase">
+						Bachelorette Biography
+					</div>
+				
+												<div class="m-person-bio copy-content m-expandable-text">
+						<div class="expandable-section clearfix" style="overflow-wrap: break-word;">
+							<p>  A model from Southern California, Bri is much more than just a pretty face. She played soccer for eight years, enjoys hiking and camping, and loves to hit the snowboard slopes. Her biggest dating fear? Farting too loudly. (Don't worry Bri, we won't tell Colton.)</p> <p>Fun fact:<br></br> - Her favorite sport to watch is hockey. <br></br> - She's been modeling since she was 14 years old. <br></br> - She loves it when her date notices her outfit. </p>                                    </div>
+					</div>
+			</div>
+      	</div>
+      	<div id="bio_Caelynn" class = "hide allBios">
+			<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">
+					Caelynn                            </h2>
+												<span class="text3 extra-light grey m-person-subtitle">
+						23<br>  Miss North Carolina 2018<br> Charlotte, NC                                </span>
+				
+																			<div class="text2 grey extra-light sectionheader lowercase">
+						Bachelorette Biography
+					</div>
+				
+												<div class="m-person-bio copy-content m-expandable-text">
+						<div class="expandable-section clearfix" style="overflow-wrap: break-word;">
+							<p>  Caelynn grew up in Fredericksburg, Virginia, and attended Virginia Commonwealth University, where she got her degree in broadcast journalism. She was named Miss North Carolina in 2018 and was the first runner-up at Miss USA. But Caelynn is not your typical beauty queen. She once flew to Japan for a first date! Luckily, she'll only have to travel to the Bachelor mansion to meet Colton.</p> <p>Fun facts:<br></br> - Her biggest mentor and role model is her grandmother, who was the first woman to be head of the FBI in Los Angeles. <br></br> - She's a terrible cook, except for breakfast. <br></br> - She thinks Napa is the most romantic city in the United States, since it feels like a small taste of Italy. </p>                                    </div>
+					</div>
+			</div>
+      	</div>
+      	<div id="bio_Caitlin" class = "hide allBios">
+			<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">
+					Caitlin                            </h2>
+												<span class="text3 extra-light grey m-person-subtitle">
+						25<br>  Realtor<br> Toronto, ON                                </span>
+				
+																			<div class="text2 grey extra-light sectionheader lowercase">
+						Bachelorette Biography
+					</div>
+				
+												<div class="m-person-bio copy-content m-expandable-text">
+						<div class="expandable-section clearfix" style="overflow-wrap: break-word;">
+							<p>  Caitlin is a successful realtor from Toronto, Ontario, Canada, who enjoys photography, painting and singing in the shower. Here's hoping she musters the courage to belt out a few tunes in front of Colton...or, maybe not?</p> <p>Fun facts:<br></br> - Her favorite dessert is cheesecake.<br></br> - She considers herself a city person more than a country person.<br></br> - If she could go anywhere in the US, she would ride horses through the Colorado mountains. </p>                                    </div>
+					</div>
+			</div>
+      	</div>
+      	<div id="bio_Cassie" class = "hide allBios">
+			<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">
+					Cassie                            </h2>
+												<span class="text3 extra-light grey m-person-subtitle">
+						23<br>  Speech Pathologist<br> Huntington Beach, CA                                </span>
+				
+																			<div class="text2 grey extra-light sectionheader lowercase">
+						Bachelorette Biography
+					</div>
+				
+												<div class="m-person-bio copy-content m-expandable-text">
+						<div class="expandable-section clearfix" style="overflow-wrap: break-word;">
+							<p>  A true native Californian, Cassie grew up at the beach and is an avid surfer. She is currently completing her degree in speech pathology and hopes to one day open up a private practice to work with kids. Maybe in the meantime she can teach Colton the language of love.</p> <p>Fun facts:<br></br> - She owns two cats named Maverick and Goose.<br></br> - Skydiving is the most outrageous thing she's done. <br></br> - The one thing she wouldn't do for love is turn her back on her family. </p>                                    </div>
+					</div>
+			</div>
+      	</div>
+      	<div id="bio_Catherine" class = "hide allBios">
+			<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">
+					Catherine                            </h2>
+												<span class="text3 extra-light grey m-person-subtitle">
+						26<br>  DJ<br> Ft. Lauderdale, FL                                </span>
+				
+																			<div class="text2 grey extra-light sectionheader lowercase">
+						Bachelorette Biography
+					</div>
+				
+												<div class="m-person-bio copy-content m-expandable-text">
+						<div class="expandable-section clearfix" style="overflow-wrap: break-word;">
+							<p>  By day, Catherine is a successful commercial real estate agent. By night, Catherine is DJ Agro—an up-and-coming hip-hop DJ making a name for herself on the Ft. Lauderdale club scene. Along with her dog daughter, Lucy, Catherine is hoping to spin her way into Colton's heart.</p> <p>Fun facts:<br></br> - She doesn't have any tattoos because "you don't put a bumper sticker on a Ferrari."<br></br> - Her favorite author is Dr. Seuss. <br></br> - She's a pescatarian. </p>                                    </div>
+					</div>
+			</div>
+      	</div>
+      	<div id="bio_Courtney" class = "hide allBios">
+			<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">
+					Courtney                            </h2>
+												<span class="text3 extra-light grey m-person-subtitle">
+						23<br>  Caterer<br> Atlanta, GA                                </span>
+				
+																			<div class="text2 grey extra-light sectionheader lowercase">
+						Bachelorette Biography
+					</div>
+				
+												<div class="m-person-bio copy-content m-expandable-text">
+						<div class="expandable-section clearfix" style="overflow-wrap: break-word;">
+							<p>  Courtney was born in Wiesbaden, Germany, but grew up in McDonough, Georgia, with four younger siblings. She turned her passion for food and cooking into a successful catering business, crafting healthy meal plans for athletes. Now she's just hoping she has the recipe for love with Colton!</p> <p>Fun facts:<br></br> - Her most embarrassing moment was tripping (twice!) on stage at her graduation. <br></br> - The closest she's ever been to marriage is a Pinterest board titled "I do." <br></br> - She's afraid of almost all reptiles.</p>                                    </div>
+					</div>
+			</div>
+      	</div>
+      	<div id="bio_Demi" class = "hide allBios">
+			<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">
+					Demi                            </h2>
+												<span class="text3 extra-light grey m-person-subtitle">
+						23<br>  Interior Designer<br> Red Oak, TX                                </span>
+				
+																			<div class="text2 grey extra-light sectionheader lowercase">
+						Bachelorette Biography
+					</div>
+				
+												<div class="m-person-bio copy-content m-expandable-text">
+						<div class="expandable-section clearfix" style="overflow-wrap: break-word;">
+							<p>  Demi grew up in rural Texas and is a proud country girl. She loves ATVing, fishing and watching WWE. She can also drive a stick shift. She's ready to put her pursuit of Colton into overdrive! Keep an eye on this one, Bachelor Nation!</p> <p>Fun facts:<br></br> - One item on her bucket list is to be the first petite Victoria's Secret Angel—with an entourage known as the "Demi Angels."<br></br> - Her favorite color is yellow. <br></br> - If she could have lunch with anyone, it would be Jon Snow (in character). </p>                                    </div>
+					</div>
+			</div>
+      	</div>
+      	<div id="bio_Devin" class = "hide allBios">
+			<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">
+					Devin                            </h2>
+												<span class="text3 extra-light grey m-person-subtitle">
+						23<br>  Broadcast Journalist<br> Medford, OR                                </span>
+				
+																			<div class="text2 grey extra-light sectionheader lowercase">
+						Bachelorette Biography
+					</div>
+				
+												<div class="m-person-bio copy-content m-expandable-text">
+						<div class="expandable-section clearfix" style="overflow-wrap: break-word;">
+							<p>  Devin graduated from Arizona State University with a Master of Arts in sports journalism. She currently works as broadcast journalist for a local news station in Medford, Oregon. When she's not reporting, you can find her doing her best sun salutation in yoga class. Namaste, Colton!</p> <p>  Fun facts:<br></br>  - She says her greatest achievement is getting her Master's degree at 23.<br></br>  - She knows every word to <em>Pride and Prejudice</em> (the movie).<br></br>  - Her motto is, "I'll try anything once!"</p>                                    </div>
+					</div>
+			</div>
+      	</div>
+      	<div id="bio_Elyse" class = "hide allBios">
+			<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">
+					Elyse                            </h2>
+												<span class="text3 extra-light grey m-person-subtitle">
+						31<br>  Makeup Artist<br> Soldotna, AK                                </span>
+				
+																			<div class="text2 grey extra-light sectionheader lowercase">
+						Bachelorette Biography
+					</div>
+				
+												<div class="m-person-bio copy-content m-expandable-text">
+						<div class="expandable-section clearfix" style="overflow-wrap: break-word;">
+							<p>  Elyse grew up outside of Anchorage in Soldotna, Alaska, where she spent her childhood ice-skating and snowmobiling. She found warmer a climate when she relocated to Scottsdale, Arizona, where she now works as a makeup artist. She also enjoys hiking, reading and spending time with friends over good food and wine.</p> <p>  Fun facts:<br></br>  - Her favorite holiday is New Year's Eve because of the glitter, glam, and hope of new beginnings.<br></br>  - She has never been out of the country.<br></br>  - She says the easiest way to relate to someone is through laughter.</p>                                    </div>
+					</div>
+			</div>
+      	</div>
+      	<div id="bio_Erika" class = "hide allBios">
+			<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">
+					Erika                            </h2>
+												<span class="text3 extra-light grey m-person-subtitle">
+						25<br>  Recruiter<br> Encinitas, CA                                </span>
+				
+																			<div class="text2 grey extra-light sectionheader lowercase">
+						Bachelorette Biography
+					</div>
+				
+												<div class="m-person-bio copy-content m-expandable-text">
+						<div class="expandable-section clearfix" style="overflow-wrap: break-word;">
+							<p>  "The Nut," as she's known to her friends, is a ball of energy with a great sense of humor. Erika boasts that one of her talents is being able to eat whatever she wants without gaining weight. What's your secret, Nut?</p> <p>  Fun facts:<br></br>  - The best trip she's ever been on was backpacking through Europe with her best friend.<br></br>  - Her ultimate date would be getting lost together in a new city.<br></br>  - If she could have any job in the world, she'd be an interior designer.</p>                                    </div>
+					</div>
+			</div>
+      	</div>
+      	<div id="bio_Erin" class = "hide allBios">
+			<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">
+					Erin                            </h2>
+												<span class="text3 extra-light grey m-person-subtitle">
+						28<br>  Cinderella<br> Plano, TX                                </span>
+				
+																			<div class="text2 grey extra-light sectionheader lowercase">
+						Bachelorette Biography
+					</div>
+				
+												<div class="m-person-bio copy-content m-expandable-text">
+						<div class="expandable-section clearfix" style="overflow-wrap: break-word;">
+							<p>  Erin works full time for her stepmother's home improvement business. She's not afraid to get her hands dirty but cleans up nicely. When she's not working, Erin enjoys ballroom dancing (as long as it's not too late of a night). Erin also loves expensive shoes but admits she can do a better job keeping track of them. She loves pumpkin spice lattes.</p> <p>  Fun facts:<br></br>  - Her favorite sports team is the Dallas Cowboys.<br></br>  - She says the most romantic city is New York at Christmas.<br></br>  - The most outrageous thing she's ever done is complete five bungee jumps in a row.</p>                                    </div>
+					</div>
+			</div>
+      	</div>
+      	<div id="bio_Hannah_B" class = "hide allBios">
+			<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">
+					Hannah B.                            </h2>
+												<span class="text3 extra-light grey m-person-subtitle">
+						23<br>  Miss Alabama 2018<br> Tuscaloosa, GA                                </span>
+				
+																			<div class="text2 grey extra-light sectionheader lowercase">
+						Bachelorette Biography
+					</div>
+				
+												<div class="m-person-bio copy-content m-expandable-text">
+						<div class="expandable-section clearfix is-truncated" style="overflow-wrap: break-word;">
+							<p style="display: block;">  Born and raised in Tuscaloosa, Alabama, Hannah was bred to be a proud member of the Alabama Crimson Tide. Following in her parents' footsteps, she recently graduated from the University of Alabama with a degree in communications. She currently works as an interior designer and never misses an Alabama football game. Oh, and in her spare time this year, she won the title of Miss Alabama USA 2018. Roll Tide, Hannah!</p> <p style="display: block;">  Fun facts:<br></br>  - She likes it when her date opens all the doors and pulls her chair out for her.<br></br>  - Her favorite type of music is country... <br></br></p></div>
+					</div>
+			</div>
+      	</div>
+      	<div id="bio_Hannah_G" class = "hide allBios">
+			<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">
+					Hannah G.                            </h2>
+												<span class="text3 extra-light grey m-person-subtitle">
+						23<br>  Content Creator<br> Birmingham, AL                                </span>
+				
+																			<div class="text2 grey extra-light sectionheader lowercase">
+						Bachelorette Biography
+					</div>
+				
+												<div class="m-person-bio copy-content m-expandable-text">
+						<div class="expandable-section clearfix" style="overflow-wrap: break-word;">
+							<p>  This sweet Southern belle definitely isn't camera shy—she's both the photographer and model for her burgeoning social media business. Apart from planning the photo shoots for her next posts, Hannah enjoys being a foodie and glamping. Hopefully Colton "likes" what you're putting down, Hannah!</p> <p>  Fun facts:<br></br>  - She doesn't like seafood.<br></br>  - Quality time is her love language.<br></br>  - She has a "sassy" cat named Marleigh.</p>                                    </div>
+					</div>
+			</div>
+      	</div>
+      	<div id="bio_Heather" class = "hide allBios">
+			<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">
+					Heather                            </h2>
+												<span class="text3 extra-light grey m-person-subtitle">
+						22<br>  Never Been Kissed<br> Carlsbad, CA                                </span>
+				
+																			<div class="text2 grey extra-light sectionheader lowercase">
+						Bachelorette Biography
+					</div>
+				
+												<div class="m-person-bio copy-content m-expandable-text">
+						<div class="expandable-section clearfix" style="overflow-wrap: break-word;">
+							<p>  Born and raised in San Diego, California, Heather is a Southern California girl through and through. She's a thrill-seeker who enjoys bungee jumping, skydiving and river-rafting. But out of all the thrilling things Heather's done, there's still one thrill she's yet to experience—she's never kissed a boy!</p> <p>  Fun facts:<br></br>  - She has a kitty named Kitty.<br></br>  - She's afraid of snakes.<br></br>  - If she could have any job in the world, she'd be a food critic.</p>                                    </div>
+					</div>
+			</div>
+      	</div>
+      	<div id="bio_Katie" class = "hide allBios">
+			<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">
+					Katie                            </h2>
+												<span class="text3 extra-light grey m-person-subtitle">
+						26<br>  Medical Sales Representative<br> Sherman Oaks, CA                                </span>
+				
+																			<div class="text2 grey extra-light sectionheader lowercase">
+						Bachelorette Biography
+					</div>
+				
+												<div class="m-person-bio copy-content m-expandable-text">
+						<div class="expandable-section clearfix" style="overflow-wrap: break-word;">
+							<p>  A lifelong dancer, Katie attended Louisiana State University where she competed on the dance team. After moving to Los Angeles to work as medical sales rep, Katie settled in Sherman Oaks, where she enjoys yoga and sushi. She still dances in her spare time, and hopes to teach Colton a few moves.</p> <p>  Fun facts:<br></br>  - Skydiving is on her bucket list.<br></br>  - Her favorite sports team is the LSU Tigers.<br></br>  - She prefers glamping to camping.</p>                                    </div>
+					</div>
+			</div>
+      	</div>
+      	<div id="bio_Kirpa" class = "hide allBios">
+			<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">
+					Kirpa                            </h2>
+												<span class="text3 extra-light grey m-person-subtitle">
+						26<br>  Dental Hygienist<br> Whittier, CA                                </span>
+				
+																			<div class="text2 grey extra-light sectionheader lowercase">
+						Bachelorette Biography
+					</div>
+				
+												<div class="m-person-bio copy-content m-expandable-text">
+						<div class="expandable-section clearfix" style="overflow-wrap: break-word;">
+							<p>  This beautiful and spunky California girl works for her dad's dentistry business as a dental hygienist. She loves hiking, reading, cooking and swimming. Her one deal breaker? Colton better floss.</p> <p>  Fun facts:<br></br>  - Her favorite show is <a href="https://abc.go.com/shows/greys-anatomy"><em>Grey's Anatomy</em></a>.<br></br>  - She thinks Denver, Colorado, is the most romantic city in the US.<br></br>  - Her favorite date memory was a trip to Disneyland.</p>                                    </div>
+					</div>
+			</div>
+      	</div>
+      	<div id="bio_Laura" class = "hide allBios">
+			<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">
+					Laura                            </h2>
+												<span class="text3 extra-light grey m-person-subtitle">
+						26<br>  Accountant<br> Dallas, TX                                </span>
+				
+																			<div class="text2 grey extra-light sectionheader lowercase">
+						Bachelorette Biography
+					</div>
+				
+												<div class="m-person-bio copy-content m-expandable-text">
+						<div class="expandable-section clearfix" style="overflow-wrap: break-word;">
+							<p>  Originally from El Paso, Texas, this beautiful girl-next-door once moved to Spain on a whim. Luckily for Colton, she moved back and is ready to put her heart on the line for love.</p> <p>  Fun facts:<br></br>  -Spanish was her first language.<br></br>  -She describes her most embarrassing style/fashion blunder as her emo phase in high school.<br></br>  -Her biggest deal breaker in a relationship is negativity.</p>                                    </div>
+					</div>
+			</div>
+      	</div>
+      	<div id="bio_Nicole" class = "hide allBios">
+			<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">
+					Nicole                            </h2>
+												<span class="text3 extra-light grey m-person-subtitle">
+						25<br>  Social Media Coordinator<br> Miami, FL                                </span>
+				
+																			<div class="text2 grey extra-light sectionheader lowercase">
+						Bachelorette Biography
+					</div>
+				
+												<div class="m-person-bio copy-content m-expandable-text">
+						<div class="expandable-section clearfix" style="overflow-wrap: break-word;">
+							<p>  Nicole is a fun and energetic Miami native who loves salsa dancing and singing a capella. Her family is originally from Havana, Cuba, and she's extremely proud of her roots. She lives at home with her brother, mom and grandma and can't wait for Colton to try some of her grandma's cooking.</p> <p>  Fun facts:<br></br>  - She describes her pets as her life. She has two dogs, a cat, and a cockatoo named Popeye.<br></br>  - She never gets embarrassed.<br></br>  - She likes all amusement park rides except rollercoasters.</p>                                    </div>
+					</div>
+			</div>
+	    </div>
+      	<div id="bio_Nina" class = "hide allBios">
+			<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">
+					Nina                            </h2>
+												<span class="text3 extra-light grey m-person-subtitle">
+						30<br>  Sales Account Manager<br> Raleigh, NC                                </span>
+				
+																			<div class="text2 grey extra-light sectionheader lowercase">
+						Bachelorette Biography
+					</div>
+				
+												<div class="m-person-bio copy-content m-expandable-text">
+						<div class="expandable-section clearfix" style="overflow-wrap: break-word;">
+							<p>  Nina was born in Croatia and moved to the United States with her mom when she was nine years old, fleeing the conflict there amidst bullets and bombs. Amongst her many hobbies, Nina enjoys kayaking and hiking. She's also watched <i>The Bachelor</i> with her mom and grandma for years.</p> <p> Fun facts:<br></br> - She's afraid of heights and rollercoasters.<br></br> - If she could be anyone else for a day, she'd be an astronaut.<br></br>  - Her favorite author is JK Rowling. </p>                                    </div>
+					</div>
+			</div>
+      	</div>
+      	<div id="bio_Onyeka" class = "hide allBios">
+			<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">
+					Onyeka                            </h2>
+												<span class="text3 extra-light grey m-person-subtitle">
+						24<br>  IT Risk Consultant<br> Dallas, TX                                </span>
+				
+																			<div class="text2 grey extra-light sectionheader lowercase">
+						Bachelorette Biography
+					</div>
+				
+												<div class="m-person-bio copy-content m-expandable-text">
+						<div class="expandable-section clearfix" style="overflow-wrap: break-word;">
+							<p>  Onyeka grew up in Manhattan, Kansas, in a loving family. Her parents are originally from Nigeria and have been married for 35 years. Her parents got engaged after just two weeks. Onyeka is hoping to have that same kind of luck with Colton.</p> <p>  Fun facts:<br></br>  - Her go-to pickup line is, "You look so familiar."<br></br>  - Cheez-its are her favorite snack.<br></br>  - If she could do any job in the world, she'd be a music producer.</p>                                    </div>
+					</div>
+			</div>
+      	</div>
+      	<div id="bio_Revian" class = "hide allBios">
+			<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">
+					Revian                            </h2>
+												<span class="text3 extra-light grey m-person-subtitle">
+						24<br>  Nurse<br> Santa Monica, CA                                </span>
+				
+																			<div class="text2 grey extra-light sectionheader lowercase">
+						Bachelorette Biography
+					</div>
+				
+												<div class="m-person-bio copy-content m-expandable-text">
+						<div class="expandable-section clearfix" style="overflow-wrap: break-word;">
+							<p>  Revian is an esthetician from Los Angeles. When she's not helping people feel beautiful, she loves to attend music festivals. She's also fluent in Mandarin.</p> <p>  Fun facts:<br></br>  - She once flew across the country to meet a guy she met on the internet.<br></br>  - Her favorite author is Stephen King.<br></br>  - Travel and food and her two main passions.</p>                                    </div>
+					</div>
+			</div>
+      	</div>
+      	<div id="bio_Sydney" class = "hide allBios">
+			<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">
+					Sydney                            </h2>
+												<span class="text3 extra-light grey m-person-subtitle">
+						27<br>  NBA Dancer<br> New York, NY                                </span>
+				
+																			<div class="text2 grey extra-light sectionheader lowercase">
+						Bachelorette Biography
+					</div>
+				
+												<div class="m-person-bio copy-content m-expandable-text">
+						<div class="expandable-section clearfix" style="overflow-wrap: break-word;">
+							<p>  Sydney has danced since she was three years old and is currently a professional dancer for an NBA team. She's had great success in her career, but hasn't been as lucky in love. She's never had a boyfriend!</p> <p>  Fun facts:<br></br>  - The most outrageous thing she's ever done was hitchhiking in China.<br></br>  - Her favorite movie is <em>Cinderella</em>.<br></br>  - Thanksgiving is her favorite holiday since there are all the elements of food and family without the pressure of gifts.</p>                                    </div>
+					</div>
+			</div>
+      	</div>
+      	<div id="bio_Tahzjuan" class = "hide allBios">
+			<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">
+					Tahzjuan                            </h2>
+												<span class="text3 extra-light grey m-person-subtitle">
+						25<br>  Business Development Associate<br> Castle Pines, CO                                </span>
+				
+																			<div class="text2 grey extra-light sectionheader lowercase">
+						Bachelorette Biography
+					</div>
+				
+												<div class="m-person-bio copy-content m-expandable-text">
+						<div class="expandable-section clearfix" style="overflow-wrap: break-word;">
+							<p>  Tahzjuan grew up in Houston but moved to Colorado with her mom, brother and two dogs. She loves reading, outdoor concerts and shopping with her mom. She has a tattoo that says "I love bad ideas." Hopefully, Tahzjuan only sticks to her good ideas when it comes to Colton.</p> <p>  Fun facts:<br></br>  - She has a paralyzing fear of frogs.<br></br>  - Her favorite type of dancing is Salsa.<br></br>  - The best trip she's ever been on was a bike tour of Croatia.</p>                                    </div>
+					</div>
+			</div>
+      	</div>
+      	<div id="bio_Tayshia" class = "hide allBios">
+			<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">
+					Tayshia                            </h2>
+												<span class="text3 extra-light grey m-person-subtitle">
+						28<br>  Phlebotomist<br> Corona Del Mar, CA                                </span>
+				
+																			<div class="text2 grey extra-light sectionheader lowercase">
+						Bachelorette Biography
+					</div>
+				
+												<div class="m-person-bio copy-content m-expandable-text">
+						<div class="expandable-section clearfix" style="overflow-wrap: break-word;">
+							<p>  This Southern California girl is definitely not the squeamish type—she draws blood for a living! When she's not filling up vials for her patients, she volunteers at her church and goes wine tasting. Unlike her patients, Tayshia hopes Colton feels faint when he sees her!</p> <p> Fun facts:<br></br> - One of her biggest turn-offs is when her date chews with his mouth open.<br></br> - She recently completed a mission trip in Africa.<br></br> - She was a Girl Scout for 12 years.<br></br> </p>                                    </div>
+					</div>
+			</div>
+		</div>
+		<div id="bio_Tracy" class = "hide allBios">
+			<div class="m-text-copy">
+				<h2 class="module-title light text1 m-person-title">
+					Tracy                            </h2>
+												<span class="text3 extra-light grey m-person-subtitle">
+						31<br>  Wardrobe Stylist<br> Los Angeles, CA                                </span>
+				
+																			<div class="text2 grey extra-light sectionheader lowercase">
+						Bachelorette Biography
+					</div>
+				
+												<div class="m-person-bio copy-content m-expandable-text">
+						<div class="expandable-section clearfix" style="overflow-wrap: break-word;">
+							<p>  Originally from New York, Tracy relocated to West Hollywood to pursue a career in wardrobe styling. When she's not helping celebrities look their best, she's traveling the world with her sister. She'll be helping Colton with fashion tips all season long.</p> <p>  Fun facts:<br></br>  - If she could be anyone else for a day, she'd be Beyonce.<br></br>  - She says she could live off of hot dogs.<br></br>  - She loves to be the center of attention.</p>                                    </div>
+					</div>
+			</div>
+		</div>  
+      </div> <!-- /.modal-body -->
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class = "row" style = "position:relative; left: 10px">
+	<div class="ui-widget ui-helper-clearfix" style = "width:100%">
+		<div class = "col-md-5">
+	 		<ul id="sortable" class="sortable ui-helper-reset ui-helper-clearfix" style = "width:100%;">
+	  			<li name = "Adrianne" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Adrianne">
+	  				<img title="Adrianne" src="pics/Adrianne.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Adrianne.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp Adrianne (Jane) &nbsp&nbsp&nbsp&nbsp
+						<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Adrianne')"></a></h5>
+						<h2> <span class="eliminatedText">ELIMINATED</span></h2>
+	  			</li>
+
+	  			<li name = "Alex B" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Alex_B">
+	  				<img title="Alex B" src="pics/Alex_B.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Alex_B.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp Alex B &nbsp&nbsp&nbsp&nbsp&nbsp
+						<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Alex_B')"></a></h5>
+						<h2> <span class="eliminatedText">ELIMINATED</span></h2>
+	  			</li>
+	  			<li name = "Alex D" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Alex_D">
+	  				<img title="Alex D" src="pics/Alex_D.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Alex_D.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp Alex D &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+						<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Alex_D')"></a></h5>
+						<h2> <span class="eliminatedText">ELIMINATED</span></h2>
+	  			</li>
+	  			<li name = "Angelique" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Angelique">
+	  				<img title="Angelique" src="pics/Angelique.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Angelique.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Angelique &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+						<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Angelique')"></a></h5>
+						<h2> <span class="eliminatedText">ELIMINATED</span></h2>
+	  			</li>
+	  			<li name = "Annie" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Annie">
+	  				<img title="Annie" src="pics/Annie.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Annie.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp Annie &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+						<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Annie')"></a></h5>
+						<h2> <span class="eliminatedText">ELIMINATED</span></h2>
+	  			</li>
+	  			<li name = "Bri" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Bri">
+	  				<img title="Bri" src="pics/Bri.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Bri.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Bri &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Bri')"></a></h5>
+	  			</li>
+	  			<li name = "Caelynn" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Caelynn">
+	  				<img title="Caelynn" src="pics/Caelynn.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Caelynn.jpg')">
+	  				  	</a>&nbsp&nbsp Caelynn &nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Caelynn')"></a></h5>
+	  			</li>
+	  			<li name = "Caitlin" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Caitlin">
+	  				<img title="Caitlin" src="pics/Caitlin.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Caitlin.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp Caitlin &nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Caitlin')"></a></h5>
+	  			</li>
+	  			<li name = "Cassie" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Cassie">
+	  				<img title="Cassie" src="pics/Cassie.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Cassie.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp Cassie &nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Cassie')"></a></h5>
+	  			</li>
+	  			<li name = "Catherine" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Catherine">
+	  				<img title="Catherine" src="pics/Catherine.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Catherine.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp Catherine &nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Catherine')"></a></h5>
+	  			</li>
+	  			<li name = "Courtney" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Courtney">
+	  				<img title="Courtney" src="pics/Courtney.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Courtney.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp Courtney &nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Courtney')"></a></h5>
+	  			</li>
+	  			<li name = "Demi" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Demi">
+	  				<img title="Demi" src="pics/Demi.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Demi.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp Demi &nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Demi')"></a></h5>
+	  			</li>
+	  			<li name = "Devin" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Devin">
+	  				<img title="Devin" src="pics/Devin.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Devin.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp Devin &nbsp&nbsp&nbsp
+						<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Devin')"></a></h5>
+						<h2> <span class="eliminatedText">ELIMINATED</span></h2>
+	  			</li>
+	  			<li name = "Elyse" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Elyse">
+	  				<img title="Elyse" src="pics/Elyse.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Elyse.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp Elyse &nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Elyse')"></a></h5>
+	  			</li>
+	  			<li name = "Erika" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Erika">
+	  				<img title="Erika" src="pics/Erika.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Erika.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp Erika &nbsp&nbsp&nbsp
+						<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Erika')"></a></h5>
+						<h2> <span class="eliminatedText">ELIMINATED</span></h2>	
+	  			</li>
+	  			<li name = "Erin" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Erin">
+	  				<img title="Erin" src="pics/Erin.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Erin.jpg')">
+						</a>&nbsp&nbsp&nbsp&nbsp Erin &nbsp&nbsp&nbsp&nbsp
+						<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Erin')"></a></h5>
+						<h2> <span class="eliminatedText">ELIMINATED</span></h2>
+	  			</li>
+	  			<li name = "Hannah B" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Hannah_B">
+	  				<img title="Hannah B" src="pics/Hannah_B.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Hannah_B.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp Hannah B &nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Hannah_B')"></a></h5>
+	  			</li>
+	  			<li name = "Hannah G" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Hannah_G">
+	  				<img title="Hannah G" src="pics/Hannah_G.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Hannah_G.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp Hannah G &nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Hannah_G')"></a></h5>
+	  			</li>
+	  			<li name = "Heather" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Heather">
+	  				<img title="Heather" src="pics/Heather.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Heather.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp Heather &nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Heather')"></a></h5>
+	  			</li>
+	  			<li name = "Katie" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Katie">
+	  				<img title="Katie" src="pics/Katie.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Katie.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp Katie &nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Katie')"></a></h5>
+	  			</li>
+	  			<li name = "Kirpa" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Kirpa">
+	  				<img title="Kirpa" src="pics/Kirpa.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Kirpa.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Kirpa &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Kirpa')"></a></h5>
+	  			</li>
+	  			<li name = "Laura" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Laura">
+	  				<img title="Laura" src="pics/Laura.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Laura.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp Laura &nbsp&nbsp&nbsp&nbsp&nbsp
+						<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Laura')"></a></h5>
+						<h2> <span class="eliminatedText">ELIMINATED</span></h2>
+	  			</li>
+	  			<li name = "Nicole" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Nicole">
+	  				<img title="Nicole" src="pics/Nicole.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Nicole.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Nicole &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Nicole')"></a></h5>
+	  			</li>
+	  			<li name = "Nina" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Nina">
+	  				<img title="Nina" src="pics/Nina.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Nina.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp&nbsp&nbsp Nina &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Nina')"></a></h5>
+	  			</li>
+	  			<li name = "Onyeka" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Onyeka">
+	  				<img title="Onyeka" src="pics/Onyeka.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Onyeka.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp Onyeka &nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Onyeka')"></a></h5>
+	  			</li>
+	  			<li name = "Revian" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Revian">
+	  				<img title="Revian" src="pics/Revian.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Revian.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp Revian &nbsp&nbsp&nbsp
+						<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Revian')"></a></h5>
+						<h2> <span class="eliminatedText">ELIMINATED</span></h2>
+	  			</li>
+	  			<li name = "Sydney" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Sydney">
+	  				<img title="Sydney" src="pics/Sydney.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Sydney.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp Sydney &nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Sydney')"></a></h5>
+	  			</li>
+	  			<li name = "Tahzjuan" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix eliminatedWomen" id = "Tahzjuan">
+	  				<img title="Tahzjuan" src="pics/Tahzjuan.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Tahzjuan.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp Tahzjuan &nbsp&nbsp&nbsp
+						<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Tahzjuan')"></a></h5>
+						<h2> <span class="eliminatedText">ELIMINATED</span></h2>
+	  			</li>
+	  			<li name = "Tayshia" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Tayshia">
+	  				<img title="Tayshia" src="pics/Tayshia.jpg" class="img-responsive">
+	  				<h5  style = "position:relative; bottom:7px">
+	  				  	<a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Tayshia.jpg')">
+	  				  	</a>&nbsp&nbsp&nbsp Tayshia &nbsp&nbsp&nbsp
+	  				  	<a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Tayshia')"></a></h5>
+				</li>
+				<li name = "Tracy" class="ui-widget-content ui-corner-tr ui-helper-reset ui-helper-clearfix" id = "Tracy">
+					<img title="Tracy" src="pics/Tracy.jpg" class="img-responsive">
+					<h5  style = "position:relative; bottom:7px">
+						  <a style = "float: left; left:4px" title="View larger image" class="glyphicon glyphicon-zoom-in" onclick="enlargeImage('pics/Tracy.jpg')">
+						  </a>&nbsp&nbsp&nbsp Tracy &nbsp&nbsp&nbsp
+						  <a style = "right:4px" title="View Bio" class="glyphicon glyphicon-book" onclick="showBio('Tracy')"></a></h5>
+				</li>
+			</ul>
+		</div>
+
+	<!-- Tabs -->
+		<div class = "col-md-7" style = "position:fixed; right: -5px; width: 810px">
+			<!-- <form role = "form" id = "submissionForm" style = "position:relative; top: -20px; color:white;" class = "form-horizontal" 
+					action="mailto:bachelorbracket18@gmail.com?Subject=Bracket Entry" method="post" enctype="text/plain"> -->
+			<form id="submissionForm" action="https://docs.google.com/forms/d/1VfE7v7hmYYE84rKREQVX2Rbr2LgAohxd_EwC96QxjuA/formResponse" role="form"
+				style = "position:relative; top: -20px; color:white;" class = "form-horizontal">
+				<div id="tabs">
+					<ul>
+						<li><a href="#tabs-1">Week 3</a></li>
+						<li><a href="#tabs-2">Week 4</a></li>
+						<li><a href="#tabs-3">Week 5</a></li>
+						<li><a href="#tabs-4">Week 6</a></li>
+						<li><a href="#tabs-5">Week 7</a></li>
+						<li><a href="#tabs-6">Week 8</a></li>
+						<li><a href="#tabs-7">Week 9</a></li>
+						<li><a href="#tabs-8">Week 10</a></li>
+					</ul>
+
+					<div id="tabs-1">
+						<div class="ui-widget ui-helper-clearfix" style = "width:col-md-7;">
+							<p><strong>Choose 14 women for this week. You have picked <span id = "numberPicked1">0</span>/14</strong></p>
+							<div id="container1" class="dropContainer ui-widget-content ui-state-default">
+							</div>
+						</div>
+					</div>
+					<div id="tabs-2">
+						<div class="ui-widget ui-helper-clearfix" style = "width:col-md-7;">
+							<p><strong>Choose 11 women for this week. You have picked <span id = "numberPicked2">0</span>/11</strong></p>
+							<div id="container2" class="dropContainer ui-widget-content ui-state-default">
+							</div>
+						</div>
+					</div>
+					<div id="tabs-3">
+						<div class="ui-widget ui-helper-clearfix" style = "width:col-md-7;">
+							<p><strong>Choose 9 women for this week. You have picked <span id = "numberPicked3">0</span>/9</strong></p>
+							<div id="container3" class="dropContainer ui-widget-content ui-state-default">
+							</div>
+						</div>
+					</div>
+					<div id="tabs-4">
+						<div class="ui-widget ui-helper-clearfix" style = "width:col-md-7;">
+							<p><strong>Choose 6 women for this week. You have picked <span id = "numberPicked4">0</span>/6</strong></p>
+							<div id="container4" class="dropContainer ui-widget-content ui-state-default">
+							</div>
+						</div>
+					</div>
+					<div id="tabs-5">
+						<div class="ui-widget ui-helper-clearfix" style = "width:col-md-7;">
+							<p><strong>Choose 4 women for this week. You have picked <span id = "numberPicked5">0</span>/4</strong></p>
+							<div id="container5" class="dropContainer ui-widget-content ui-state-default">
+							</div>
+						</div>
+					</div>
+					<div id="tabs-6">					
+						<div class="ui-widget ui-helper-clearfix" style = "width:col-md-7;">
+							<p><strong>Choose 3 women for this week. You have picked <span id = "numberPicked6">0</span>/3</strong></p>
+							<div id="container6" class="dropContainer ui-widget-content ui-state-default">
+							</div>
+						</div>
+					</div>
+					<div id="tabs-7">
+						<div class="ui-widget ui-helper-clearfix" style = "width:col-md-7;">
+							<p><strong>Choose 2 women for this week. You have picked <span id = "numberPicked7">0</span>/2</strong></p>
+							<div id="container7" class="dropContainer ui-widget-content ui-state-default">
+							</div>
+						</div>
+					</div>
+					<div id="tabs-8">					
+						<div class="ui-widget ui-helper-clearfix" style = "width:col-md-7;">
+							<p><strong>Choose the final woman! You have picked <span id = "numberPicked8">0</span>/1</strong></p>
+							<div id="container8" class="dropContainer ui-widget-content ui-state-default">
+							</div>
+						</div>
+					</div>
+				</div> <!--End Tabs -->
+
+			  <h5>Done? Choose your name and submit.</h5>
+
+			  <div class="form-group">
+			    <label for="name" class = "col-md-2 control-label">Name:</label>
+			    <div class = "col-md-4">
+			    	<!-- Name and Id given by Google Form -->
+			    	<select name="entry.206844228" id="entry_206844228" class="form-control selectpicker valid">
+						<option>Choose your name</option>
+						<option>Aaron</option>
+						<option>Aimee</option>
+						<option>Aysia</option>
+			    		<option>Amanda</option>
+						<option>Brad</option>
+						<option>Brandon</option>
+						<option>Brittany</option>
+						<option>Carissa</option>
+						<option>Cassidy</option>
+			    		<option>Cassia</option>
+			    		<option>Courtney</option>
+			    		<option>Dana</option>
+						<option>Emily H.</option>
+			    		<option>Emilee M.</option>
+			    		<option>Hack</option>
+			    		<option>Hannah</option>
+						<option>Jake 1</option>
+						<option>Jake 2</option>
+						<option>James</option>
+						<option>Katrina</option>
+						<option>Kristen</option>
+						<option>Lauren</option>
+						<option>Lisel</option>
+						<option>Maddi</option>
+						<option>Matthew</option>
+			    		<option>Paulina</option>
+			    		<option>Rachel M.</option>
+						<option>Rachel S.</option>
+			    		<option>Riyaz</option>
+			    		<option>Ryan</option>
+			    		<option>Sanchit</option>
+						<option>Sarah H.</option>
+						<option>Sarah K.</option>
+			    		<option>Tebine</option>
+			    		<option>Thomas</option>
+			    	</select>
+			    </div>
+			  </div>
+
+			  <div class = "form-group hide">
+			  	<textarea name="entry.1299310825" id="entry_1299310825"></textarea>
+			  </div>
+
+			  <div class = "form-group">
+			  	  <label for="name" class = "col-md-2 control-label"></label>
+				  <div class ="col-md-2">
+				  	<button id = "formfill" class="btn btn-primary">Submit</button>
+				  </div>
+			  </div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script>
+	$('a').tooltip({placement:"bottom"});
+	$('.selectpicker').selectpicker();
+
+	$('#formfill').click(function() {
+		var week3picks = "";
+		var week4picks = "";
+		var week5picks = "";
+		var week6picks = "";
+		var week7picks = "";
+		var week8picks = "";
+		var week9picks = "";
+		var week10picks = "";
+
+		$( "#container1 li" ).each(function( index ) {
+			week3picks += $( this ).attr('id') + ";";
+		});
+
+		$( "#container2 li" ).each(function( index ) {
+			week4picks += $( this ).attr('id') + ";";
+		});
+		
+		$( "#container3 li" ).each(function( index ) {
+			week5picks += $( this ).attr('id') + ";";
+		});
+		
+		$( "#container4 li" ).each(function( index ) {
+			week6picks += $( this ).attr('id') + ";";
+		});
+		
+		$( "#container5 li" ).each(function( index ) {
+			week7picks += $( this ).attr('id') + ";";
+		});
+
+		$( "#container6 li" ).each(function( index ) {
+			week8picks += $( this ).attr('id') + ";";
+		});
+
+		$( "#container7 li" ).each(function( index ) {
+			week9picks += $( this ).attr('id') + ";";
+		});
+
+		$( "#container8 li" ).each(function( index ) {
+			week10picks += $( this ).attr('id') + ";";
+		});
+
+		document.getElementById("entry_1299310825").value = "week3="+week3picks+"\n"+ "week4="+week4picks+"\n"+ "week5="+week5picks+"\n"+
+															"week6="+week6picks+"\n"+ "week7="+week7picks+"\n"+ "week8="+week8picks+"\n"+
+															"week9="+week9picks+"\n"+ "week10="+week10picks;
+	});
+
+	$('#submissionForm').on('submit', function() {
+		$('#alertError').hide(); //hide any errors after a new submit
+		if ($('#entry_206844228').val() == "Choose your name") {
+			alertError("You need to choose your name.", "");
+			return false;
+		}
+
+		//Check all lengths before submission
+		if ($('#container1 li').length != week3Eliminations) {
+			alertError("", "Week 3 has not been completed yet.");
+			return false;
+		}
+		else if ($('#container2 li').length != week4Eliminations) {
+			alertError("", "Week 4 has not been completed yet.");
+			return false;
+		}
+		else if ($('#container3 li').length != week5Eliminations) {
+			alertError("", "Week 5 has not been completed yet.");
+			return false;
+		}
+		else if ($('#container4 li').length != week6Eliminations) {
+			alertError("", "Week 6 has not been completed yet.");
+			return false;
+		}
+		else if ($('#container5 li').length != week7Eliminations) {
+			alertError("", "Week 7 has not been completed yet.");
+			return false;
+		}
+		else if ($('#container6 li').length != week8Eliminations) {
+			alertError("", "Week 8 has not been completed yet.");
+			return false;
+		}
+		else if ($('#container7 li').length != week9Eliminations) {
+			alertError("", "Week 9 has not been completed yet.");
+			return false;
+		}
+		else if ($('#container8 li').length != week10Eliminations) {
+			alertError("", "Week 10 has not been completed yet.");
+			return false;
+		}
+		var finalChecks = true;
+		var loopBreak = 0;
+		for(j = 8; j > 0; j--) {
+			console.log(j);
+			var containerIdStart = "#container" + j + " li";
+			$( containerIdStart ).each(function( index ) {
+				for(i = 1; i<j; i++) {
+					console.log("i=" + i);
+					containerId = "#container" + i
+					var prevCheck = $(containerId).find("#" + $( this ).attr('id'));
+					console.log(prevCheck.length);
+					if (prevCheck.length <= 0) {
+						if (loopBreak == 0) {
+							finalChecks = false;
+							var str = $(this).attr('id');
+					  		var id = str.replace("_", " ");
+							alertError(id + " is in week " + (j+2) + ", but not in week " + (i+2), "");
+							loopBreak = 1;
+							return false;
+						}
+					}
+				}
+			});
+		}
+		return finalChecks;
+    });
+
+	function enlargeImage(picURI) {
+		$('#myModalBackground').width("570px");
+		$('#myModalBackground').css( "left","0px");
+		var picHeight = 500;
+		$('#myModalBody').html("<img src='"+picURI+"' style='position:relative; left: -5px; height:"+picHeight+"px'>");
+		$('#myModal').modal();
+	}
+
+	function showBio(id) {
+		var picURI = "pics/bios/" + id + ".jpg";
+		var bioId = "#bio_" + id;
+		$('#myModalBackground').width("900px");
+		$('#myModalBackground').css( "left","-130px");
+		$('#myModalBody').html("<img src='"+picURI+"' width=825px>");
+		$(bioId).removeClass("hide");
+		$('#myModal').modal();
+	}
+
+	$('#myModal').on('hidden.bs.modal', function () {
+		//hide all bios after closing the modal
+		$('.allBios').addClass("hide");
+	})
+</script>
+</body>
+</html>
